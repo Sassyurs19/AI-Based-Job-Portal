@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
     verifyOtpBtn.textContent = 'Verifying...';
 
     try {
-      const result = await api.verifyOtp(userEmail, otp, 'password-reset');
+      const result = await api.verifyPasswordResetOTP(userEmail, otp);
       
       if (result.success) {
         step2.style.display = 'none';
