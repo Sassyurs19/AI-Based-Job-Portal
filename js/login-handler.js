@@ -30,9 +30,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const email = emailInput.value.trim();
     const password = passwordInput.value;
+    const agreeTerms = document.getElementById('agreeTerms');
 
     if (!email || !password) {
       showError('Please fill in all fields');
+      return;
+    }
+
+    if (!agreeTerms || !agreeTerms.checked) {
+      showError('You must agree to the terms and conditions');
+      const errAgreeTerms = document.getElementById('err-agreeTerms');
+      if (errAgreeTerms) errAgreeTerms.style.display = 'block';
       return;
     }
 

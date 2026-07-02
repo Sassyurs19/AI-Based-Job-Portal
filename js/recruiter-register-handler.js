@@ -27,10 +27,30 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
     const email = document.getElementById('email').value.trim();
+    const agreeTerms = document.getElementById('agreeTerms');
+    
+    if (!firstName) {
+      showError('Please enter your first name.');
+      return;
+    }
+    
+    if (!lastName) {
+      showError('Please enter your last name.');
+      return;
+    }
     
     if (!email || !isValidEmail(email)) {
       showError('Please enter a valid email address.');
+      return;
+    }
+
+    if (!agreeTerms || !agreeTerms.checked) {
+      showError('You must agree to the terms and conditions.');
+      const errAgreeTerms = document.getElementById('err-agreeTerms');
+      if (errAgreeTerms) errAgreeTerms.style.display = 'block';
       return;
     }
 
@@ -41,8 +61,9 @@ document.addEventListener('DOMContentLoaded', function() {
     submitBtn.textContent = 'Sending verification code...';
 
     try {
-      // Register with minimal data (email only, no password yet)
+      // Register with name and email (password will be set later)
       const formData = {
+        name: `${firstName} ${lastName}`,
         email: email,
         password: 'temp_password_' + Date.now(), // Temporary password
         role: 'recruiter'

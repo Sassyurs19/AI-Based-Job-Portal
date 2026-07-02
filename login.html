@@ -117,6 +117,15 @@
           <label class="remember"><input type="checkbox" /> Remember me</label>
           <a class="forgot" href="forgot-password.html">Forgot password?</a>
         </div>
+        <div class="field full" style="margin-top: 1rem;">
+          <label style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer;">
+            <input type="checkbox" id="agreeTerms" name="agreeTerms" style="margin-top: 4px; width: 18px; height: 18px;" />
+            <span style="font-size: 0.85rem; color: rgba(255,255,255,0.8);">
+              I agree to the <a href="terms-conditions.html" target="_blank" style="color: #8b5cf6; text-decoration: underline;">Terms and Conditions</a> and <a href="terms-conditions.html" target="_blank" style="color: #8b5cf6; text-decoration: underline;">Privacy Policy</a> <span class="req">*</span>
+            </span>
+          </label>
+          <span class="err-msg" id="err-agreeTerms" style="display: none;">You must agree to the terms and conditions.</span>
+        </div>
         <button class="btn btn-grad btn-block" type="submit">Sign In</button>
       </form>
       <div class="or">OR</div>

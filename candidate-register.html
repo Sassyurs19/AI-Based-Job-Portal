@@ -88,6 +88,18 @@
 
       <div class="form-grid" id="formGrid">
 
+        <div class="field" data-field="firstName">
+          <label for="firstName">First Name <span class="req">*</span></label>
+          <input class="input" type="text" id="firstName" name="firstName" placeholder="John" autocomplete="given-name" />
+          <span class="err-msg" id="err-firstName">Please enter your first name.</span>
+        </div>
+
+        <div class="field" data-field="lastName">
+          <label for="lastName">Last Name <span class="req">*</span></label>
+          <input class="input" type="text" id="lastName" name="lastName" placeholder="Doe" autocomplete="family-name" />
+          <span class="err-msg" id="err-lastName">Please enter your last name.</span>
+        </div>
+
         <div class="field full" data-field="email">
           <label for="email">Email Address <span class="req">*</span></label>
           <input class="input" type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" />
@@ -99,6 +111,16 @@
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: text-bottom; margin-right: 6px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             We'll send you a verification code to confirm your email address
           </p>
+        </div>
+
+        <div class="field full" style="margin-top: 1.5rem;">
+          <label style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer;">
+            <input type="checkbox" id="agreeTerms" name="agreeTerms" style="margin-top: 4px; width: 18px; height: 18px;" />
+            <span style="font-size: 0.9rem; color: var(--text);">
+              I agree to the <a href="terms-conditions.html" target="_blank" style="color: #8b5cf6; text-decoration: underline;">Terms and Conditions</a> and <a href="terms-conditions.html" target="_blank" style="color: #8b5cf6; text-decoration: underline;">Privacy Policy</a> <span class="req">*</span>
+            </span>
+          </label>
+          <span class="err-msg" id="err-agreeTerms">You must agree to the terms and conditions.</span>
         </div>
 
       </div>
@@ -118,7 +140,7 @@
       </div>
 
       <div class="form-actions">
-        <button class="btn btn-grad" type="submit" id="submitBtn" style="width: 100%;">Send Verification Code</button>
+        <button class="btn btn-grad" type="submit" id="submitBtn" style="width: 100%;">Create Account</button>
         <a class="btn btn-ghost" href="register.html" style="width: 100%;">Back</a>
       </div>
 
