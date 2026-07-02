@@ -62,22 +62,20 @@
         </div>
 
         <div class="form-grid" id="formGrid">
-          <div class="premium-input-wrapper">
-            <input class="premium-input" type="text" id="firstName" name="firstName" placeholder="First Name" autocomplete="given-name" />
-            <div class="icon"><i data-lucide="user"></i></div>
-            <span class="err-msg" id="err-firstName">Please enter your first name.</span>
-          </div>
-
-          <div class="premium-input-wrapper">
-            <input class="premium-input" type="text" id="lastName" name="lastName" placeholder="Last Name" autocomplete="family-name" />
-            <div class="icon"><i data-lucide="user"></i></div>
-            <span class="err-msg" id="err-lastName">Please enter your last name.</span>
+          <div class="premium-input-wrapper" style="display: flex; gap: 1rem;">
+            <div style="flex: 1;">
+              <input class="premium-input" type="text" id="firstName" name="firstName" placeholder="First Name" autocomplete="given-name" style="width: 100%;" />
+              <div class="icon" style="left: 16px;"><i data-lucide="user"></i></div>
+            </div>
+            <div style="flex: 1;">
+              <input class="premium-input" type="text" id="lastName" name="lastName" placeholder="Last Name" autocomplete="family-name" style="width: 100%;" />
+              <div class="icon" style="left: 16px;"><i data-lucide="user"></i></div>
+            </div>
           </div>
 
           <div class="premium-input-wrapper">
             <input class="premium-input" type="email" id="email" name="email" placeholder="Email Address" autocomplete="email" />
             <div class="icon"><i data-lucide="mail"></i></div>
-            <span class="err-msg" id="err-email">Enter a valid email address.</span>
           </div>
 
           <label class="premium-checkbox">
