@@ -144,6 +144,38 @@ function updateNavbar() {
       if (panelLinks) panelLinks.innerHTML = panelLinksHTML;
     }
   }
+
+  // Set active class on navbar links dynamically matching current page filename
+  const currentPath = window.location.pathname;
+  let currentFilename = currentPath.substring(currentPath.lastIndexOf('/') + 1) || 'index.html';
+  if (currentFilename === '') {
+    currentFilename = 'index.html';
+  }
+  if (currentFilename.includes('#')) {
+    currentFilename = currentFilename.split('#')[0];
+  }
+  if (currentFilename.includes('?')) {
+    currentFilename = currentFilename.split('?')[0];
+  }
+
+  document.querySelectorAll('.nav-links a, .panel-links a').forEach(link => {
+    const href = link.getAttribute('href');
+    if (href) {
+      let linkFilename = href.substring(href.lastIndexOf('/') + 1);
+      if (linkFilename.includes('#')) {
+        linkFilename = linkFilename.split('#')[0];
+      }
+      if (linkFilename.includes('?')) {
+        linkFilename = linkFilename.split('?')[0];
+      }
+      
+      if (linkFilename === currentFilename) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    }
+  });
 }
 
 // Handle logout
