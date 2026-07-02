@@ -1,7 +1,11 @@
-// Skills tag input functionality
+// Skills tag input functionality with safety checks
 function setupSkillsInput(containerId) {
   const container = document.getElementById(containerId);
+  if (!container) return;
+  
   const input = container.querySelector('.skill-tag-input');
+  if (!input) return;
+  
   const skills = [];
 
   input.addEventListener('keydown', function(e) {
@@ -46,24 +50,28 @@ setupSkillsInput('softSkillsContainer');
 document.querySelectorAll('.remove-btn').forEach(btn => {
   btn.addEventListener('click', function() {
     const item = this.closest('.experience-item, .cert-item, .language-item');
-    if (confirm('Are you sure you want to remove this item?')) {
+    if (item && confirm('Are you sure you want to remove this item?')) {
       item.remove();
     }
   });
 });
 
-
-// Update resume button
-document.getElementById('updateResumeBtn').addEventListener('click', function() {
-  alert('Resume upload modal would open here. Supported formats: PDF, DOC, DOCX');
-});
+// Update resume button (Safe binding)
+const updateResumeBtn = document.getElementById('updateResumeBtn');
+if (updateResumeBtn) {
+  updateResumeBtn.addEventListener('click', function() {
+    alert('Resume upload modal would open here. Supported formats: PDF, DOC, DOCX');
+  });
+}
 
 // Add buttons
 document.querySelectorAll('.add-btn').forEach(btn => {
   btn.addEventListener('click', function() {
     const section = this.closest('.section-card');
-    const h2 = section.querySelector('h2').textContent.trim();
-    alert(`Add ${h2} modal/form would open here.`);
+    if (section) {
+      const h2 = section.querySelector('h2').textContent.trim();
+      alert(`Add ${h2} modal/form would open here.`);
+    }
   });
 });
 
@@ -71,6 +79,8 @@ document.querySelectorAll('.add-btn').forEach(btn => {
 document.addEventListener('DOMContentLoaded', function() {
   setTimeout(() => {
     const ring = document.querySelector('.completion-ring-fill');
-    ring.style.strokeDashoffset = '52.78';
+    if (ring) {
+      ring.style.strokeDashoffset = '52.78';
+    }
   }, 500);
 });

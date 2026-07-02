@@ -22,11 +22,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Bind change listeners to profile fields
   const saveProfileInfoBtn = document.getElementById('saveProfileInfoBtn');
-  const profileFields = ['name', 'phone', 'location', 'bio'];
+  const profileFields = ['name', 'phone', 'location', 'bio', 'dob'];
   profileFields.forEach(id => {
     const el = document.getElementById(id);
     if (el) {
       el.addEventListener('input', function() {
+        if (saveProfileInfoBtn) saveProfileInfoBtn.style.display = 'block';
+      });
+      el.addEventListener('change', function() {
         if (saveProfileInfoBtn) saveProfileInfoBtn.style.display = 'block';
       });
     }
@@ -40,7 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
         name: document.getElementById('name').value.trim(),
         phone: document.getElementById('phone').value.trim(),
         bio: document.getElementById('bio').value.trim(),
-        location: document.getElementById('location').value.trim()
+        location: document.getElementById('location').value.trim(),
+        dob: document.getElementById('dob').value.trim()
       };
       
       saveProfileInfoBtn.disabled = true;
@@ -296,6 +300,15 @@ function updateProfileUI(user) {
 
   const locationInput = document.getElementById('location');
   if (locationInput) locationInput.value = user.location || '';
+
+  const dobInput = document.getElementById('dob');
+  if (dobInput && user.dob) {
+    const date = new Date(user.dob);
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    dobInput.value = `${yyyy}-${mm}-${dd}`;
+  }
 
   // Render dynamic education and experience
   renderEducationList(user.education || []);
@@ -926,6 +939,282 @@ function gatherExperienceFromUI() {
     }
   });
   return experience;
+}
+
+// ---------- ADDITIONAL DETAILS TIMELINE & STATE ----------
+let isEditingAdditional = false;
+let currentSkills = [];
+let currentSoftSkills = [];
+let currentProjects = [];
+let currentCertifications = [];
+let currentLanguages = [];
+
+function renderAdditionalDetailsList() {
+  const container = document.getElementById('additionalDetailsContainer');
+  const saveAdditionalBtn = document.getElementById('saveAdditionalBtn');
+  const editAdditionalBtn = document.getElementById('editAdditionalBtn');
+  if (!container) return;
+
+  if (!isEditingAdditional) {
+    // Read-only Mode
+    if (editAdditionalBtn) {
+      editAdditionalBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 4px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit`;
+    }
+    if (saveAdditionalBtn) saveAdditionalBtn.style.display = 'none';
+
+    let html = '';
+
+    // Render Tech Skills
+    html += `
+      <div style="margin-bottom: 24px;">
+        <h4 style="font-size: 0.95rem; margin-bottom: 8px; color: var(--text); font-weight: 600;">Technical Skills</h4>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          ${currentSkills.length > 0 
+            ? currentSkills.map(s => `<span class="skill-tag">${s}</span>`).join('')
+            : '<span style="color: var(--muted); font-size: 0.85rem;">None added yet</span>'}
+        </div>
+      </div>
+    `;
+
+    // Render Soft Skills
+    html += `
+      <div style="margin-bottom: 24px;">
+        <h4 style="font-size: 0.95rem; margin-bottom: 8px; color: var(--text); font-weight: 600;">Soft Skills</h4>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          ${currentSoftSkills.length > 0 
+            ? currentSoftSkills.map(s => `<span class="skill-tag" style="background: rgba(6, 182, 212, 0.15); color: var(--cyan); border-color: rgba(6, 182, 212, 0.25);">${s}</span>`).join('')
+            : '<span style="color: var(--muted); font-size: 0.85rem;">None added yet</span>'}
+        </div>
+      </div>
+    `;
+
+    // Render Certifications
+    html += `
+      <div style="margin-bottom: 24px;">
+        <h4 style="font-size: 0.95rem; margin-bottom: 8px; color: var(--text); font-weight: 600;">Certifications</h4>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          ${currentCertifications.length > 0 
+            ? currentCertifications.map(c => `<span class="skill-tag" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border-color: rgba(16, 185, 129, 0.25);">${c}</span>`).join('')
+            : '<span style="color: var(--muted); font-size: 0.85rem;">None added yet</span>'}
+        </div>
+      </div>
+    `;
+
+    // Render Projects
+    html += `
+      <div style="margin-bottom: 24px;">
+        <h4 style="font-size: 0.95rem; margin-bottom: 12px; color: var(--text); font-weight: 600;">Key Projects</h4>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          ${currentProjects.length > 0 
+            ? currentProjects.map(p => `
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); padding: 14px; border-radius: 12px;">
+                  <h5 style="margin: 0 0 6px; font-size: 0.92rem; color: #fff; font-weight: 600;">${p.title}</h5>
+                  <p style="margin: 0; font-size: 0.82rem; color: var(--muted); line-height: 1.5;">${p.description}</p>
+                </div>
+              `).join('')
+            : '<p style="color: var(--muted); font-size: 0.85rem; margin: 0;">None added yet</p>'}
+        </div>
+      </div>
+    `;
+
+    // Render Languages
+    html += `
+      <div style="margin-bottom: 12px;">
+        <h4 style="font-size: 0.95rem; margin-bottom: 8px; color: var(--text); font-weight: 600;">Languages</h4>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+          ${currentLanguages.length > 0 
+            ? currentLanguages.map(l => `
+                <div style="display: flex; align-items: center; gap: 8px; background: rgba(15,23,42,0.4); border: 1px solid var(--glass-border); padding: 6px 12px; border-radius: 8px;">
+                  <span style="font-size: 0.82rem; color: #fff; font-weight: 500;">${l.name}</span>
+                  <span style="font-size: 0.7rem; background: rgba(139,92,246,0.15); color: var(--purple); padding: 2px 6px; border-radius: 4px; font-weight: 600; text-transform: uppercase;">${l.proficiency}</span>
+                </div>
+              `).join('')
+            : '<span style="color: var(--muted); font-size: 0.85rem;">None added yet</span>'}
+        </div>
+      </div>
+    `;
+
+    container.innerHTML = html;
+
+  } else {
+    // Editable Mode
+    if (editAdditionalBtn) {
+      editAdditionalBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 4px;"><path d="M18 6L6 18M6 6l12 12"/></svg> Cancel`;
+    }
+    if (saveAdditionalBtn) saveAdditionalBtn.style.display = 'block';
+
+    let html = '';
+
+    // Tech Skills Editor
+    html += `
+      <div style="margin-bottom: 24px; background: rgba(255,255,255,0.01); border: 1px solid var(--glass-border); padding: 18px; border-radius: 14px;">
+        <h4 style="font-size: 0.95rem; margin: 0 0 10px 0; color: var(--text); font-weight: 600;">Technical Skills</h4>
+        <div id="techSkillsTags" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
+          ${currentSkills.map((s, idx) => `<span class="skill-tag">${s} <span onclick="removeTechSkill(${idx})" style="cursor:pointer; margin-left: 6px; font-weight: bold;">&times;</span></span>`).join('')}
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="newTechSkillInput" placeholder="Add a technical skill (e.g. Python)" style="flex: 1; background: rgba(15,23,42,.6); border: 1px solid var(--glass-border); color: var(--text); padding: 8px 12px; border-radius: 8px; font-size: 0.85rem;" />
+          <button type="button" onclick="addTechSkill()" class="btn btn-grad btn-sm" style="width: auto; margin:0; padding:6px 14px;">Add</button>
+        </div>
+      </div>
+    `;
+
+    // Soft Skills Editor
+    html += `
+      <div style="margin-bottom: 24px; background: rgba(255,255,255,0.01); border: 1px solid var(--glass-border); padding: 18px; border-radius: 14px;">
+        <h4 style="font-size: 0.95rem; margin: 0 0 10px 0; color: var(--text); font-weight: 600;">Soft Skills</h4>
+        <div id="softSkillsTags" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
+          ${currentSoftSkills.map((s, idx) => `<span class="skill-tag" style="background: rgba(6, 182, 212, 0.15); color: var(--cyan); border-color: rgba(6, 182, 212, 0.25);">${s} <span onclick="removeSoftSkill(${idx})" style="cursor:pointer; margin-left: 6px; font-weight: bold;">&times;</span></span>`).join('')}
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="newSoftSkillInput" placeholder="Add a soft skill (e.g. Leadership)" style="flex: 1; background: rgba(15,23,42,.6); border: 1px solid var(--glass-border); color: var(--text); padding: 8px 12px; border-radius: 8px; font-size: 0.85rem;" />
+          <button type="button" onclick="addSoftSkill()" class="btn btn-grad btn-sm" style="width: auto; margin:0; padding:6px 14px;">Add</button>
+        </div>
+      </div>
+    `;
+
+    // Certifications Editor
+    html += `
+      <div style="margin-bottom: 24px; background: rgba(255,255,255,0.01); border: 1px solid var(--glass-border); padding: 18px; border-radius: 14px;">
+        <h4 style="font-size: 0.95rem; margin: 0 0 10px 0; color: var(--text); font-weight: 600;">Certifications</h4>
+        <div id="certsTags" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
+          ${currentCertifications.map((c, idx) => `<span class="skill-tag" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border-color: rgba(16, 185, 129, 0.25);">${c} <span onclick="removeCert(${idx})" style="cursor:pointer; margin-left: 6px; font-weight: bold;">&times;</span></span>`).join('')}
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="newCertInput" placeholder="Add a certification (e.g. AWS)" style="flex: 1; background: rgba(15,23,42,.6); border: 1px solid var(--glass-border); color: var(--text); padding: 8px 12px; border-radius: 8px; font-size: 0.85rem;" />
+          <button type="button" onclick="addCert()" class="btn btn-grad btn-sm" style="width: auto; margin:0; padding:6px 14px;">Add</button>
+        </div>
+      </div>
+    `;
+
+    // Projects Editor
+    html += `
+      <div style="margin-bottom: 24px; background: rgba(255,255,255,0.01); border: 1px solid var(--glass-border); padding: 18px; border-radius: 14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h4 style="font-size: 0.95rem; margin: 0; color: var(--text); font-weight: 600;">Key Projects</h4>
+          <button type="button" onclick="addProjectItem()" class="btn btn-grad btn-sm" style="width:auto; margin:0; padding:4px 12px; font-size:0.75rem;">+ Add Project</button>
+        </div>
+        <div id="projectsEditorContainer" style="display:flex; flex-direction:column; gap:12px;">
+          ${currentProjects.map((p, idx) => `
+            <div class="project-edit-item" style="display:flex; flex-direction:column; gap:8px; background:rgba(0,0,0,0.2); border:1px solid var(--glass-border); padding:12px; border-radius:10px; position:relative;">
+              <input type="text" class="proj-title" placeholder="Project Title" style="width: 90%; background: rgba(15,23,42,.6); border: 1px solid var(--glass-border); color: var(--text); padding: 6px 10px; border-radius: 6px; font-size: 0.82rem;" value="${p.title || ''}" />
+              <textarea class="proj-desc" placeholder="Project Description" style="width: 100%; height:60px; background: rgba(15,23,42,.6); border: 1px solid var(--glass-border); color: var(--text); padding: 6px 10px; border-radius: 6px; font-size: 0.82rem; resize:vertical;">${p.description || ''}</textarea>
+              <button type="button" onclick="removeProjectItem(${idx})" style="position:absolute; top:10px; right:10px; background:none; border:none; color:#f87171; font-size:1.1rem; cursor:pointer;">&times;</button>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    // Languages Editor
+    html += `
+      <div style="margin-bottom: 12px; background: rgba(255,255,255,0.01); border: 1px solid var(--glass-border); padding: 18px; border-radius: 14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h4 style="font-size: 0.95rem; margin: 0; color: var(--text); font-weight: 600;">Languages</h4>
+          <button type="button" onclick="addLanguageItem()" class="btn btn-grad btn-sm" style="width:auto; margin:0; padding:4px 12px; font-size:0.75rem;">+ Add Language</button>
+        </div>
+        <div id="languagesEditorContainer" style="display:flex; flex-direction:column; gap:10px;">
+          ${currentLanguages.map((l, idx) => `
+            <div class="lang-edit-item" style="display:flex; gap:10px; align-items:center; background:rgba(0,0,0,0.2); border:1px solid var(--glass-border); padding:10px; border-radius:8px; position:relative; padding-right:32px;">
+              <input type="text" class="lang-name" placeholder="Language Name" style="flex:1; background: rgba(15,23,42,.6); border: 1px solid var(--glass-border); color: var(--text); padding: 6px 10px; border-radius: 6px; font-size: 0.82rem;" value="${l.name || ''}" />
+              <select class="lang-prof" style="background: rgba(15,23,42,.6); border: 1px solid var(--glass-border); color: var(--text); padding: 6px 10px; border-radius: 6px; font-size: 0.82rem;">
+                <option value="Native" ${l.proficiency === 'Native' ? 'selected' : ''}>Native</option>
+                <option value="Fluent" ${l.proficiency === 'Fluent' ? 'selected' : ''}>Fluent</option>
+                <option value="Conversational" ${l.proficiency === 'Conversational' ? 'selected' : ''}>Conversational</option>
+                <option value="Basic" ${l.proficiency === 'Basic' ? 'selected' : ''}>Basic</option>
+              </select>
+              <button type="button" onclick="removeLanguageItem(${idx})" style="position:absolute; top:10px; right:10px; background:none; border:none; color:#f87171; font-size:1.1rem; cursor:pointer;">&times;</button>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    container.innerHTML = html;
+  }
+}
+
+window.removeTechSkill = function(idx) {
+  currentSkills.splice(idx, 1);
+  renderAdditionalDetailsList();
+};
+window.addTechSkill = function() {
+  const input = document.getElementById('newTechSkillInput');
+  const val = input ? input.value.trim() : '';
+  if (val && !currentSkills.includes(val)) {
+    currentSkills.push(val);
+    renderAdditionalDetailsList();
+  }
+};
+window.removeSoftSkill = function(idx) {
+  currentSoftSkills.splice(idx, 1);
+  renderAdditionalDetailsList();
+};
+window.addSoftSkill = function() {
+  const input = document.getElementById('newSoftSkillInput');
+  const val = input ? input.value.trim() : '';
+  if (val && !currentSoftSkills.includes(val)) {
+    currentSoftSkills.push(val);
+    renderAdditionalDetailsList();
+  }
+};
+window.removeCert = function(idx) {
+  currentCertifications.splice(idx, 1);
+  renderAdditionalDetailsList();
+};
+window.addCert = function() {
+  const input = document.getElementById('newCertInput');
+  const val = input ? input.value.trim() : '';
+  if (val && !currentCertifications.includes(val)) {
+    currentCertifications.push(val);
+    renderAdditionalDetailsList();
+  }
+};
+window.addProjectItem = function() {
+  currentProjects = gatherProjectsFromUI();
+  currentProjects.push({ title: '', description: '' });
+  renderAdditionalDetailsList();
+};
+window.removeProjectItem = function(idx) {
+  currentProjects = gatherProjectsFromUI();
+  currentProjects.splice(idx, 1);
+  renderAdditionalDetailsList();
+};
+window.addLanguageItem = function() {
+  currentLanguages = gatherLanguagesFromUI();
+  currentLanguages.push({ name: '', proficiency: 'Fluent' });
+  renderAdditionalDetailsList();
+};
+window.removeLanguageItem = function(idx) {
+  currentLanguages = gatherLanguagesFromUI();
+  currentLanguages.splice(idx, 1);
+  renderAdditionalDetailsList();
+};
+
+function gatherProjectsFromUI() {
+  const list = [];
+  const items = document.querySelectorAll('.project-edit-item');
+  items.forEach(item => {
+    const title = item.querySelector('.proj-title').value.trim();
+    const description = item.querySelector('.proj-desc').value.trim();
+    if (title) list.push({ title, description });
+  });
+  return list;
+}
+
+function gatherCertsFromUI() {
+  return currentCertifications;
+}
+
+function gatherLanguagesFromUI() {
+  const list = [];
+  const items = document.querySelectorAll('.lang-edit-item');
+  items.forEach(item => {
+    const name = item.querySelector('.lang-name').value.trim();
+    const proficiency = item.querySelector('.lang-prof').value;
+    if (name) list.push({ name, proficiency });
+  });
+  return list;
 }
 
 

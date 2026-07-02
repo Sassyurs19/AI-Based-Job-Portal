@@ -347,7 +347,7 @@ const getMe = async (req, res, next) => {
 
 const updateProfile = async (req, res, next) => {
   try {
-    const { name, phone, location, bio, skills, softSkills, experience, education, projects, certifications, languages } = req.body;
+    const { name, phone, location, bio, skills, softSkills, experience, education, projects, certifications, languages, dob } = req.body;
 
     const user = await User.findById(req.user._id);
 
@@ -362,6 +362,7 @@ const updateProfile = async (req, res, next) => {
     if (projects) user.projects = projects;
     if (certifications) user.certifications = certifications;
     if (languages) user.languages = languages;
+    if (dob) user.dob = dob;
 
     if (req.file) {
       user.avatar = req.file.path.replace(/\\/g, '/');
@@ -379,6 +380,7 @@ const updateProfile = async (req, res, next) => {
         phone: user.phone,
         location: user.location,
         bio: user.bio,
+        dob: user.dob,
         skills: user.skills,
         softSkills: user.softSkills,
         experience: user.experience,
