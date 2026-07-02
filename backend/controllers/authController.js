@@ -1,0 +1,488 @@
+const crypto = require('crypto');
+const User = require('../models/User');
+const { generateToken, generateRefreshToken } = require('../utils/jwt');
+const sendEmail = require('../utils/email');
+const { generateOTP, hashOTP, verifyOTP } = require('../utils/otp');
+
+const register = async (req, res, next) => {
+  try {
+    const { name, email, password, role } = req.body;
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      // Check if user signed up with Google
+      if (existingUser.provider === 'google') {
+        return res.status(400).json({
+          success: false,
+          message: 'This email is already registered with Google. Please use Google login or set a password.',
+          requiresPassword: true
+        });
+      }
+      return res.status(400).json({
+        success: false,
+        message: 'User already exists with this email'
+      });
+    }
+
+    const user = await User.create({
+      name,
+      email,
+      password,
+      role: role || 'candidate',
+      provider: 'local'
+    });
+
+    // Generate and send OTP
+    const otp = generateOTP();
+    const hashedOTP = hashOTP(otp);
+    const otpExpiry = Date.now() + 10 * 60 * 1000; // 10 minutes
+
+    user.verificationOTP = hashedOTP;
+    user.verificationOTPExpiry = otpExpiry;
+    await user.save();
+
+    // Send OTP email
+    const html = `
+      <h1>Email Verification</h1>
+      <p>Thank you for registering with AI Job Portal!</p>
+      <p>Your verification code is: <strong style="font-size: 24px; color: #4F46E5;">${otp}</strong></p>
+      <p>This code will expire in 10 minutes.</p>
+      <p>If you didn't request this, please ignore this email.</p>
+    `;
+
+    await sendEmail({
+      email: user.email,
+      subject: 'Verify Your Email - AI Job Portal',
+      html
+    });
+
+    res.status(201).json({
+      success: true,
+      message: 'Registration successful. Please check your email for verification code.',
+      requiresVerification: true,
+      userId: user._id
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email }).select('+password');
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid credentials'
+      });
+    }
+
+    const isPasswordMatch = await user.comparePassword(password);
+    if (!isPasswordMatch) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid credentials'
+      });
+    }
+
+    if (!user.isActive) {
+      return res.status(401).json({
+        success: false,
+        message: 'Your account has been deactivated'
+      });
+    }
+
+    const token = generateToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
+
+    user.refreshToken = refreshToken;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Login successful',
+      token,
+      refreshToken,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        avatar: user.avatar
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const refreshToken = async (req, res, next) => {
+  try {
+    const { refreshToken } = req.body;
+
+    if (!refreshToken) {
+      return res.status(401).json({
+        success: false,
+        message: 'Refresh token is required'
+      });
+    }
+
+    const user = await User.findOne({ refreshToken });
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid refresh token'
+      });
+    }
+
+    const token = generateToken(user._id);
+    const newRefreshToken = generateRefreshToken(user._id);
+
+    user.refreshToken = newRefreshToken;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      token,
+      refreshToken: newRefreshToken
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const logout = async (req, res, next) => {
+  try {
+    await User.findByIdAndUpdate(req.user._id, { refreshToken: null });
+
+    res.status(200).json({
+      success: true,
+      message: 'Logout successful'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const forgotPassword = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'No user found with this email'
+      });
+    }
+
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const resetPasswordExpire = Date.now() + 10 * 60 * 1000;
+
+    user.resetPasswordToken = crypto
+      .createHash('sha256')
+      .update(resetToken)
+      .digest('hex');
+    user.resetPasswordExpire = resetPasswordExpire;
+    await user.save();
+
+    const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password/${resetToken}`;
+
+    const html = `
+      <h1>Password Reset Request</h1>
+      <p>You requested a password reset for your AI Job Portal account.</p>
+      <p>Click the link below to reset your password:</p>
+      <a href="${resetUrl}" style="background: #4F46E5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Reset Password</a>
+      <p>This link will expire in 10 minutes.</p>
+      <p>If you didn't request this, please ignore this email.</p>
+    `;
+
+    await sendEmail({
+      email: user.email,
+      subject: 'Password Reset Request',
+      html
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Password reset email sent'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const resetPassword = async (req, res, next) => {
+  try {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    const resetPasswordToken = crypto
+      .createHash('sha256')
+      .update(token)
+      .digest('hex');
+
+    const user = await User.findOne({
+      resetPasswordToken,
+      resetPasswordExpire: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid or expired reset token'
+      });
+    }
+
+    user.password = password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Password reset successful'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getMe = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id).select('-password -refreshToken');
+    
+    res.status(200).json({
+      success: true,
+      user
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updateProfile = async (req, res, next) => {
+  try {
+    const { name, phone, location, bio, skills, experience, education } = req.body;
+
+    const user = await User.findById(req.user._id);
+
+    if (name) user.name = name;
+    if (phone) user.phone = phone;
+    if (location) user.location = location;
+    if (bio !== undefined) user.bio = bio;
+    if (skills) user.skills = skills;
+    if (experience) user.experience = experience;
+    if (education) user.education = education;
+
+    if (req.file) {
+      user.avatar = req.file.path.replace(/\\/g, '/');
+    }
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Profile updated successfully',
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        location: user.location,
+        bio: user.bio,
+        skills: user.skills,
+        experience: user.experience,
+        education: user.education,
+        avatar: user.avatar
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getUserById = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      user
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const googleAuthSuccess = async (req, res, next) => {
+  try {
+    const user = req.user;
+
+    // Check if this was a signup attempt with existing email
+    if (req.session && req.session.googleSignupError === 'EMAIL_EXISTS') {
+      req.session.googleSignupError = null;
+      const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5500';
+      res.redirect(`${frontendUrl}/login.html?error=email_exists_use_google_login`);
+      return;
+    }
+
+    const token = generateToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
+
+    user.refreshToken = refreshToken;
+    await user.save();
+
+    // Redirect to frontend with tokens
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5500';
+    
+    // Check if user needs to complete profile (new Google user with minimal info)
+    const needsProfileCompletion = user.provider === 'google' && 
+      (!user.phone || !user.location || !user.skills || user.skills.length === 0);
+    
+    if (needsProfileCompletion) {
+      res.redirect(`${frontendUrl}/auth-callback.html?token=${token}&refreshToken=${refreshToken}&role=${user.role}&completeProfile=true`);
+    } else {
+      res.redirect(`${frontendUrl}/auth-callback.html?token=${token}&refreshToken=${refreshToken}&role=${user.role}`);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+const googleAuthFailure = (req, res) => {
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5500';
+  res.redirect(`${frontendUrl}/login.html?error=google_auth_failed`);
+};
+
+const verifyEmailOTP = async (req, res, next) => {
+  try {
+    const { userId, otp } = req.body;
+
+    const user = await User.findById(userId).select('+verificationOTP +verificationOTPExpiry');
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    // Check if OTP expired
+    if (Date.now() > user.verificationOTPExpiry) {
+      return res.status(400).json({
+        success: false,
+        message: 'OTP has expired. Please request a new one.'
+      });
+    }
+
+    // Verify OTP
+    if (!verifyOTP(otp, user.verificationOTP)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid OTP'
+      });
+    }
+
+    // Mark user as verified
+    user.isVerified = true;
+    user.verificationOTP = undefined;
+    user.verificationOTPExpiry = undefined;
+    await user.save();
+
+    // Generate tokens
+    const token = generateToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
+
+    user.refreshToken = refreshToken;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Email verified successfully',
+      token,
+      refreshToken,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const resendOTP = async (req, res, next) => {
+  try {
+    const { userId } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    if (user.isVerified) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email is already verified'
+      });
+    }
+
+    // Generate new OTP
+    const otp = generateOTP();
+    const hashedOTP = hashOTP(otp);
+    const otpExpiry = Date.now() + 10 * 60 * 1000; // 10 minutes
+
+    user.verificationOTP = hashedOTP;
+    user.verificationOTPExpiry = otpExpiry;
+    await user.save();
+
+    // Send OTP email
+    const html = `
+      <h1>Email Verification</h1>
+      <p>Your new verification code is: <strong style="font-size: 24px; color: #4F46E5;">${otp}</strong></p>
+      <p>This code will expire in 10 minutes.</p>
+    `;
+
+    await sendEmail({
+      email: user.email,
+      subject: 'Verify Your Email - AI Job Portal',
+      html
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'New OTP sent to your email'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  register,
+  login,
+  refreshToken,
+  logout,
+  forgotPassword,
+  resetPassword,
+  getMe,
+  updateProfile,
+  getUserById,
+  googleAuthSuccess,
+  googleAuthFailure,
+  verifyEmailOTP,
+  resendOTP
+};

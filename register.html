@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Create Your Account — AI Hire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/common.css" />
+<link rel="stylesheet" href="css/register.css" />
+</head>
+
+
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<div class="orb a"></div><div class="orb b"></div><div class="orb c"></div>
+
+
+<!-- ===== NAVBAR ===== -->
+<header>
+  <div class="container">
+    <nav class="nav">
+      <a class="logo" href="index.html"><span class="dot">AI</span> AI Hire</a>
+      <ul class="nav-links">
+        <li><a href="index.html#home">Home</a></li>
+        <li><a href="index.html#jobs">Jobs</a></li>
+        <li><a href="index.html#companies">Companies</a></li>
+        <li><a href="index.html#how">About</a></li>
+        <li><a class="active" href="register.html" aria-current="page">Register</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="login.html">Login</a>
+        <a class="btn btn-grad" href="register.html">Register</a>
+      </div>
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="panel">
+        <span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<div class="backdrop" id="backdrop" aria-hidden="true"></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <a class="logo panel-brand" href="index.html"><span class="dot">AI</span> AI Hire</a>
+  <nav class="panel-links">
+    <a href="index.html#home">Home</a>
+    <a href="index.html#jobs">Jobs</a>
+    <a href="index.html#companies">Companies</a>
+    <a href="index.html#how">About</a>
+    <a class="active" href="register.html" aria-current="page">Register</a>
+  </nav>
+  <div class="panel-actions">
+    <a class="btn btn-ghost" href="login.html">Login</a>
+    <a class="btn btn-grad" href="register.html">Register</a>
+  </div>
+</aside>
+
+
+<!-- ===== REGISTER ===== -->
+<main class="auth-wrap">
+  <div class="container register-shell">
+    <div class="register-card gborder enter d1">
+      <div class="register-head">
+        <a class="logo" href="index.html"><span class="dot">AI</span> AI Hire</a>
+        <span class="eyebrow">Get Started</span>
+        <h1>Create Your <span class="grad-text">Account</span></h1>
+        <p>Choose how you want to join our AI-powered recruitment platform.</p>
+      </div>
+
+      <div class="roles">
+        <article class="role gborder enter d1">
+          <div class="role-ic">👨‍💻</div>
+          <h3>Job Seeker</h3>
+          <p>Find jobs with AI-powered recommendations, upload your resume, and track your applications.</p>
+          <a class="btn btn-grad" href="candidate-register.html">Continue as Job Seeker</a>
+        </article>
+
+        <article class="role gborder enter d2">
+          <div class="role-ic">🏢</div>
+          <h3>Recruiter</h3>
+          <p>Post jobs, discover AI-ranked candidates, manage applications, and hire top talent.</p>
+          <a class="btn btn-grad" href="recruiter-register.html">Continue as Recruiter</a>
+        </article>
+      </div>
+
+      <p class="login-line">Already have an account? <a href="login.html">Login</a></p>
+    </div>
+  </div>
+</main>
+
+
+<script src="js/api.js"></script>
+<script src="js/auth-check.js"></script>
+<script src="js/register.js"></script>
+</body>
+</html>

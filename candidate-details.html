@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Candidate Details — AI Hire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/common.css" />
+<link rel="stylesheet" href="css/candidate-details.css" />
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<div class="orb a"></div><div class="orb b"></div><div class="orb c"></div>
+
+<!-- ===== NAVBAR ===== -->
+<header>
+  <div class="container">
+    <nav class="nav">
+      <a class="logo" href="index.html"><span class="dot">AI</span> AI Hire</a>
+      <ul class="nav-links">
+        <li><a href="index.html#home">Home</a></li>
+        <li><a href="jobs.html">Jobs</a></li>
+        <li><a href="index.html#companies">Companies</a></li>
+        <li><a href="index.html#how">About</a></li>
+        <li><a href="index.html#footer">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="recruiter-dashboard.html">Dashboard</a>
+        <a class="btn btn-grad" href="index.html">Logout</a>
+      </div>
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="panel">
+        <span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== MOBILE OFF-CANVAS ===== -->
+<div class="backdrop" id="backdrop" aria-hidden="true"></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <a class="logo panel-brand" href="index.html"><span class="dot">AI</span> AI Hire</a>
+  <nav class="panel-links">
+    <a href="recruiter-dashboard.html">Dashboard</a>
+    <a href="applicants.html">Applicants</a>
+    <a href="post-job.html">Post Job</a>
+    <a href="jobs.html">Jobs</a>
+    <a href="index.html#companies">Companies</a>
+    <a href="index.html#how">About</a>
+    <a href="index.html#footer">Contact</a>
+  </nav>
+  <div class="panel-actions">
+    <a class="btn btn-ghost" href="recruiter-dashboard.html">Dashboard</a>
+    <a class="btn btn-grad" href="index.html">Logout</a>
+  </div>
+</aside>
+
+<!-- ===== CANDIDATE DETAILS PAGE ===== -->
+<main class="details-wrap">
+  <div class="container">
+    
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+      <a href="applicants.html">Applicants</a>
+      <span>/</span>
+      <span>John Doe</span>
+    </nav>
+
+    <div class="details-grid">
+      
+      <!-- Main Content -->
+      <div class="details-main">
+        
+        <!-- Profile Card -->
+        <div class="profile-card">
+          <div class="profile-header">
+            <div class="profile-avatar">JD</div>
+            <div class="profile-info">
+              <h1>John Doe</h1>
+              <div class="role">Senior Machine Learning Engineer</div>
+              <div class="location">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-5.3-7-11a7 7 0 0 1 14 0c0 5.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                San Francisco, CA
+              </div>
+            </div>
+          </div>
+          
+          <div class="profile-contact">
+            <div class="contact-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <a href="mailto:john.doe@email.com">john.doe@email.com</a>
+            </div>
+            <div class="contact-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <a href="tel:+15551234567">+1 (555) 123-4567</a>
+            </div>
+          </div>
+          
+          <div class="profile-social">
+            <a class="social-link" href="#" title="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a class="social-link" href="#" title="GitHub">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            </a>
+            <a class="social-link" href="#" title="Portfolio">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Experience -->
+        <div class="section-card">
+          <h2>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Experience
+          </h2>
+          <div class="experience-item">
+            <div class="experience-icon">TC</div>
+            <div class="experience-content">
+              <h3>Senior ML Engineer</h3>
+              <div class="company">Tech Corporation · San Francisco, CA</div>
+              <div class="period">2021 - Present · 3 years</div>
+              <p>Led development of ML models for product recommendations, improving accuracy by 35%. Managed team of 4 engineers. Implemented MLOps pipelines and deployed models at scale.</p>
+            </div>
+          </div>
+          <div class="experience-item">
+            <div class="experience-icon">DS</div>
+            <div class="experience-content">
+              <h3>ML Engineer</h3>
+              <div class="company">Data Solutions · Austin, TX</div>
+              <div class="period">2019 - 2021 · 2 years</div>
+              <p>Built predictive models for customer churn analysis. Implemented data preprocessing pipelines and feature engineering. Collaborated with data science team on research projects.</p>
+            </div>
+          </div>
+          <div class="experience-item">
+            <div class="experience-icon">AI</div>
+            <div class="experience-content">
+              <h3>Junior Data Scientist</h3>
+              <div class="company">AI Startup · Boston, MA</div>
+              <div class="period">2018 - 2019 · 1 year</div>
+              <p>Developed NLP models for sentiment analysis. Worked on computer vision projects for object detection. Assisted senior engineers in model optimization.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Education -->
+        <div class="section-card">
+          <h2>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Education
+          </h2>
+          <div class="education-item">
+            <div class="education-icon">MS</div>
+            <div class="education-content">
+              <h3>Master of Science in Computer Science</h3>
+              <div class="school">Stanford University</div>
+              <div class="period">2017 - 2019 · Specialization in Machine Learning</div>
+            </div>
+          </div>
+          <div class="education-item">
+            <div class="education-icon">BS</div>
+            <div class="education-content">
+              <h3>Bachelor of Science in Computer Engineering</h3>
+              <div class="school">MIT</div>
+              <div class="period">2013 - 2017</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skills -->
+        <div class="section-card">
+          <h2>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17-2 2"/></svg>
+            Skills
+          </h2>
+          <div class="skills-grid">
+            <div class="skill-category">
+              <h3>Programming</h3>
+              <div class="skill-tags">
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">TensorFlow</span>
+                <span class="skill-tag">PyTorch</span>
+                <span class="skill-tag">Scikit-learn</span>
+                <span class="skill-tag">SQL</span>
+              </div>
+            </div>
+            <div class="skill-category">
+              <h3>Machine Learning</h3>
+              <div class="skill-tags">
+                <span class="skill-tag">Deep Learning</span>
+                <span class="skill-tag">NLP</span>
+                <span class="skill-tag">Computer Vision</span>
+                <span class="skill-tag">MLOps</span>
+                <span class="skill-tag">Reinforcement Learning</span>
+              </div>
+            </div>
+            <div class="skill-category">
+              <h3>Cloud & DevOps</h3>
+              <div class="skill-tags">
+                <span class="skill-tag">AWS</span>
+                <span class="skill-tag">Docker</span>
+                <span class="skill-tag">Kubernetes</span>
+                <span class="skill-tag">CI/CD</span>
+              </div>
+            </div>
+            <div class="skill-category">
+              <h3>Tools</h3>
+              <div class="skill-tags">
+                <span class="skill-tag">Git</span>
+                <span class="skill-tag">Jupyter</span>
+                <span class="skill-tag">MLflow</span>
+                <span class="skill-tag">Airflow</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="details-sidebar">
+        
+        <!-- AI Analysis -->
+        <div class="ai-analysis-card">
+          <h2>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            AI Analysis
+          </h2>
+          
+          <div class="ai-scores">
+            <div class="ai-score">
+              <div class="ai-score-ring">
+                <svg width="80" height="80">
+                  <circle class="ai-score-ring-bg" cx="40" cy="40" r="34"/>
+                  <circle class="ai-score-ring-fill" cx="40" cy="40" r="34" stroke-dasharray="213.63" stroke-dashoffset="6.41"/>
+                </svg>
+                <div class="ai-score-text">97%</div>
+              </div>
+              <div class="ai-score-label">AI Match</div>
+            </div>
+            <div class="ai-score">
+              <div class="ai-score-ring">
+                <svg width="80" height="80">
+                  <circle class="ai-score-ring-bg" cx="40" cy="40" r="34"/>
+                  <circle class="ai-score-ring-fill" cx="40" cy="40" r="34" stroke-dasharray="213.63" stroke-dashoffset="17.09"/>
+                </svg>
+                <div class="ai-score-text">92%</div>
+              </div>
+              <div class="ai-score-label">ATS Score</div>
+            </div>
+          </div>
+
+          <!-- Skill Gap Analysis -->
+          <h3 style="font-size:1rem; margin-bottom:16px;">Skill Gap Analysis</h3>
+          <div style="margin-bottom:20px;">
+            <div class="skill-gap-item">
+              <span class="skill-gap-name">Python</span>
+              <div class="skill-gap-bar"><div class="skill-gap-fill high" style="width:95%;"></div></div>
+              <span class="skill-gap-value">95%</span>
+            </div>
+            <div class="skill-gap-item">
+              <span class="skill-gap-name">TensorFlow</span>
+              <div class="skill-gap-bar"><div class="skill-gap-fill high" style="width:90%;"></div></div>
+              <span class="skill-gap-value">90%</span>
+            </div>
+            <div class="skill-gap-item">
+              <span class="skill-gap-name">PyTorch</span>
+              <div class="skill-gap-bar"><div class="skill-gap-fill high" style="width:88%;"></div></div>
+              <span class="skill-gap-value">88%</span>
+            </div>
+            <div class="skill-gap-item">
+              <span class="skill-gap-name">MLOps</span>
+              <div class="skill-gap-bar"><div class="skill-gap-fill medium" style="width:75%;"></div></div>
+              <span class="skill-gap-value">75%</span>
+            </div>
+            <div class="skill-gap-item">
+              <span class="skill-gap-name">Kubernetes</span>
+              <div class="skill-gap-bar"><div class="skill-gap-fill low" style="width:45%;"></div></div>
+              <span class="skill-gap-value">45%</span>
+            </div>
+          </div>
+
+          <!-- Strengths -->
+          <h3 style="font-size:1rem; margin-bottom:12px;">Strengths</h3>
+          <div class="analysis-list" style="margin-bottom:20px;">
+            <div class="analysis-item">
+              <div class="analysis-item-icon green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
+              </div>
+              <div class="analysis-item-content">
+                <h4>Strong Technical Foundation</h4>
+                <p>Excellent command of ML frameworks and programming</p>
+              </div>
+            </div>
+            <div class="analysis-item">
+              <div class="analysis-item-icon green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
+              </div>
+              <div class="analysis-item-content">
+                <h4>Leadership Experience</h4>
+                <p>Managed team of 4 engineers successfully</p>
+              </div>
+            </div>
+            <div class="analysis-item">
+              <div class="analysis-item-icon green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
+              </div>
+              <div class="analysis-item-content">
+                <h4>Proven Results</h4>
+                <p>35% improvement in model accuracy</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Weaknesses -->
+          <h3 style="font-size:1rem; margin-bottom:12px;">Areas for Improvement</h3>
+          <div class="analysis-list" style="margin-bottom:20px;">
+            <div class="analysis-item">
+              <div class="analysis-item-icon red">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+              </div>
+              <div class="analysis-item-content">
+                <h4>Limited Kubernetes</h4>
+                <p>Could improve container orchestration skills</p>
+              </div>
+            </div>
+            <div class="analysis-item">
+              <div class="analysis-item-icon red">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+              </div>
+              <div class="analysis-item-content">
+                <h4>No Publications</h4>
+                <p>Could contribute to research papers</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recommendation -->
+          <div class="recommendation-card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Highly Recommended
+            </h3>
+            <p>Strong candidate for Senior ML Engineer role. Excellent technical skills with proven leadership experience. Recommended for immediate interview.</p>
+          </div>
+
+          <!-- Interview Recommendation -->
+          <div class="recommendation-card" style="background:rgba(99,102,241,.1); border-color:rgba(139,92,246,.3);">
+            <h3 style="color:var(--purple);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Schedule Interview
+            </h3>
+            <p>Technical interview recommended. Focus on ML system design and MLOps experience. Prepare questions about team leadership and project management.</p>
+          </div>
+
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button class="btn btn-grad" id="shortlistBtn">Shortlist Candidate</button>
+          <button class="btn btn-grad" id="scheduleBtn">Schedule Interview</button>
+          <button class="btn btn-reject" id="rejectBtn">Reject Candidate</button>
+        </div>
+
+        <!-- Download Resume -->
+        <div class="download-resume" id="downloadResume">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Resume
+        </div>
+
+      </aside>
+
+    </div>
+  </div>
+</main>
+
+<script src="js/common.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth-guard.js"></script>
+<script src="js/candidate-details.js"></script>
+</body>
+</html>

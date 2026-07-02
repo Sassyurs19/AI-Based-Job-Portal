@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Recruiter Registration — AI Hire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/common.css" />
+<link rel="stylesheet" href="../css/form.css" />
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<div class="orb a"></div><div class="orb b"></div><div class="orb c"></div>
+
+
+
+<!-- ===== NAVBAR ===== -->
+<header>
+  <div class="container">
+    <nav class="nav">
+      <a class="logo" href="../index.html"><span class="dot">AI</span> AI Hire</a>
+      <ul class="nav-links">
+        <li><a href="../index.html#home">Home</a></li>
+        <li><a href="../index.html#jobs">Jobs</a></li>
+        <li><a href="../index.html#companies">Companies</a></li>
+        <li><a href="../index.html#how">About</a></li>
+        <li><a href="../index.html#footer">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="../login.html">Login</a>
+        <a class="btn btn-grad" href="../register.html">Register</a>
+      </div>
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="panel">
+        <span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== MOBILE OFF-CANVAS ===== -->
+<div class="backdrop" id="backdrop" aria-hidden="true"></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <a class="logo panel-brand" href="../index.html"><span class="dot">AI</span> AI Hire</a>
+  <nav class="panel-links">
+    <a href="../index.html#home">Home</a>
+    <a href="../index.html#jobs">Jobs</a>
+    <a href="../index.html#companies">Companies</a>
+    <a href="../index.html#how">About</a>
+    <a href="../index.html#footer">Contact</a>
+  </nav>
+  <div class="panel-actions">
+    <a class="btn btn-ghost" href="../login.html">Login</a>
+    <a class="btn btn-grad" href="../register.html">Register</a>
+  </div>
+</aside>
+
+<!-- ===== FORM SECTION ===== -->
+<section class="form-wrap">
+  <div class="container">
+    <div class="page-head reveal">
+      <span class="eyebrow">Recruiter Registration</span>
+      <h1>Recruiter <span class="grad-text">Registration</span></h1>
+      <p>Create your company profile and start discovering AI-ranked candidates.</p>
+    </div>
+
+
+
+    <form class="form-card gborder reveal" id="regForm" novalidate>
+      <div class="form-grid" id="formGrid">
+
+        <div class="field full" data-field="companyName">
+          <label for="companyName">Company Name <span class="req">*</span></label>
+          <input class="input" type="text" id="companyName" name="companyName" placeholder="e.g. TechCorp Inc." autocomplete="organization" />
+          <span class="err-msg" id="err-companyName">Please enter your company name.</span>
+        </div>
+
+        <div class="field" data-field="fullName">
+          <label for="fullName">Your Full Name <span class="req">*</span></label>
+          <input class="input" type="text" id="fullName" name="fullName" placeholder="John Smith" autocomplete="name" />
+          <span class="err-msg" id="err-fullName">Please enter your full name.</span>
+        </div>
+
+        <div class="field" data-field="jobTitle">
+          <label for="jobTitle">Job Title <span class="req">*</span></label>
+          <input class="input" type="text" id="jobTitle" name="jobTitle" placeholder="e.g. HR Manager" autocomplete="organization-title" />
+          <span class="err-msg" id="err-jobTitle">Please enter your job title.</span>
+        </div>
+
+        <div class="field" data-field="email">
+          <label for="email">Work Email <span class="req">*</span></label>
+          <input class="input" type="email" id="email" name="email" placeholder="you@company.com" autocomplete="email" />
+          <span class="err-msg" id="err-email">Enter a valid email address.</span>
+        </div>
+
+        <div class="field" data-field="phone">
+          <label for="phone">Phone Number <span class="req">*</span></label>
+          <input class="input" type="tel" id="phone" name="phone" placeholder="+1 555 123 4567" autocomplete="tel" />
+          <span class="err-msg" id="err-phone">Enter a valid phone number (10+ digits).</span>
+        </div>
+
+        <div class="field" data-field="password">
+          <label for="password">Password <span class="req">*</span></label>
+          <input class="input" type="password" id="password" name="password" placeholder="Min 8 characters" autocomplete="new-password" />
+          <span class="err-msg" id="err-password">Password must be at least 8 characters.</span>
+        </div>
+
+        <div class="field" data-field="confirm">
+          <label for="confirm">Confirm Password <span class="req">*</span></label>
+          <input class="input" type="password" id="confirm" name="confirm" placeholder="Re-enter password" autocomplete="new-password" />
+          <span class="err-msg" id="err-confirm">Passwords do not match.</span>
+        </div>
+
+        <div class="field full" data-field="industry">
+          <label for="industry">Industry <span class="req">*</span></label>
+          <select class="input" id="industry" name="industry">
+            <option value="" disabled selected>Select industry</option>
+            <option value="technology">Technology</option>
+            <option value="finance">Finance</option>
+            <option value="healthcare">Healthcare</option>
+            <option value="education">Education</option>
+            <option value="retail">Retail</option>
+            <option value="manufacturing">Manufacturing</option>
+            <option value="consulting">Consulting</option>
+            <option value="other">Other</option>
+          </select>
+          <span class="err-msg" id="err-industry">Please select an option.</span>
+        </div>
+
+        <div class="field" data-field="companySize">
+          <label for="companySize">Company Size <span class="req">*</span></label>
+          <select class="input" id="companySize" name="companySize">
+            <option value="" disabled selected>Select company size</option>
+            <option value="1-10">1-10 employees</option>
+            <option value="11-50">11-50 employees</option>
+            <option value="51-200">51-200 employees</option>
+            <option value="201-500">201-500 employees</option>
+            <option value="500+">500+ employees</option>
+          </select>
+          <span class="err-msg" id="err-companySize">Please select an option.</span>
+        </div>
+
+        <div class="field" data-field="website">
+          <label for="website">Company Website <span class="req">*</span></label>
+          <input class="input" type="url" id="website" name="website" placeholder="https://company.com" />
+          <span class="err-msg" id="err-website">Enter a valid URL.</span>
+        </div>
+
+        <div class="field full" data-field="address">
+          <label for="address">Company Address <span class="req">*</span></label>
+          <input class="input" type="text" id="address" name="address" placeholder="Street address, City, State, Country" />
+          <span class="err-msg" id="err-address">Please enter your company address.</span>
+        </div>
+
+        <div class="field full" data-field="description">
+          <label for="description">Company Description <span class="req">*</span></label>
+          <textarea class="input" id="description" name="description" placeholder="Tell us about your company culture, mission, and what makes you a great place to work..."></textarea>
+          <span class="err-msg" id="err-description">Please provide a company description.</span>
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-grad" type="submit">Create Account</button>
+        <a class="btn btn-ghost" href="../register.html">Back</a>
+      </div>
+
+      <p class="form-foot">Already have an account? <a href="../login.html">Login</a></p>
+
+      <div class="form-success" id="formSuccess" role="status" aria-live="polite">
+        <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
+        <h3>Account Created!</h3>
+        <p>Welcome to AI Hire. Your recruiter profile is ready — start posting jobs and discovering top AI-ranked candidates.</p>
+        <a class="btn btn-grad" href="../login.html">Continue to Login</a>
+      </div>
+    </form>
+  </div>
+</section>
+
+
+
+<!-- ===== FOOTER ===== -->
+<footer id="footer">
+  <div class="container foot-row">
+    <p>© 2024 AI Hire. All rights reserved.</p>
+    <nav class="foot-links">
+      <a href="../index.html#home">Home</a>
+      <a href="../login.html">Login</a>
+      <a href="../register.html">Register</a>
+      <a href="../index.html#footer">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../js/form.js"></script>
+<script src="../js/recruiter-validation.js"></script>
+</body>
+</html>

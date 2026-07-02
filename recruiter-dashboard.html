@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Recruiter Dashboard — AI Hire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/common.css" />
+<link rel="stylesheet" href="css/recruiter-dashboard.css" />
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<div class="orb a"></div><div class="orb b"></div><div class="orb c"></div>
+
+<!-- ===== NAVBAR ===== -->
+<header>
+  <div class="container">
+    <nav class="nav">
+      <a class="logo" href="index.html"><span class="dot">AI</span> AI Hire</a>
+      <ul class="nav-links">
+        <li><a href="index.html#home">Home</a></li>
+        <li><a href="jobs.html">Jobs</a></li>
+        <li><a href="index.html#companies">Companies</a></li>
+        <li><a href="index.html#how">About</a></li>
+        <li><a href="index.html#footer">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="recruiter-dashboard.html">Dashboard</a>
+        <a class="btn btn-grad" href="index.html">Logout</a>
+      </div>
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="panel">
+        <span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== MOBILE OFF-CANVAS ===== -->
+<div class="backdrop" id="backdrop" aria-hidden="true"></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <a class="logo panel-brand" href="index.html"><span class="dot">AI</span> AI Hire</a>
+  <nav class="panel-links">
+    <a href="recruiter-dashboard.html">Dashboard</a>
+    <a href="jobs.html">Jobs</a>
+    <a href="index.html#companies">Companies</a>
+    <a href="index.html#how">About</a>
+    <a href="index.html#footer">Contact</a>
+  </nav>
+  <div class="panel-actions">
+    <a class="btn btn-ghost" href="recruiter-dashboard.html">Dashboard</a>
+    <a class="btn btn-grad" href="index.html">Logout</a>
+  </div>
+</aside>
+
+<!-- ===== DASHBOARD WRAP ===== -->
+<section class="dashboard-wrap">
+  <div class="container">
+    <div class="dashboard-grid">
+      
+      <!-- ===== SIDEBAR ===== -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="avatar">TC</div>
+          <div>
+            <h3>Tech Corp</h3>
+            <span>Recruiter</span>
+          </div>
+        </div>
+        <nav class="sidebar-nav">
+          <a href="#" class="active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            Dashboard
+          </a>
+          <a href="post-job.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+            Manage Jobs
+          </a>
+          <a href="applicants.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Applicants
+          </a>
+          <a href="#">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Interviews
+          </a>
+          <a href="#">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg>
+            Analytics
+          </a>
+          <a href="#">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V7l8-4 8 4v14M8 21v-4h8v4"/></svg>
+            Company Profile
+          </a>
+          <a href="#">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17-2 2"/></svg>
+            Settings
+          </a>
+          <a href="index.html" class="logout">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Logout
+          </a>
+        </nav>
+      </aside>
+
+      <!-- ===== MAIN CONTENT ===== -->
+      <main class="dashboard-main">
+        
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+          <div>
+            <h2>Welcome back, <span class="grad-text">Tech Corp!</span></h2>
+            <p>Your AI-powered hiring dashboard is ready. 8 new applicants today.</p>
+          </div>
+          <div class="avatar" style="width:56px;height:56px;font-size:1.3rem;">TC</div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="icon blue">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+            </div>
+            <div class="label">Active Jobs</div>
+            <div class="value">12</div>
+          </div>
+          <div class="stat-card">
+            <div class="icon purple">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="label">Total Applicants</div>
+            <div class="value grad">248</div>
+          </div>
+          <div class="stat-card">
+            <div class="icon cyan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div class="label">Interviews</div>
+            <div class="value">18</div>
+          </div>
+          <div class="stat-card">
+            <div class="icon green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="label">Hired</div>
+            <div class="value">7</div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="full-width">
+          <div class="quick-actions">
+            <div class="quick-action-btn">
+              <div class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6"/><path d="M9 15h6"/></svg>
+              </div>
+              <span>Post New Job</span>
+            </div>
+            <div class="quick-action-btn">
+              <div class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <span>View Applicants</span>
+            </div>
+            <div class="quick-action-btn">
+              <div class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+              </div>
+              <span>Manage Jobs</span>
+            </div>
+            <div class="quick-action-btn">
+              <div class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V7l8-4 8 4v14M8 21v-4h8v4"/></svg>
+              </div>
+              <span>Company Profile</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-content">
+          
+          <!-- Company Profile -->
+          <div class="section-card full-width">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V7l8-4 8 4v14M8 21v-4h8v4"/></svg>
+              Company Profile
+            </h3>
+            <div class="company-profile-card">
+              <div class="company-profile-logo">TC</div>
+              <div class="company-profile-info">
+                <h3>Tech Corporation</h3>
+                <p>Leading AI and ML solutions provider</p>
+                <div class="company-profile-stats">
+                  <span>🏢 500+ employees</span>
+                  <span>🌍 San Francisco, CA</span>
+                  <span>🚀 Founded 2015</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Job Posts -->
+          <div class="section-card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+              Recent Job Posts
+            </h3>
+            <div class="job-posts-list">
+              <div class="job-post-item">
+                <div class="job-post-logo">TC</div>
+                <div class="job-post-info">
+                  <h4>Senior ML Engineer</h4>
+                  <p>Posted 2 days ago</p>
+                </div>
+                <div class="job-post-meta">
+                  <span>45 applicants</span>
+                </div>
+                <span class="job-post-status active">Active</span>
+              </div>
+              <div class="job-post-item">
+                <div class="job-post-logo">TC</div>
+                <div class="job-post-info">
+                  <h4>Data Scientist</h4>
+                  <p>Posted 5 days ago</p>
+                </div>
+                <div class="job-post-meta">
+                  <span>32 applicants</span>
+                </div>
+                <span class="job-post-status active">Active</span>
+              </div>
+              <div class="job-post-item">
+                <div class="job-post-logo">TC</div>
+                <div class="job-post-info">
+                  <h4>AI Product Manager</h4>
+                  <p>Posted 1 week ago</p>
+                </div>
+                <div class="job-post-meta">
+                  <span>28 applicants</span>
+                </div>
+                <span class="job-post-status active">Active</span>
+              </div>
+              <div class="job-post-item">
+                <div class="job-post-logo">TC</div>
+                <div class="job-post-info">
+                  <h4>ML Research Scientist</h4>
+                  <p>Posted 2 weeks ago</p>
+                </div>
+                <div class="job-post-meta">
+                  <span>18 applicants</span>
+                </div>
+                <span class="job-post-status closed">Closed</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Applicants -->
+          <div class="section-card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              Recent Applicants
+            </h3>
+            <div class="applicants-list">
+              <div class="applicant-item">
+                <div class="applicant-avatar">JD</div>
+                <div class="applicant-info">
+                  <h4>John Doe</h4>
+                  <p>Senior ML Engineer</p>
+                </div>
+                <div class="applicant-match">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
+                  97%
+                </div>
+              </div>
+              <div class="applicant-item">
+                <div class="applicant-avatar">SM</div>
+                <div class="applicant-info">
+                  <h4>Sarah Miller</h4>
+                  <p>Data Scientist</p>
+                </div>
+                <div class="applicant-match">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
+                  94%
+                </div>
+              </div>
+              <div class="applicant-item">
+                <div class="applicant-avatar">MJ</div>
+                <div class="applicant-info">
+                  <h4>Michael Johnson</h4>
+                  <p>AI Product Manager</p>
+                </div>
+                <div class="applicant-match">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
+                  91%
+                </div>
+              </div>
+              <div class="applicant-item">
+                <div class="applicant-avatar">EW</div>
+                <div class="applicant-info">
+                  <h4>Emily Wilson</h4>
+                  <p>ML Research Scientist</p>
+                </div>
+                <div class="applicant-match">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
+                  89%
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Top Candidates -->
+          <div class="section-card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>
+              AI Top Candidates
+            </h3>
+            <div class="top-candidates-grid">
+              <div class="candidate-card">
+                <div class="candidate-avatar">JD</div>
+                <div class="candidate-info">
+                  <h4>John Doe</h4>
+                  <p>Senior ML Engineer</p>
+                </div>
+                <div class="candidate-match">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
+                  97%
+                </div>
+                <div class="candidate-actions">
+                  <button class="btn btn-grad">Review</button>
+                </div>
+              </div>
+              <div class="candidate-card">
+                <div class="candidate-avatar">SM</div>
+                <div class="candidate-info">
+                  <h4>Sarah Miller</h4>
+                  <p>Data Scientist</p>
+                </div>
+                <div class="candidate-match">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
+                  94%
+                </div>
+                <div class="candidate-actions">
+                  <button class="btn btn-grad">Review</button>
+                </div>
+              </div>
+              <div class="candidate-card">
+                <div class="candidate-avatar">MJ</div>
+                <div class="candidate-info">
+                  <h4>Michael Johnson</h4>
+                  <p>AI Product Manager</p>
+                </div>
+                <div class="candidate-match">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
+                  91%
+                </div>
+                <div class="candidate-actions">
+                  <button class="btn btn-grad">Review</button>
+                </div>
+              </div>
+              <div class="candidate-card">
+                <div class="candidate-avatar">EW</div>
+                <div class="candidate-info">
+                  <h4>Emily Wilson</h4>
+                  <p>ML Research Scientist</p>
+                </div>
+                <div class="candidate-match">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
+                  89%
+                </div>
+                <div class="candidate-actions">
+                  <button class="btn btn-grad">Review</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hiring Analytics -->
+          <div class="section-card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg>
+              Hiring Analytics
+            </h3>
+            <div class="analytics-chart">
+              <div class="analytics-bars">
+                <div class="analytics-bar">
+                  <div class="bar" style="height:80%;"></div>
+                  <span class="label">Applied</span>
+                </div>
+                <div class="analytics-bar">
+                  <div class="bar" style="height:60%;"></div>
+                  <span class="label">Screened</span>
+                </div>
+                <div class="analytics-bar">
+                  <div class="bar" style="height:45%;"></div>
+                  <span class="label">Interview</span>
+                </div>
+                <div class="analytics-bar">
+                  <div class="bar" style="height:25%;"></div>
+                  <span class="label">Offer</span>
+                </div>
+                <div class="analytics-bar">
+                  <div class="bar" style="height:15%;"></div>
+                  <span class="label">Hired</span>
+                </div>
+              </div>
+              <div class="analytics-legend">
+                <div class="analytics-legend-item">
+                  <span class="dot"></span>
+                  <span>Funnel Progress</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upcoming Interviews -->
+          <div class="section-card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Upcoming Interviews
+            </h3>
+            <div class="interviews-list">
+              <div class="interview-item">
+                <div class="interview-avatar">JD</div>
+                <div class="interview-info">
+                  <h4>John Doe</h4>
+                  <p>Senior ML Engineer</p>
+                </div>
+                <div class="interview-time">Today, 2:00 PM</div>
+              </div>
+              <div class="interview-item">
+                <div class="interview-avatar">SM</div>
+                <div class="interview-info">
+                  <h4>Sarah Miller</h4>
+                  <p>Data Scientist</p>
+                </div>
+                <div class="interview-time">Tomorrow, 10:00 AM</div>
+              </div>
+              <div class="interview-item">
+                <div class="interview-avatar">MJ</div>
+                <div class="interview-info">
+                  <h4>Michael Johnson</h4>
+                  <p>AI Product Manager</p>
+                </div>
+                <div class="interview-time">Jun 30, 3:00 PM</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notifications -->
+          <div class="section-card full-width">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              Notifications
+            </h3>
+            <div class="notifications-list">
+              <div class="notification-item">
+                <div class="icon green">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+                <div class="notification-item-content">
+                  <h4>New applicant matched</h4>
+                  <p>John Doe applied for Senior ML Engineer - 97% match</p>
+                </div>
+                <span class="notification-item-time">2h ago</span>
+              </div>
+              <div class="notification-item">
+                <div class="icon blue">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </div>
+                <div class="notification-item-content">
+                  <h4>Interview scheduled</h4>
+                  <p>Sarah Miller interview confirmed for tomorrow at 10:00 AM</p>
+                </div>
+                <span class="notification-item-time">5h ago</span>
+              </div>
+              <div class="notification-item">
+                <div class="icon purple">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+                </div>
+                <div class="notification-item-content">
+                  <h4>Job post approved</h4>
+                  <p>Your AI Product Manager job is now live on the platform</p>
+                </div>
+                <span class="notification-item-time">1d ago</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+</section>
+
+<script src="js/common.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth-guard.js"></script>
+<script src="js/recruiter-dashboard.js"></script>
+<script src="js/recruiter-dashboard-handler.js"></script>
+</body>
+</html>

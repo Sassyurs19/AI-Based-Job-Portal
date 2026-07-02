@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Authentication Callback — AI Hire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/common.css" />
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    }
+    .callback-container {
+      text-align: center;
+      padding: 2rem;
+      color: white;
+    }
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #8b5cf6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1.5rem;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .callback-container h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .callback-container p {
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .error {
+      color: #ef4444;
+      margin-top: 1rem;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="callback-container">
+    <div class="spinner"></div>
+    <h2>Authenticating...</h2>
+    <p>Please wait while we complete your sign in.</p>
+    <div id="error" class="error"></div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token');
+      const refreshToken = urlParams.get('refreshToken');
+      const role = urlParams.get('role');
+      const completeProfile = urlParams.get('completeProfile');
+      const error = urlParams.get('error');
+
+      if (error) {
+        document.querySelector('.spinner').style.display = 'none';
+        document.querySelector('h2').textContent = 'Authentication Failed';
+        document.querySelector('p').textContent = error === 'google_auth_failed' 
+          ? 'Google authentication failed. Please try again.' 
+          : error === 'email_exists_use_google_login'
+          ? 'This email is already registered. Please use Google login instead.'
+          : 'An error occurred during authentication.';
+        document.getElementById('error').innerHTML = '<a href="login.html" class="btn">Back to Login</a>';
+        return;
+      }
+
+      if (token && refreshToken) {
+        // Store tokens
+        api.setTokens(token, refreshToken);
+        
+        // Fetch user data
+        api.getMe().then(result => {
+          if (result.success) {
+            api.setCurrentUser(result.user);
+            
+            // Check if profile completion is needed
+            if (completeProfile === 'true') {
+              const userRole = result.user.role || role;
+              if (userRole === 'candidate') {
+                window.location.href = 'complete-profile-candidate.html';
+              } else if (userRole === 'recruiter') {
+                window.location.href = 'complete-profile-recruiter.html';
+              } else {
+                window.location.href = 'index.html';
+              }
+              return;
+            }
+            
+            // Redirect based on role
+            const userRole = result.user.role || role;
+            if (userRole === 'candidate') {
+              window.location.href = 'candidate-dashboard.html';
+            } else if (userRole === 'recruiter') {
+              window.location.href = 'recruiter-dashboard.html';
+            } else if (userRole === 'admin') {
+              window.location.href = 'admin/admin-dashboard.html';
+            } else {
+              window.location.href = 'index.html';
+            }
+          } else {
+            throw new Error('Failed to fetch user data');
+          }
+        }).catch(err => {
+          console.error('Auth callback error:', err);
+          document.querySelector('.spinner').style.display = 'none';
+          document.querySelector('h2').textContent = 'Authentication Failed';
+          document.querySelector('p').textContent = 'Could not complete authentication.';
+          document.getElementById('error').innerHTML = '<a href="login.html" class="btn">Back to Login</a>';
+        });
+      } else {
+        document.querySelector('.spinner').style.display = 'none';
+        document.querySelector('h2').textContent = 'Invalid Callback';
+        document.querySelector('p').textContent = 'Missing authentication tokens.';
+        document.getElementById('error').innerHTML = '<a href="login.html" class="btn">Back to Login</a>';
+      }
+    });
+  </script>
+</body>
+</html>

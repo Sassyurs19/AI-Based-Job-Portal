@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin Dashboard — AI Hire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/common.css" />
+<link rel="stylesheet" href="../css/recruiter-dashboard.css" />
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<div class="orb a"></div><div class="orb b"></div><div class="orb c"></div>
+
+<!-- ===== NAVBAR ===== -->
+<header>
+  <div class="container">
+    <nav class="nav">
+      <a class="logo" href="../index.html"><span class="dot">AI</span> AI Hire</a>
+      <ul class="nav-links">
+        <li><a href="../index.html#home">Home</a></li>
+        <li><a href="../index.html#jobs">Jobs</a></li>
+        <li><a href="../index.html#companies">Companies</a></li>
+        <li><a href="../index.html#how">About</a></li>
+        <li><a href="../index.html#footer">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="admin-dashboard.html">Dashboard</a>
+        <a class="btn btn-grad" href="../login.html">Logout</a>
+      </div>
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="panel">
+        <span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== MOBILE OFF-CANVAS ===== -->
+<div class="backdrop" id="backdrop" aria-hidden="true"></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <a class="logo panel-brand" href="../index.html"><span class="dot">AI</span> AI Hire</a>
+  <nav class="panel-links">
+    <a href="admin-dashboard.html">Dashboard</a>
+    <a href="admin-users.html">Users</a>
+    <a href="admin-recruiters.html">Recruiters</a>
+    <a href="admin-jobs.html">Jobs</a>
+  </nav>
+  <div class="panel-actions">
+    <a class="btn btn-ghost" href="admin-dashboard.html">Dashboard</a>
+    <a class="btn btn-grad" href="../login.html">Logout</a>
+  </div>
+</aside>
+
+<!-- ===== DASHBOARD WRAP ===== -->
+<section class="dashboard-wrap">
+  <div class="container">
+    <div class="dashboard-grid">
+      
+      <!-- ===== SIDEBAR ===== -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="avatar">AD</div>
+          <div>
+            <h3>Admin</h3>
+            <span>Administrator</span>
+          </div>
+        </div>
+        <nav class="sidebar-nav">
+          <a href="admin-dashboard.html" class="active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            Dashboard
+          </a>
+          <a href="admin-users.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Users
+          </a>
+          <a href="admin-recruiters.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Recruiters
+          </a>
+          <a href="admin-jobs.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+            Jobs
+          </a>
+          <a href="../login.html" class="logout">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Logout
+          </a>
+        </nav>
+      </aside>
+
+      <!-- ===== MAIN CONTENT ===== -->
+      <main class="dashboard-content">
+        <div class="dashboard-header">
+          <h1>Admin Dashboard</h1>
+          <p>Platform overview and analytics</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card gborder">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Total Users</span>
+              <span class="stat-value" id="totalUsers">0</span>
+            </div>
+          </div>
+          <div class="stat-card gborder">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Recruiters</span>
+              <span class="stat-value" id="totalRecruiters">0</span>
+            </div>
+          </div>
+          <div class="stat-card gborder">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Total Jobs</span>
+              <span class="stat-value" id="totalJobs">0</span>
+            </div>
+          </div>
+          <div class="stat-card gborder">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Applications</span>
+              <span class="stat-value" id="totalApplications">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="dashboard-sections">
+          <div class="section-card gborder">
+            <h3>Recent Users</h3>
+            <div class="recent-list" id="recentUsers"></div>
+          </div>
+          <div class="section-card gborder">
+            <h3>Recent Jobs</h3>
+            <div class="recent-list" id="recentJobs"></div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+</section>
+
+<script src="../js/common.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/admin-dashboard-handler.js"></script>
+</body>
+</html>
