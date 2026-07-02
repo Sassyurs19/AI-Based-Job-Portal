@@ -58,13 +58,17 @@
 
 <!-- ===== AUTH ===== -->
 <main class="auth-wrap">
-  <div class="container auth-grid" style="display: flex; justify-content: center; align-items: center;">
+  <div class="container auth-grid" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <h1 style="font-size: 2rem; font-weight: 700; color: white; margin-bottom: 0.5rem;">Welcome to AI Hire</h1>
+      <p style="color: rgba(255,255,255,0.7); font-size: 1rem;">Your AI-powered job search platform</p>
+    </div>
 
     <!-- RIGHT: login card -->
     <div class="login-card gborder enter d2" style="width: 100%; max-width: 480px;">
-      <a class="logo" href="index.html"><span class="dot">AI</span> AI Hire</a>
-      <h1>Welcome back</h1>
-      <p class="muted">Sign in to continue to your AI Hire dashboard.</p>
+      <h1 style="font-size: 1.5rem;">Sign In</h1>
+      <p class="muted">Enter your credentials to access your account</p>
       <form onsubmit="return false" novalidate>
         <div class="field">
           <input type="email" id="email" placeholder="Email address" autocomplete="email" required />
