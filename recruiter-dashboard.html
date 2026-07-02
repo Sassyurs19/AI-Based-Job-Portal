@@ -19,17 +19,14 @@
 <header>
   <div class="container">
     <nav class="nav">
-      <a class="logo" href="index.html"><span class="dot">AI</span> AI Hire</a>
+      <a class="logo" href="recruiter-dashboard.html"><span class="dot">AI</span> AI Hire</a>
       <ul class="nav-links">
-        <li><a href="index.html#home">Home</a></li>
-        <li><a href="jobs.html">Jobs</a></li>
-        <li><a href="index.html#companies">Companies</a></li>
-        <li><a href="index.html#how">About</a></li>
-        <li><a href="index.html#footer">Contact</a></li>
+        <li><a href="recruiter-dashboard.html" class="active">Dashboard</a></li>
+        <li><a href="post-job.html">Post Job</a></li>
+        <li><a href="applicants.html">Applicants</a></li>
       </ul>
       <div class="nav-actions">
-        <a class="btn btn-ghost" href="recruiter-dashboard.html">Dashboard</a>
-        <a class="btn btn-grad" href="index.html">Logout</a>
+        <button class="btn btn-grad" onclick="handleLogout()">Logout</button>
       </div>
       <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="panel">
         <span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span>
@@ -41,17 +38,14 @@
 <!-- ===== MOBILE OFF-CANVAS ===== -->
 <div class="backdrop" id="backdrop" aria-hidden="true"></div>
 <aside class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Navigation menu">
-  <a class="logo panel-brand" href="index.html"><span class="dot">AI</span> AI Hire</a>
+  <a class="logo panel-brand" href="recruiter-dashboard.html"><span class="dot">AI</span> AI Hire</a>
   <nav class="panel-links">
-    <a href="recruiter-dashboard.html">Dashboard</a>
-    <a href="jobs.html">Jobs</a>
-    <a href="index.html#companies">Companies</a>
-    <a href="index.html#how">About</a>
-    <a href="index.html#footer">Contact</a>
+    <a href="recruiter-dashboard.html" class="active">Dashboard</a>
+    <a href="post-job.html">Post Job</a>
+    <a href="applicants.html">Applicants</a>
   </nav>
   <div class="panel-actions">
-    <a class="btn btn-ghost" href="recruiter-dashboard.html">Dashboard</a>
-    <a class="btn btn-grad" href="index.html">Logout</a>
+    <button class="btn btn-grad" onclick="handleLogout()">Logout</button>
   </div>
 </aside>
 
