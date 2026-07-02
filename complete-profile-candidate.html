@@ -79,25 +79,25 @@
           <span class="err-msg" id="err-location">Please enter your location.</span>
         </div>
 
-        <div class="field full" data-field="qualification">
+        <div class="field" data-field="qualification">
           <label for="qualification">Highest Qualification <span class="req">*</span></label>
           <input class="input" type="text" id="qualification" name="qualification" placeholder="e.g. B.Tech in Computer Science" />
           <span class="err-msg" id="err-qualification">Please enter your qualification.</span>
         </div>
 
-        <div class="field full" data-field="college">
+        <div class="field" data-field="college">
           <label for="college">College/University <span class="req">*</span></label>
           <input class="input" type="text" id="college" name="college" placeholder="e.g. MIT" />
           <span class="err-msg" id="err-college">Please enter your college name.</span>
         </div>
 
-        <div class="field full" data-field="role">
+        <div class="field" data-field="role">
           <label for="role">Preferred Role <span class="req">*</span></label>
           <input class="input" type="text" id="role" name="role" placeholder="e.g. Software Engineer" />
           <span class="err-msg" id="err-role">Please enter your preferred role.</span>
         </div>
 
-        <div class="field full" data-field="experience">
+        <div class="field" data-field="experience">
           <label for="experience">Experience <span class="req">*</span></label>
           <select class="input" id="experience" name="experience">
             <option value="">Select experience level</option>
@@ -117,8 +117,15 @@
         </div>
 
         <div class="field full" data-field="resume">
-          <label for="resume">Resume <span class="opt">(Optional)</span></label>
-          <input class="input" type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" />
+          <label>Resume <span class="opt">(Optional)</span></label>
+          <label class="file-input" for="resume">
+            <span class="file-btn">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Choose File
+            </span>
+            <span class="file-name" id="fileName">No file chosen</span>
+            <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" />
+          </label>
           <span class="err-msg" id="err-resume">Please upload a valid resume file.</span>
         </div>
 
@@ -148,6 +155,19 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   if (!protectCandidateRoute()) return;
+
+  // Update navbar based on auth status
+  updateNavbar();
+
+  // Handle file name display
+  const resumeInput = document.getElementById('resume');
+  const fileNameSpan = document.getElementById('fileName');
+  if (resumeInput && fileNameSpan) {
+    resumeInput.addEventListener('change', function() {
+      fileNameSpan.textContent = this.files.length > 0 ? this.files[0].name : 'No file chosen';
+    });
+  }
+
   const form = document.getElementById('profileForm');
   if (!form) return;
 
