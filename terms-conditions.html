@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Terms & Conditions — AI Hire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/common.css" />
+<link rel="stylesheet" href="css/form.css" />
+<link rel="stylesheet" href="css/auth.css" />
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<div class="orb a"></div><div class="orb b"></div><div class="orb c"></div>
+
+<!-- ===== NAVBAR ===== -->
+<header>
+  <div class="container">
+    <nav class="nav">
+      <a class="logo" href="index.html"><span class="dot">AI</span> AI Hire</a>
+      <ul class="nav-links">
+        <li><a href="index.html#home">Home</a></li>
+        <li><a href="index.html#jobs">Jobs</a></li>
+        <li><a href="index.html#companies">Companies</a></li>
+        <li><a href="index.html#how">About</a></li>
+        <li><a href="index.html#footer">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="login.html">Login</a>
+        <a class="btn btn-grad" href="register.html">Register</a>
+      </div>
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="panel">
+        <span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== MOBILE OFF-CANVAS ===== -->
+<div class="backdrop" id="backdrop" aria-hidden="true"></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <a class="logo panel-brand" href="index.html"><span class="dot">AI</span> AI Hire</a>
+  <nav class="panel-links">
+    <a href="index.html#home">Home</a>
+    <a href="index.html#jobs">Jobs</a>
+    <a href="index.html#companies">Companies</a>
+    <a href="index.html#how">About</a>
+    <a href="index.html#footer">Contact</a>
+  </nav>
+  <div class="panel-actions">
+    <a class="btn btn-ghost" href="login.html">Login</a>
+    <a class="btn btn-grad" href="register.html">Register</a>
+  </div>
+</aside>
+
+<!-- ===== FORM SECTION ===== -->
+<section class="form-wrap">
+  <div class="container">
+    <div class="auth-grid">
+      
+      <!-- LEFT SIDE: Info -->
+      <div class="auth-left enter d1">
+        <span class="eyebrow">Terms & Conditions</span>
+        <h2>Review Our <span class="grad-text">Terms</span></h2>
+        <p class="lead">Please read and accept our terms and conditions to continue with your account setup.</p>
+        
+        <div class="auth-visual" aria-hidden="true" style="margin-top: 1.5rem;">
+          <div class="fcard fc1"><span class="pip"></span><div><small>Legal</small><b>Terms</b></div></div>
+          <div class="fcard fc2"><div><small>Privacy</small><b class="grad-text">Policy</b></div></div>
+          <div class="fcard fc3"><div><small>User</small><b>Agreement</b></div></div>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE: Terms Content -->
+      <div class="form-card gborder enter d2" style="margin: 0; max-width: 100%; max-height: 500px; overflow-y: auto;">
+        
+        <div class="terms-content">
+          <h3>Terms and Conditions</h3>
+          
+          <h4>1. Acceptance of Terms</h4>
+          <p>By accessing and using AI Hire, you agree to be bound by these Terms and Conditions. If you do not agree to these terms, please do not use our service.</p>
+          
+          <h4>2. User Accounts</h4>
+          <p>You are responsible for maintaining the confidentiality of your account credentials. You agree to notify us immediately of any unauthorized use of your account.</p>
+          
+          <h4>3. User Conduct</h4>
+          <p>You agree not to use the platform for any unlawful purpose, harass other users, or post false or misleading information about yourself or others.</p>
+          
+          <h4>4. Job Postings</h4>
+          <p>Recruiters must ensure that job postings are accurate and comply with applicable laws. AI Hire reserves the right to remove any job posting that violates these terms.</p>
+          
+          <h4>5. Intellectual Property</h4>
+          <p>All content on AI Hire, including text, graphics, logos, and software, is owned by AI Hire and protected by intellectual property laws.</p>
+          
+          <h4>6. Privacy Policy</h4>
+          <p>Your use of AI Hire is also governed by our Privacy Policy, which describes how we collect, use, and protect your personal information.</p>
+          
+          <h4>7. Limitation of Liability</h4>
+          <p>AI Hire shall not be liable for any indirect, incidental, special, or consequential damages arising out of or in connection with your use of our service.</p>
+          
+          <h4>8. Termination</h4>
+          <p>We reserve the right to terminate or suspend your account at any time, with or without cause, with or without notice.</p>
+          
+          <h4>9. Changes to Terms</h4>
+          <p>We may update these terms from time to time. Continued use of the service after changes constitutes acceptance of the new terms.</p>
+          
+          <h4>10. Contact Information</h4>
+          <p>For any questions about these Terms and Conditions, please contact us at support@aihire.com</p>
+        </div>
+
+        <div class="terms-acceptance" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--glass-border);">
+          <label style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer;">
+            <input type="checkbox" id="acceptTerms" style="margin-top: 4px; width: 18px; height: 18px;" />
+            <span style="font-size: 0.9rem; color: var(--text);">
+              I have read and agree to the <strong>Terms and Conditions</strong> and <strong>Privacy Policy</strong>
+            </span>
+          </label>
+        </div>
+
+        <div class="form-actions" style="margin-top: 20px;">
+          <button class="btn btn-grad" type="button" id="acceptBtn" disabled>Accept & Continue</button>
+          <a class="btn btn-ghost" href="login.html">Cancel</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer id="footer">
+  <div class="container foot-row">
+    <p>© 2024 AI Hire. All rights reserved.</p>
+    <nav class="foot-links">
+      <a href="index.html#home">Home</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+      <a href="index.html#footer">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script src="js/terms-handler.js"></script>
+</body>
+</html>

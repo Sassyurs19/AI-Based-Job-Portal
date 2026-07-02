@@ -45,6 +45,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true
   }],
+  softSkills: [{
+    type: String,
+    trim: true
+  }],
   experience: [{
     title: String,
     company: String,
@@ -59,6 +63,18 @@ const userSchema = new mongoose.Schema({
     startDate: Date,
     endDate: Date,
     field: String
+  }],
+  projects: [{
+    title: String,
+    description: String
+  }],
+  certifications: [{
+    type: String,
+    trim: true
+  }],
+  languages: [{
+    name: String,
+    proficiency: String
   }],
   bio: {
     type: String,

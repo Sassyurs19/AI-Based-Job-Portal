@@ -268,13 +268,23 @@ class APIClient {
     return response.json();
   }
 
-  async resetPassword(token, password) {
-    const response = await this.put(`/auth/reset-password/${token}`, { password });
+  async verifyPasswordResetOTP(email, otp) {
+    const response = await this.post('/auth/verify-password-reset-otp', { email, otp });
     return response.json();
   }
 
-  async verifyOTP(userId, otp) {
-    const response = await this.post('/auth/verify-otp', { userId, otp });
+  async resetPassword(email, password) {
+    const response = await this.put('/auth/reset-password', { email, password });
+    return response.json();
+  }
+
+  async setPassword(userId, password) {
+    const response = await this.post('/auth/set-password', { userId, password });
+    return response.json();
+  }
+
+  async verifyOTP(userId, otp, purpose = 'email-verification') {
+    const response = await this.post('/auth/verify-otp', { userId, otp, purpose });
     const result = await response.json();
     if (result.success) {
       this.setTokens(result.token, result.refreshToken);

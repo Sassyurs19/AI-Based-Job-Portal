@@ -75,7 +75,8 @@
             </div>
             <div class="profile-info">
               <h1>John Doe</h1>
-              <div class="title">Senior Machine Learning Engineer</div>
+              <div class="email" style="opacity: 0.7; font-size: 0.9rem; margin-top: 2px;">john.doe@email.com</div>
+              <div class="title" style="margin-top: 6px;">Senior Machine Learning Engineer</div>
               <div class="location">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-5.3-7-11a7 7 0 0 1 14 0c0 5.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
                 San Francisco, CA
@@ -109,181 +110,89 @@
               <input type="date" value="1992-06-15" />
             </div>
           </div>
+          <div style="display: flex; justify-content: flex-end; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--glass-border);">
+            <button class="btn btn-grad" type="button" id="saveProfileInfoBtn" style="display: none; width: auto; padding: 8px 20px; font-size: 0.88rem; border-radius: 8px; margin: 0; cursor: pointer;">
+              Save Profile Info
+            </button>
+          </div>
         </div>
 
         <!-- Education -->
         <div class="section-card">
-          <h2>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            Education
+          <h2 style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="display: flex; align-items: center; gap: 8px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              Education
+            </span>
+            <button class="edit-section-btn" type="button" id="editEducationBtn" style="background: none; border: none; color: var(--purple); cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 600; font-family: inherit;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              Edit
+            </button>
           </h2>
-          <div class="experience-item">
-            <div class="experience-icon">MS</div>
-            <div class="experience-content">
-              <input type="text" value="Master of Science in Computer Science" />
-              <input type="text" value="Stanford University" />
-              <input type="text" value="2017 - 2019" />
-              <textarea placeholder="Specialization in Machine Learning">Specialization in Machine Learning</textarea>
-            </div>
-            <div class="remove-btn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            </div>
+          <div class="education-timeline" id="educationContainer">
+            <!-- Dynamic education cards will be injected here -->
           </div>
-          <div class="experience-item">
-            <div class="experience-icon">BS</div>
-            <div class="experience-content">
-              <input type="text" value="Bachelor of Science in Computer Engineering" />
-              <input type="text" value="MIT" />
-              <input type="text" value="2013 - 2017" />
-              <textarea placeholder="Description">Graduated with honors</textarea>
-            </div>
-            <div class="remove-btn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px;">
+            <button class="add-btn" type="button" id="addEducationBtn" style="margin: 0;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add Education
+            </button>
+            <button class="btn btn-grad" type="button" id="saveEducationBtn" style="display: none; width: auto; padding: 8px 20px; font-size: 0.88rem; border-radius: 8px; margin: 0; cursor: pointer;">
+              Save Education
+            </button>
           </div>
-          <button class="add-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add Education
-          </button>
         </div>
 
         <!-- Experience -->
         <div class="section-card">
-          <h2>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            Experience
+          <h2 style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="display: flex; align-items: center; gap: 8px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              Experience
+            </span>
+            <button class="edit-section-btn" type="button" id="editExperienceBtn" style="background: none; border: none; color: var(--purple); cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 600; font-family: inherit;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              Edit
+            </button>
           </h2>
-          <div class="experience-item">
-            <div class="experience-icon">TC</div>
-            <div class="experience-content">
-              <input type="text" value="Senior ML Engineer" />
-              <input type="text" value="Tech Corporation" />
-              <input type="text" value="2021 - Present" />
-              <textarea>Led development of ML models for product recommendations, improving accuracy by 35%. Managed team of 4 engineers.</textarea>
-            </div>
-            <div class="remove-btn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            </div>
+          <div class="experience-timeline" id="experienceContainer">
+            <!-- Dynamic experience cards will be injected here -->
           </div>
-          <div class="experience-item">
-            <div class="experience-icon">DS</div>
-            <div class="experience-content">
-              <input type="text" value="ML Engineer" />
-              <input type="text" value="Data Solutions" />
-              <input type="text" value="2019 - 2021" />
-              <textarea>Built predictive models for customer churn analysis. Implemented data preprocessing pipelines.</textarea>
-            </div>
-            <div class="remove-btn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            </div>
-          </div>
-          <button class="add-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add Experience
-          </button>
-        </div>
-
-        <!-- Technical Skills -->
-        <div class="section-card">
-          <h2>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17-2 2"/></svg>
-            Technical Skills
-          </h2>
-          <div class="form-field">
-            <label>Add Skills (press Enter to add)</label>
-            <div class="skills-input-container" id="techSkillsContainer">
-              <input type="text" class="skill-tag-input" placeholder="Type skill and press Enter..." />
-            </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px;">
+            <button class="add-btn" type="button" id="addExperienceBtn" style="margin: 0;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add Experience
+            </button>
+            <button class="btn btn-grad" type="button" id="saveExperienceBtn" style="display: none; width: auto; padding: 8px 20px; font-size: 0.88rem; border-radius: 8px; margin: 0; cursor: pointer;">
+              Save Experience
+            </button>
           </div>
         </div>
 
-        <!-- Soft Skills -->
+        <!-- Skills & Credentials -->
         <div class="section-card">
-          <h2>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            Soft Skills
+          <h2 style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="display: flex; align-items: center; gap: 8px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+              Skills & Additional Info
+            </span>
+            <button class="edit-section-btn" type="button" id="editAdditionalBtn" style="background: none; border: none; color: var(--purple); cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 600; font-family: inherit;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; margin-right: 4px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit
+            </button>
           </h2>
-          <div class="form-field">
-            <label>Add Soft Skills (press Enter to add)</label>
-            <div class="skills-input-container" id="softSkillsContainer">
-              <input type="title" class="skill-tag-input" placeholder="Type skill and press Enter..." />
-            </div>
+
+          <div id="additionalDetailsContainer">
+            <!-- Dynamic read-only or edit elements for Skills, Soft Skills, Projects, Certifications, Languages -->
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--glass-border);">
+            <button class="btn btn-grad" type="button" id="saveAdditionalBtn" style="display: none; width: auto; padding: 8px 20px; font-size: 0.88rem; border-radius: 8px; margin: 0; cursor: pointer;">
+              Save Additional Details
+            </button>
           </div>
         </div>
 
-        <!-- Projects -->
-        <div class="section-card">
-          <h2>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-            Projects
-          </h2>
-          <div class="project-item">
-            <input type="text" value="ML Recommendation System" placeholder="Project Name" />
-            <textarea placeholder="Project Description">Built a collaborative filtering recommendation system using TensorFlow, achieving 35% improvement in accuracy.</textarea>
-          </div>
-          <div class="project-item">
-            <input type="text" value="NLP Sentiment Analyzer" placeholder="Project Name" />
-            <textarea placeholder="Project Description">Developed a sentiment analysis tool using BERT for customer feedback analysis.</textarea>
-          </div>
-          <button class="add-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add Project
-          </button>
-        </div>
-
-        <!-- Certifications -->
-        <div class="section-card">
-          <h2>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            Certifications
-          </h2>
-          <div class="cert-item">
-            <input type="text" value="AWS Machine Learning Specialty" />
-            <div class="remove-btn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            </div>
-          </div>
-          <div class="cert-item">
-            <input type="text" value="TensorFlow Developer Certificate" />
-            <div class="remove-btn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            </div>
-          </div>
-          <button class="add-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add Certification
-          </button>
-        </div>
-
-        <!-- Languages -->
-        <div class="section-card">
-          <h2>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            Languages
-          </h2>
-          <div class="language-item">
-            <input type="text" value="English" />
-            <select>
-              <option value="native">Native</option>
-              <option value="fluent" selected>Fluent</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="basic">Basic</option>
-            </select>
-          </div>
-          <div class="language-item">
-            <input type="text" value="Spanish" />
-            <select>
-              <option value="native">Native</option>
-              <option value="fluent">Fluent</option>
-              <option value="intermediate" selected>Intermediate</option>
-              <option value="basic">Basic</option>
-            </select>
-          </div>
-          <button class="add-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add Language
-          </button>
-        </div>
+        <!-- Save Actions (Removed) -->
 
       </div>
 
@@ -349,16 +258,66 @@
           </a>
         </div>
 
-        <!-- Action Buttons -->
-        <div class="action-buttons">
-          <button class="btn btn-grad" type="submit" id="saveBtn">Save Changes</button>
-          <button class="btn btn-ghost" id="updateResumeBtn">Update Resume</button>
-        </div>
+        <!-- Action Buttons (Removed) -->
 
       </aside>
 
     </form>
   </div>
+  <datalist id="schoolsList">
+    <!-- Schools -->
+    <option value="Delhi Public School (DPS)"></option>
+    <option value="Kendriya Vidyalaya"></option>
+    <option value="DAV Public School"></option>
+    <option value="Ryan International School"></option>
+    <option value="Chirec International School"></option>
+    <option value="Oakridge International School"></option>
+    <option value="St. Paul's High School"></option>
+    <option value="Little Flower High School"></option>
+    <option value="Gitanjali School"></option>
+    <option value="Hyderabad Public School (HPS)"></option>
+  </datalist>
+
+  <datalist id="juniorCollegesList">
+    <!-- Junior Colleges -->
+    <option value="Chaitanya Junior College"></option>
+    <option value="Narayana Junior College"></option>
+    <option value="Sri Chaitanya Educational Institutions"></option>
+    <option value="Narayana Educational Institutions"></option>
+    <option value="Vishwa Bharathi Junior College"></option>
+    <option value="Gautami Junior College"></option>
+    <option value="Little Flower Junior College"></option>
+    <option value="St. Mary's Junior College"></option>
+    <option value="Page Junior College"></option>
+    <option value="FIITJEE Junior College"></option>
+  </datalist>
+
+  <datalist id="universitiesList">
+    <!-- Universities & Colleges -->
+    <option value="Jawaharlal Nehru Technological University (JNTU)"></option>
+    <option value="Osmania University"></option>
+    <option value="Andhra University"></option>
+    <option value="University of Delhi"></option>
+    <option value="Anna University"></option>
+    <option value="Visvesvaraya Technological University (VTU)"></option>
+    <option value="Indian Institute of Technology (IIT) Madras"></option>
+    <option value="Indian Institute of Technology (IIT) Bombay"></option>
+    <option value="Indian Institute of Technology (IIT) Delhi"></option>
+    <option value="BITS Pilani"></option>
+    <option value="VIT University"></option>
+    <option value="SRM Institute of Science and Technology"></option>
+    <option value="Stanford University"></option>
+    <option value="Massachusetts Institute of Technology (MIT)"></option>
+    <option value="Harvard University"></option>
+    <option value="Loyola College (Autonomous)"></option>
+    <option value="St. Xavier's College (Autonomous)"></option>
+    <option value="PSG College of Technology (Autonomous)"></option>
+    <option value="RV College of Engineering (Autonomous)"></option>
+    <option value="Chaitanya Bharathi Institute of Technology (CBIT) (Autonomous)"></option>
+    <option value="Vasavi College of Engineering (Autonomous)"></option>
+    <option value="VNR Vignana Jyothi Institute of Engineering and Technology (VNR VJIET) (Autonomous)"></option>
+    <option value="Gokaraju Rangaraju Institute of Engineering and Technology (GRIET) (Autonomous)"></option>
+  </datalist>
 </main>
 
 <script src="js/common.js"></script>

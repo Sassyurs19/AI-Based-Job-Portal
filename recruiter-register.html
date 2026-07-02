@@ -81,93 +81,10 @@
 
       <div class="form-grid" id="formGrid">
 
-        <div class="field full" data-field="companyName">
-          <label for="companyName">Company Name <span class="req">*</span></label>
-          <input class="input" type="text" id="companyName" name="companyName" placeholder="e.g. TechCorp Inc." autocomplete="organization" />
-          <span class="err-msg" id="err-companyName">Please enter your company name.</span>
-        </div>
-
-        <div class="field" data-field="fullName">
-          <label for="fullName">Your Full Name <span class="req">*</span></label>
-          <input class="input" type="text" id="fullName" name="fullName" placeholder="John Smith" autocomplete="name" />
-          <span class="err-msg" id="err-fullName">Please enter your full name.</span>
-        </div>
-
-        <div class="field" data-field="jobTitle">
-          <label for="jobTitle">Job Title <span class="req">*</span></label>
-          <input class="input" type="text" id="jobTitle" name="jobTitle" placeholder="e.g. HR Manager" autocomplete="organization-title" />
-          <span class="err-msg" id="err-jobTitle">Please enter your job title.</span>
-        </div>
-
-        <div class="field" data-field="email">
-          <label for="email">Work Email <span class="req">*</span></label>
+        <div class="field full" data-field="email">
+          <label for="email">Work Email Address <span class="req">*</span></label>
           <input class="input" type="email" id="email" name="email" placeholder="you@company.com" autocomplete="email" />
           <span class="err-msg" id="err-email">Enter a valid email address.</span>
-        </div>
-
-        <div class="field" data-field="phone">
-          <label for="phone">Phone Number <span class="req">*</span></label>
-          <input class="input" type="tel" id="phone" name="phone" placeholder="+1 555 123 4567" autocomplete="tel" />
-          <span class="err-msg" id="err-phone">Enter a valid phone number (10+ digits).</span>
-        </div>
-
-        <div class="field" data-field="password">
-          <label for="password">Password <span class="req">*</span></label>
-          <input class="input" type="password" id="password" name="password" placeholder="Min 8 characters" autocomplete="new-password" />
-          <span class="err-msg" id="err-password">Password must be at least 8 characters.</span>
-        </div>
-
-        <div class="field" data-field="confirm">
-          <label for="confirm">Confirm Password <span class="req">*</span></label>
-          <input class="input" type="password" id="confirm" name="confirm" placeholder="Re-enter password" autocomplete="new-password" />
-          <span class="err-msg" id="err-confirm">Passwords do not match.</span>
-        </div>
-
-        <div class="field full" data-field="industry">
-          <label for="industry">Industry <span class="req">*</span></label>
-          <select class="input" id="industry" name="industry">
-            <option value="" disabled selected>Select industry</option>
-            <option value="technology">Technology</option>
-            <option value="finance">Finance</option>
-            <option value="healthcare">Healthcare</option>
-            <option value="education">Education</option>
-            <option value="retail">Retail</option>
-            <option value="manufacturing">Manufacturing</option>
-            <option value="consulting">Consulting</option>
-            <option value="other">Other</option>
-          </select>
-          <span class="err-msg" id="err-industry">Please select an option.</span>
-        </div>
-
-        <div class="field" data-field="companySize">
-          <label for="companySize">Company Size <span class="req">*</span></label>
-          <select class="input" id="companySize" name="companySize">
-            <option value="" disabled selected>Select company size</option>
-            <option value="1-10">1-10 employees</option>
-            <option value="11-50">11-50 employees</option>
-            <option value="51-200">51-200 employees</option>
-            <option value="201-500">201-500 employees</option>
-            <option value="500+">500+ employees</option>
-          </select>
-          <span class="err-msg" id="err-companySize">Please select an option.</span>
-        </div>
-
-        <div class="field" data-field="website">
-          <label for="website">Company Website <span class="req">*</span></label>
-          <input class="input" type="url" id="website" name="website" placeholder="https://company.com" />
-          <span class="err-msg" id="err-website">Enter a valid URL.</span>
-        </div>
-
-        <div class="field full" data-field="address">
-          <label for="address">Company Address <span class="req">*</span></label>
-          <input class="input" type="text" id="address" name="address" placeholder="Street address, City, State, Country" />
-          <span class="err-msg" id="err-address">Please enter your company address.</span>
-        </div>
-
-        <div class="field full" data-field="description">
-          <label for="description">Company Description <span class="req">*</span></label>
-          <textarea class="input" id="description" name="description" placeholder="Tell us about your company culture, mission, and what makes you a great place to work..."></textarea>
-          <span class="err-msg" id="err-description">Please provide a company description.</span>
         </div>
 
       </div>
@@ -186,10 +103,8 @@
         </div>
       </div>
 
-      </div>
-
       <div class="form-actions">
-        <button class="btn btn-grad" type="submit">Create Account</button>
+        <button class="btn btn-grad" type="submit" id="submitBtn">Sign Up with Email</button>
         <a class="btn btn-ghost" href="register.html">Back</a>
       </div>
 
@@ -197,9 +112,8 @@
 
       <div class="form-success" id="formSuccess" role="status" aria-live="polite">
         <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
-        <h3>Account Created!</h3>
-        <p>Welcome to AI Hire. Your recruiter profile is ready — start posting jobs and discovering top AI-ranked candidates.</p>
-        <a class="btn btn-grad" href="login.html">Continue to Login</a>
+        <h3>Email Verified!</h3>
+        <p>Your email has been verified successfully. Redirecting to set your password...</p>
       </div>
     </form>
   </div>

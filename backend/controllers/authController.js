@@ -79,6 +79,15 @@ const login = async (req, res, next) => {
       });
     }
 
+    // Check if user has a password set (for Google users who haven't set password yet)
+    if (!user.password) {
+      return res.status(401).json({
+        success: false,
+        message: 'No password set for this account. Please use Google login or set a password via forgot password.',
+        requiresPassword: true
+      });
+    }
+
     const isPasswordMatch = await user.comparePassword(password);
     if (!isPasswordMatch) {
       return res.status(401).json({
@@ -178,36 +187,33 @@ const forgotPassword = async (req, res, next) => {
       });
     }
 
-    const resetToken = crypto.randomBytes(32).toString('hex');
-    const resetPasswordExpire = Date.now() + 10 * 60 * 1000;
+    // Generate OTP for password reset
+    const otp = generateOTP();
+    const hashedOTP = hashOTP(otp);
+    const otpExpiry = Date.now() + 10 * 60 * 1000; // 10 minutes
 
-    user.resetPasswordToken = crypto
-      .createHash('sha256')
-      .update(resetToken)
-      .digest('hex');
-    user.resetPasswordExpire = resetPasswordExpire;
+    user.resetPasswordOTP = hashedOTP;
+    user.resetPasswordOTPExpiry = otpExpiry;
     await user.save();
 
-    const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password/${resetToken}`;
-
+    // Send OTP email
     const html = `
       <h1>Password Reset Request</h1>
       <p>You requested a password reset for your AI Job Portal account.</p>
-      <p>Click the link below to reset your password:</p>
-      <a href="${resetUrl}" style="background: #4F46E5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Reset Password</a>
-      <p>This link will expire in 10 minutes.</p>
+      <p>Your verification code is: <strong style="font-size: 24px; color: #4F46E5;">${otp}</strong></p>
+      <p>This code will expire in 10 minutes.</p>
       <p>If you didn't request this, please ignore this email.</p>
     `;
 
     await sendEmail({
       email: user.email,
-      subject: 'Password Reset Request',
+      subject: 'Password Reset Code - AI Job Portal',
       html
     });
 
     res.status(200).json({
       success: true,
-      message: 'Password reset email sent'
+      message: 'Password reset code sent to your email'
     });
   } catch (error) {
     next(error);
@@ -216,34 +222,85 @@ const forgotPassword = async (req, res, next) => {
 
 const resetPassword = async (req, res, next) => {
   try {
-    const { token } = req.params;
-    const { password } = req.body;
+    const { email, password } = req.body;
 
-    const resetPasswordToken = crypto
-      .createHash('sha256')
-      .update(token)
-      .digest('hex');
-
-    const user = await User.findOne({
-      resetPasswordToken,
-      resetPasswordExpire: { $gt: Date.now() }
-    });
-
+    const user = await User.findOne({ email }).select('+resetPasswordOTP +resetPasswordOTPExpiry');
     if (!user) {
-      return res.status(400).json({
+      return res.status(404).json({
         success: false,
-        message: 'Invalid or expired reset token'
+        message: 'User not found'
       });
     }
 
     user.password = password;
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpire = undefined;
+    user.resetPasswordOTP = undefined;
+    user.resetPasswordOTPExpiry = undefined;
     await user.save();
 
     res.status(200).json({
       success: true,
       message: 'Password reset successful'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const verifyPasswordResetOTP = async (req, res, next) => {
+  try {
+    const { email, otp } = req.body;
+
+    const user = await User.findOne({ email }).select('+resetPasswordOTP +resetPasswordOTPExpiry');
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    // Check if OTP expired
+    if (Date.now() > user.resetPasswordOTPExpiry) {
+      return res.status(400).json({
+        success: false,
+        message: 'OTP has expired. Please request a new one.'
+      });
+    }
+
+    // Verify OTP
+    if (!verifyOTP(otp, user.resetPasswordOTP)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid OTP'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'OTP verified successfully'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const setPassword = async (req, res, next) => {
+  try {
+    const { userId, password } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    user.password = password;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Password set successfully'
     });
   } catch (error) {
     next(error);
@@ -265,7 +322,7 @@ const getMe = async (req, res, next) => {
 
 const updateProfile = async (req, res, next) => {
   try {
-    const { name, phone, location, bio, skills, experience, education } = req.body;
+    const { name, phone, location, bio, skills, softSkills, experience, education, projects, certifications, languages } = req.body;
 
     const user = await User.findById(req.user._id);
 
@@ -274,8 +331,12 @@ const updateProfile = async (req, res, next) => {
     if (location) user.location = location;
     if (bio !== undefined) user.bio = bio;
     if (skills) user.skills = skills;
+    if (softSkills) user.softSkills = softSkills;
     if (experience) user.experience = experience;
     if (education) user.education = education;
+    if (projects) user.projects = projects;
+    if (certifications) user.certifications = certifications;
+    if (languages) user.languages = languages;
 
     if (req.file) {
       user.avatar = req.file.path.replace(/\\/g, '/');
@@ -294,8 +355,12 @@ const updateProfile = async (req, res, next) => {
         location: user.location,
         bio: user.bio,
         skills: user.skills,
+        softSkills: user.softSkills,
         experience: user.experience,
         education: user.education,
+        projects: user.projects,
+        certifications: user.certifications,
+        languages: user.languages,
         avatar: user.avatar
       }
     });
@@ -478,6 +543,8 @@ module.exports = {
   logout,
   forgotPassword,
   resetPassword,
+  verifyPasswordResetOTP,
+  setPassword,
   getMe,
   updateProfile,
   getUserById,

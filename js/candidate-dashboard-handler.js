@@ -27,6 +27,20 @@ function updateSidebar() {
     nameEl.textContent = user.name || 'Candidate';
   }
 
+  // Update welcome banner name
+  const welcomeName = document.querySelector('.welcome-banner h2 .grad-text');
+  if (welcomeName && user.name) {
+    const firstName = user.name.split(' ')[0];
+    welcomeName.textContent = firstName + '!';
+  }
+
+  // Update welcome banner avatar
+  const welcomeAvatar = document.querySelector('.welcome-banner .avatar');
+  if (welcomeAvatar) {
+    const initials = user.name ? user.name.split(' ').map(n => n[0]).join('').toUpperCase() : 'JD';
+    welcomeAvatar.textContent = initials;
+  }
+
   // Update logout link
   const logoutLink = document.querySelector('.sidebar-nav a.logout');
   if (logoutLink) {
