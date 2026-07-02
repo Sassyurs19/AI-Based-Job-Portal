@@ -62,19 +62,19 @@
 .login-card h1{font-size:clamp(1.5rem,3.5vw,1.9rem); margin-bottom:6px;}
 .login-card .muted{color:var(--muted); font-size:.94rem; margin:0 0 26px;}
 
-.field{position:relative; margin-bottom:18px;}
-.field input{
+.login-card .field{position:relative; margin-bottom:18px;}
+.login-card .field input{
   width:100%; background:rgba(15,23,42,.55); border:1px solid var(--glass-border); color:var(--text);
   padding:20px 14px 8px; border-radius:12px; font-size:.96rem; font-family:inherit; transition:border-color .25s, box-shadow .25s, background .25s;
 }
-.field input:focus{outline:none; border-color:rgba(99,102,241,.7); background:rgba(15,23,42,.8); box-shadow:0 0 0 3px rgba(99,102,241,.18), 0 0 22px rgba(99,102,241,.18);}
-.field label{position:absolute; left:15px; top:14px; color:var(--muted); font-size:.95rem; pointer-events:none; transition:.2s ease;}
-.field input:focus + label,
-.field input:not(:placeholder-shown) + label{top:7px; font-size:.7rem; color:var(--cyan); letter-spacing:.03em;}
-.field input::placeholder{color:transparent;}
-.field .toggle{position:absolute; right:8px; top:50%; transform:translateY(-50%); background:transparent; border:0; color:var(--muted); cursor:pointer; padding:8px; border-radius:8px; display:grid; place-items:center; transition:color .2s, background .2s;}
-.field .toggle:hover{color:#fff; background:var(--glass);}
-.field .toggle svg{width:18px; height:18px;}
+.login-card .field input:focus{outline:none; border-color:rgba(99,102,241,.7); background:rgba(15,23,42,.8); box-shadow:0 0 0 3px rgba(99,102,241,.18), 0 0 22px rgba(99,102,241,.18);}
+.login-card .field label{position:absolute; left:15px; top:14px; color:var(--muted); font-size:.95rem; pointer-events:none; transition:.2s ease;}
+.login-card .field input:focus + label,
+.login-card .field input:not(:placeholder-shown) + label{top:7px; font-size:.7rem; color:var(--cyan); letter-spacing:.03em;}
+.login-card .field input::placeholder{color:transparent;}
+.login-card .field .toggle{position:absolute; right:8px; top:50%; transform:translateY(-50%); background:transparent; border:0; color:var(--muted); cursor:pointer; padding:8px; border-radius:8px; display:grid; place-items:center; transition:color .2s, background .2s;}
+.login-card .field .toggle:hover{color:#fff; background:var(--glass);}
+.login-card .field .toggle svg{width:18px; height:18px;}
 
 .row-between{display:flex; align-items:center; justify-content:space-between; gap:10px; margin:4px 0 22px; font-size:.86rem;}
 .remember{display:inline-flex; align-items:center; gap:8px; color:var(--muted); cursor:pointer; user-select:none;}
