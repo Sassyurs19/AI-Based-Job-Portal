@@ -59,39 +59,90 @@ function updateNavbar() {
   const navActions = document.querySelector('.nav-actions');
   const panelActions = document.querySelector('.panel-actions');
   
-  if (!navActions || !panelActions) return;
-
   if (api.isAuthenticated()) {
     const user = api.getCurrentUser();
-    const userRole = user ? user.role : null;
+    const userRole = user ? user.role : api.getUserRole();
+    
+    let dashboardLink = 'candidate-dashboard.html';
+    if (userRole === 'recruiter') {
+      dashboardLink = 'recruiter-dashboard.html';
+    } else if (userRole === 'admin') {
+      dashboardLink = 'admin/admin-dashboard.html';
+    }
+    
+    const resolvedDashLink = getResolvedPath(dashboardLink);
     
     // Update main navbar
-    if (userRole === 'candidate') {
+    if (navActions) {
       navActions.innerHTML = `
-        <a class="btn btn-ghost" href="${getResolvedPath('candidate-dashboard.html')}">Dashboard</a>
-        <button class="btn btn-grad" onclick="handleLogout()">Logout</button>
-      `;
-    } else if (userRole === 'recruiter') {
-      navActions.innerHTML = `
-        <a class="btn btn-ghost" href="${getResolvedPath('recruiter-dashboard.html')}">Dashboard</a>
-        <button class="btn btn-grad" onclick="handleLogout()">Logout</button>
-      `;
-    } else if (userRole === 'admin') {
-      navActions.innerHTML = `
-        <a class="btn btn-ghost" href="${getResolvedPath('admin/admin-dashboard.html')}">Dashboard</a>
+        <a class="btn btn-ghost" href="${resolvedDashLink}">Dashboard</a>
         <button class="btn btn-grad" onclick="handleLogout()">Logout</button>
       `;
     }
 
     // Update mobile panel
-    let dashboardLink = `${userRole}-dashboard.html`;
-    if (userRole === 'admin') {
-      dashboardLink = 'admin/admin-dashboard.html';
+    if (panelActions) {
+      panelActions.innerHTML = `
+        <a class="btn btn-ghost" href="${resolvedDashLink}">Dashboard</a>
+        <button class="btn btn-grad" onclick="handleLogout()">Logout</button>
+      `;
     }
-    panelActions.innerHTML = `
-      <a class="btn btn-ghost" href="${getResolvedPath(dashboardLink)}">Dashboard</a>
-      <button class="btn btn-grad" onclick="handleLogout()">Logout</button>
-    `;
+
+    // Update logo links to point to dashboard
+    document.querySelectorAll('.logo').forEach(logo => {
+      logo.setAttribute('href', resolvedDashLink);
+    });
+
+    // Update navbar menu links dynamically
+    const navLinks = document.querySelector('.nav-links');
+    const panelLinks = document.querySelector('.panel-links');
+
+    if (userRole === 'candidate') {
+      const linksHTML = `
+        <li><a href="${resolvedDashLink}">Home</a></li>
+        <li><a href="${getResolvedPath('jobs.html')}">Jobs</a></li>
+        <li><a href="${getResolvedPath('my-applications.html')}">Applications</a></li>
+        <li><a href="${getResolvedPath('resume-analysis.html')}">Resume Analysis</a></li>
+        <li><a href="${getResolvedPath('candidate-profile.html')}">Profile</a></li>
+      `;
+      const panelLinksHTML = `
+        <a href="${resolvedDashLink}">Home</a>
+        <a href="${getResolvedPath('jobs.html')}">Jobs</a>
+        <a href="${getResolvedPath('my-applications.html')}">Applications</a>
+        <a href="${getResolvedPath('resume-analysis.html')}">Resume Analysis</a>
+        <a href="${getResolvedPath('candidate-profile.html')}">Profile</a>
+      `;
+      if (navLinks) navLinks.innerHTML = linksHTML;
+      if (panelLinks) panelLinks.innerHTML = panelLinksHTML;
+    } else if (userRole === 'recruiter') {
+      const linksHTML = `
+        <li><a href="${resolvedDashLink}">Home</a></li>
+        <li><a href="${getResolvedPath('post-job.html')}">Post Job</a></li>
+        <li><a href="${getResolvedPath('applicants.html')}">Applicants</a></li>
+      `;
+      const panelLinksHTML = `
+        <a href="${resolvedDashLink}">Home</a>
+        <a href="${getResolvedPath('post-job.html')}">Post Job</a>
+        <a href="${getResolvedPath('applicants.html')}">Applicants</a>
+      `;
+      if (navLinks) navLinks.innerHTML = linksHTML;
+      if (panelLinks) panelLinks.innerHTML = panelLinksHTML;
+    } else if (userRole === 'admin') {
+      const linksHTML = `
+        <li><a href="${resolvedDashLink}">Home</a></li>
+        <li><a href="${getResolvedPath('admin/admin-users.html')}">Manage Users</a></li>
+        <li><a href="${getResolvedPath('admin/admin-jobs.html')}">Manage Jobs</a></li>
+        <li><a href="${getResolvedPath('admin/admin-recruiters.html')}">Manage Recruiters</a></li>
+      `;
+      const panelLinksHTML = `
+        <a href="${resolvedDashLink}">Home</a>
+        <a href="${getResolvedPath('admin/admin-users.html')}">Manage Users</a>
+        <a href="${getResolvedPath('admin/admin-jobs.html')}">Manage Jobs</a>
+        <a href="${getResolvedPath('admin/admin-recruiters.html')}">Manage Recruiters</a>
+      `;
+      if (navLinks) navLinks.innerHTML = linksHTML;
+      if (panelLinks) panelLinks.innerHTML = panelLinksHTML;
+    }
   }
 }
 
@@ -101,6 +152,11 @@ function handleLogout() {
     api.logoutAPI();
   }
 }
+
+// Automatically update navbar on load
+document.addEventListener('DOMContentLoaded', () => {
+  updateNavbar();
+});
 
 // Make functions globally available
 window.protectRoute = protectRoute;
