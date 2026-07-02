@@ -107,7 +107,7 @@ const profileValidation = [
     .trim()
     .isLength({ min: 2, max: 50 }).withMessage('Name must be between 2 and 50 characters'),
   body('phone')
-    .optional()
+    .optional({ checkFalsy: true })
     .trim()
     .matches(/^[\d\+\-\(\)\s]+$/).withMessage('Invalid phone number format'),
   body('bio')

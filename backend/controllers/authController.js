@@ -423,6 +423,28 @@ const googleAuthSuccess = async (req, res, next) => {
     if (req.session && req.session.googleSignupError === 'EMAIL_EXISTS') {
       req.session.googleSignupError = null;
       const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5500';
+      if (frontendUrl.startsWith('file:')) {
+        res.send(`
+          <!DOCTYPE html>
+          <html>
+          <head><title>Authentication Failed</title></head>
+          <body>
+            <script>
+              if (window.opener) {
+                window.opener.postMessage({
+                  type: 'google-auth-failure',
+                  error: 'email_exists_use_google_login'
+                }, '*');
+                window.close();
+              } else {
+                window.location.href = "${frontendUrl}/login.html?error=email_exists_use_google_login";
+              }
+            </script>
+          </body>
+          </html>
+        `);
+        return;
+      }
       res.redirect(`${frontendUrl}/login.html?error=email_exists_use_google_login`);
       return;
     }
@@ -453,6 +475,33 @@ const googleAuthSuccess = async (req, res, next) => {
     const needsProfileCompletion = user.provider === 'google' && 
       (!user.phone || !user.location || !user.skills || user.skills.length === 0);
     
+    if (frontendUrl.startsWith('file:')) {
+      res.send(`
+        <!DOCTYPE html>
+        <html>
+        <head><title>Authentication Successful</title></head>
+        <body>
+          <p>Authentication successful. This window should close automatically.</p>
+          <script>
+            if (window.opener) {
+              window.opener.postMessage({
+                type: 'google-auth-success',
+                token: '${token}',
+                refreshToken: '${refreshToken}',
+                role: '${user.role}',
+                completeProfile: ${needsProfileCompletion}
+              }, '*');
+              window.close();
+            } else {
+              window.location.href = "${frontendUrl}/auth-callback.html?token=${token}&refreshToken=${refreshToken}&role=${user.role}${needsProfileCompletion ? '&completeProfile=true' : ''}";
+            }
+          </script>
+        </body>
+        </html>
+      `);
+      return;
+    }
+
     if (needsProfileCompletion) {
       res.redirect(`${frontendUrl}/auth-callback.html?token=${token}&refreshToken=${refreshToken}&role=${user.role}&completeProfile=true`);
     } else {
@@ -476,6 +525,30 @@ const googleAuthFailure = (req, res) => {
   if (frontendUrl.endsWith('/')) {
     frontendUrl = frontendUrl.slice(0, -1);
   }
+  
+  if (frontendUrl.startsWith('file:')) {
+    res.send(`
+      <!DOCTYPE html>
+      <html>
+      <head><title>Authentication Failed</title></head>
+      <body>
+        <script>
+          if (window.opener) {
+            window.opener.postMessage({
+              type: 'google-auth-failure',
+              error: 'google_auth_failed'
+            }, '*');
+            window.close();
+          } else {
+            window.location.href = "${frontendUrl}/login.html?error=google_auth_failed";
+          }
+        </script>
+      </body>
+      </html>
+    `);
+    return;
+  }
+  
   res.redirect(`${frontendUrl}/login.html?error=google_auth_failed`);
 };
 

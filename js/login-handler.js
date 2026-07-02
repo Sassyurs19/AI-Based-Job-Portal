@@ -24,7 +24,46 @@ document.addEventListener('DOMContentLoaded', function() {
     googleLoginBtn.addEventListener('click', function() {
       const backendUrl = window.getBackendUrl ? window.getBackendUrl() : 'http://localhost:5000';
       const frontendUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
-      window.location.href = `${backendUrl}/api/auth/google?frontend_url=${encodeURIComponent(frontendUrl)}`;
+      const authUrl = `${backendUrl}/api/auth/google?frontend_url=${encodeURIComponent(frontendUrl)}`;
+      
+      const width = 500;
+      const height = 600;
+      const left = (window.innerWidth - width) / 2;
+      const top = (window.innerHeight - height) / 2;
+      const popup = window.open(authUrl, 'Google Login', `width=${width},height=${height},left=${left},top=${top},status=no,resizable=yes,scrollbars=yes`);
+
+      if (!popup) {
+        showError('Popup blocked! Please allow popups for Google Sign In.');
+        return;
+      }
+
+      const messageListener = function(event) {
+        if (event.data && event.data.type === 'google-auth-success') {
+          const { token, refreshToken, role, completeProfile } = event.data;
+          api.setTokens(token, refreshToken);
+          api.getMe().then(result => {
+            if (result.success) {
+              api.setCurrentUser(result.user);
+              window.removeEventListener('message', messageListener);
+              if (completeProfile) {
+                window.location.href = role === 'candidate' ? 'complete-profile-candidate.html' : 'complete-profile-recruiter.html';
+              } else {
+                window.location.href = role === 'candidate' ? 'candidate-dashboard.html' : 'recruiter-dashboard.html';
+              }
+            }
+          }).catch(err => {
+            showError('Failed to fetch user profile details.');
+          });
+        } else if (event.data && event.data.type === 'google-auth-failure') {
+          const errorMsg = event.data.error === 'email_exists_use_google_login'
+            ? 'An account already exists with this email. Please sign in with Google.'
+            : 'Google authentication failed. Please try again.';
+          showError(errorMsg);
+          window.removeEventListener('message', messageListener);
+        }
+      };
+
+      window.addEventListener('message', messageListener);
     });
   }
 
