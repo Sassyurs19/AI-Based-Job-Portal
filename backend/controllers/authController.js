@@ -3,6 +3,12 @@ const User = require('../models/User');
 const { generateToken, generateRefreshToken } = require('../utils/jwt');
 const sendEmail = require('../utils/email');
 const { generateOTP, hashOTP, verifyOTP } = require('../utils/otp');
+const { 
+  getWelcomeEmail, 
+  getEmailVerificationOTP, 
+  getForgotPasswordOTP, 
+  getPasswordResetConfirmation 
+} = require('../utils/emailTemplates');
 
 const register = async (req, res, next) => {
   try {
@@ -41,18 +47,12 @@ const register = async (req, res, next) => {
     user.verificationOTPExpiry = otpExpiry;
     await user.save();
 
-    // Send OTP email
-    const html = `
-      <h1>Email Verification</h1>
-      <p>Thank you for registering with AI Job Portal!</p>
-      <p>Your verification code is: <strong style="font-size: 24px; color: #4F46E5;">${otp}</strong></p>
-      <p>This code will expire in 10 minutes.</p>
-      <p>If you didn't request this, please ignore this email.</p>
-    `;
+    // Send OTP email with template
+    const html = getEmailVerificationOTP(name || 'User', otp);
 
     await sendEmail({
       email: user.email,
-      subject: 'Verify Your Email - AI Job Portal',
+      subject: 'Verify Your Email - AI Hire',
       html
     });
 
@@ -196,18 +196,12 @@ const forgotPassword = async (req, res, next) => {
     user.resetPasswordOTPExpiry = otpExpiry;
     await user.save();
 
-    // Send OTP email
-    const html = `
-      <h1>Password Reset Request</h1>
-      <p>You requested a password reset for your AI Job Portal account.</p>
-      <p>Your verification code is: <strong style="font-size: 24px; color: #4F46E5;">${otp}</strong></p>
-      <p>This code will expire in 10 minutes.</p>
-      <p>If you didn't request this, please ignore this email.</p>
-    `;
+    // Send OTP email with template
+    const html = getForgotPasswordOTP(user.name || 'User', otp);
 
     await sendEmail({
       email: user.email,
-      subject: 'Password Reset Code - AI Job Portal',
+      subject: 'Reset Your Password - AI Hire',
       html
     });
 
@@ -236,6 +230,15 @@ const resetPassword = async (req, res, next) => {
     user.resetPasswordOTP = undefined;
     user.resetPasswordOTPExpiry = undefined;
     await user.save();
+
+    // Send password reset confirmation email
+    const html = getPasswordResetConfirmation(user.name || 'User');
+
+    await sendEmail({
+      email: user.email,
+      subject: 'Password Reset Successful - AI Hire',
+      html
+    });
 
     res.status(200).json({
       success: true,
@@ -405,6 +408,17 @@ const googleAuthSuccess = async (req, res, next) => {
 
     user.refreshToken = refreshToken;
     await user.save();
+
+    // Send welcome email for new Google users (created within last 5 minutes)
+    const isNewUser = user.createdAt && (Date.now() - new Date(user.createdAt).getTime()) < 5 * 60 * 1000;
+    if (isNewUser && user.provider === 'google') {
+      const html = getWelcomeEmail(user.name || 'User', user.role);
+      await sendEmail({
+        email: user.email,
+        subject: 'Welcome to AI Hire!',
+        html
+      });
+    }
 
     // Redirect to frontend with tokens
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5500';
