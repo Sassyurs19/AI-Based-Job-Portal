@@ -93,6 +93,14 @@ const getDashboard = async (req, res, next) => {
       recruiter: req.user._id, 
       status: 'pending' 
     });
+    const shortlistedApplications = await Application.countDocuments({ 
+      recruiter: req.user._id, 
+      status: 'shortlisted' 
+    });
+    const hiredApplications = await Application.countDocuments({ 
+      recruiter: req.user._id, 
+      status: 'hired' 
+    });
 
     const recentJobs = await Job.find({ postedBy: req.user._id })
       .sort({ createdAt: -1 })
@@ -110,7 +118,9 @@ const getDashboard = async (req, res, next) => {
         totalJobs,
         activeJobs,
         totalApplications,
-        pendingApplications
+        pendingApplications,
+        shortlistedApplications,
+        hiredApplications
       },
       recentJobs,
       recentApplications
