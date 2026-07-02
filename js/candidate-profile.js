@@ -52,23 +52,6 @@ document.querySelectorAll('.remove-btn').forEach(btn => {
   });
 });
 
-// Save changes button
-document.getElementById('saveBtn').addEventListener('click', function() {
-  this.textContent = 'Saving...';
-  setTimeout(() => {
-    this.textContent = '✓ Saved Successfully';
-    this.style.background = 'rgba(34,197,94,.25)';
-    this.style.borderColor = 'rgba(34,197,94,.5)';
-    this.style.color = '#22c55e';
-    
-    setTimeout(() => {
-      this.textContent = 'Save Changes';
-      this.style.background = '';
-      this.style.borderColor = '';
-      this.style.color = '';
-    }, 2000);
-  }, 1000);
-});
 
 // Update resume button
 document.getElementById('updateResumeBtn').addEventListener('click', function() {

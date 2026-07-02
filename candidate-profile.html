@@ -59,7 +59,7 @@
 <main class="profile-wrap">
   <div class="container">
     
-    <div class="profile-grid">
+    <form class="profile-grid" id="profileForm" novalidate>
       
       <!-- Main Content -->
       <div class="profile-main">
@@ -85,20 +85,28 @@
           
           <div class="profile-contact-grid">
             <div class="contact-field">
+              <label>Full Name</label>
+              <input type="text" id="name" value="John Doe" />
+            </div>
+            <div class="contact-field">
               <label>Email</label>
-              <input type="email" value="john.doe@email.com" />
+              <input type="email" id="email" value="john.doe@email.com" readonly style="opacity: 0.7; cursor: not-allowed;" />
             </div>
             <div class="contact-field">
               <label>Phone</label>
-              <input type="tel" value="+1 (555) 123-4567" />
+              <input type="tel" id="phone" value="+1 (555) 123-4567" />
+            </div>
+            <div class="contact-field">
+              <label>Location</label>
+              <input type="text" id="location" value="San Francisco, CA" />
+            </div>
+            <div class="contact-field">
+              <label>Bio</label>
+              <input type="text" id="bio" value="Senior Machine Learning Engineer" />
             </div>
             <div class="contact-field">
               <label>Date of Birth</label>
               <input type="date" value="1992-06-15" />
-            </div>
-            <div class="contact-field">
-              <label>Professional Title</label>
-              <input type="text" value="Senior Machine Learning Engineer" />
             </div>
           </div>
         </div>
@@ -343,13 +351,13 @@
 
         <!-- Action Buttons -->
         <div class="action-buttons">
-          <button class="btn btn-grad" id="saveBtn">Save Changes</button>
+          <button class="btn btn-grad" type="submit" id="saveBtn">Save Changes</button>
           <button class="btn btn-ghost" id="updateResumeBtn">Update Resume</button>
         </div>
 
       </aside>
 
-    </div>
+    </form>
   </div>
 </main>
 
