@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/common.css" />
   <link rel="stylesheet" href="css/form.css" />
+  <link rel="stylesheet" href="css/auth.css" />
 </head>
 <body>
 <canvas id="bg" aria-hidden="true"></canvas>
@@ -58,14 +59,40 @@
 <!-- ===== FORM SECTION ===== -->
 <section class="form-wrap">
   <div class="container">
-    <div class="page-head reveal">
-      <span class="eyebrow">Complete Your Profile</span>
-      <h1>Complete Your <span class="grad-text">Profile</span></h1>
-      <p>Fill in your details to help us match you with the perfect jobs.</p>
-    </div>
+    <div class="auth-grid">
+      
+      <!-- LEFT SIDE: Profile Benefits & Visual -->
+      <div class="auth-left enter d1">
+        <span class="eyebrow">Complete Your Profile</span>
+        <h2>Supercharge Your <span class="grad-text">Job Search</span></h2>
+        <p class="lead">Provide your details to unlock AI-powered job matching, instant ATS resume scoring, and direct recruiter outreach.</p>
+        
+        <div class="auth-visual" aria-hidden="true" style="margin-top: 1.5rem;">
+          <div class="fcard fc1"><span class="pip"></span><div><small>Hiring Chance</small><b>+85%</b></div></div>
+          <div class="fcard fc2"><div><small>Profile Status</small><b class="grad-text">Active</b></div></div>
+          <div class="fcard fc3"><div><small>Match Engine</small><b>Online</b></div></div>
+          <div class="dash gborder">
+            <div class="dash-top"><i></i><i></i><i></i><b>Profile Completion</b></div>
+            <div class="dash-row" style="grid-template-columns: 1fr;">
+              <div>
+                <small style="color: var(--muted); font-size: 0.76rem; display: block; margin-bottom: 6px;">Setup Progress: 60%</small>
+                <div style="width:100%; height:8px; background:rgba(255,255,255,.05); border-radius:4px; overflow:hidden; border:1px solid var(--glass-border); position:relative;">
+                  <div style="width:60%; height:100%; background:var(--grad); border-radius:4px;"></div>
+                </div>
+              </div>
+              <div class="mini-list" style="margin-top: 14px;">
+                <div class="mini-job" style="gap: 12px;"><span class="badge" style="background:#10b981; width:8px; height:8px; border-radius:50%; margin:0; flex:none;"></span><span>Verify Phone & Location</span><span style="color:#10b981; margin-left:auto;">✓</span></div>
+                <div class="mini-job" style="gap: 12px;"><span class="badge" style="background:#3b82f6; width:8px; height:8px; border-radius:50%; margin:0; flex:none;"></span><span>Add Qualifications</span><span style="color:#3b82f6; margin-left:auto;">Pending</span></div>
+                <div class="mini-job" style="gap: 12px;"><span class="badge" style="background:#a855f7; width:8px; height:8px; border-radius:50%; margin:0; flex:none;"></span><span>Upload Resume File</span><span style="color:#a855f7; margin-left:auto;">Optional</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <form class="form-card gborder reveal" id="profileForm" novalidate>
-      <div class="form-grid" id="formGrid">
+      <!-- RIGHT SIDE: The Form -->
+      <form class="form-card gborder enter d2" id="profileForm" novalidate style="margin: 0; max-width: 100%;">
+        <div class="form-grid" id="formGrid">
 
         <div class="field" data-field="phone">
           <label for="phone">Phone Number <span class="req">*</span></label>
@@ -146,6 +173,7 @@
       </div>
 
     </form>
+    </div>
   </div>
 </section>
 
