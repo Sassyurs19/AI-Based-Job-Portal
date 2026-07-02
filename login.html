@@ -9,6 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/common.css" />
 <link rel="stylesheet" href="css/auth.css" />
+<link rel="stylesheet" href="css/premium-auth.css" />
+<script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 <canvas id="bg" aria-hidden="true"></canvas>
@@ -58,51 +60,84 @@
 
 <!-- ===== AUTH ===== -->
 <main class="auth-wrap">
-  <div class="container auth-grid" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-    
-    <div style="text-align: center; margin-bottom: 1rem;">
-      <h1 style="font-size: 2rem; font-weight: 700; color: white; margin-bottom: 0.25rem;">Welcome to AI Hire</h1>
-      <p style="color: rgba(255,255,255,0.7); font-size: 1rem; margin-bottom: 0.5rem;">Your AI-powered job search platform</p>
-      <p style="color: rgba(255,255,255,0.5); font-size: 0.875rem;">Find your dream job with AI matching and intelligent recommendations</p>
-    </div>
-
-    <!-- RIGHT: login card -->
-    <div class="login-card gborder enter d2" style="width: 100%; max-width: 480px;">
-      <h1 style="font-size: 1.5rem;">Sign In</h1>
-      <p class="muted">Enter your credentials to access your account</p>
-      <form onsubmit="return false" novalidate>
-        <div class="field">
-          <input type="email" id="email" placeholder="Email address" autocomplete="email" required />
-          <label for="email">Email address</label>
+  <div class="premium-auth-container">
+    <!-- Left Side -->
+    <div class="premium-auth-left">
+      <div class="premium-hero stagger-in">
+        <h1>Welcome Back to <span class="highlight">AI Hire</span></h1>
+        <p>Sign in to access your AI-powered job search dashboard. Track applications, get matched to roles, and discover opportunities that fit you best.</p>
+        
+        <div class="premium-stats">
+          <div class="premium-stat-card">
+            <div class="stat-icon"><i data-lucide="briefcase"></i></div>
+            <div class="stat-value">10K+</div>
+            <div class="stat-label">Active Jobs</div>
+          </div>
+          <div class="premium-stat-card">
+            <div class="stat-icon"><i data-lucide="users"></i></div>
+            <div class="stat-value">50K+</div>
+            <div class="stat-label">Candidates</div>
+          </div>
+          <div class="premium-stat-card">
+            <div class="stat-icon"><i data-lucide="building"></i></div>
+            <div class="stat-value">500+</div>
+            <div class="stat-label">Companies</div>
+          </div>
         </div>
-        <div class="field">
-          <input type="password" id="password" placeholder="Password" autocomplete="current-password" required />
-          <label for="password">Password</label>
-          <button type="button" class="toggle" id="pwToggle" aria-label="Show password" aria-pressed="false">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
-          </button>
-        </div>
-        <a class="forgot" href="forgot-password.html" style="display: block; text-align: right; margin-bottom: 1rem;">Forgot password?</a>
-        <label class="remember" style="margin-top: 1rem;">
-          <input type="checkbox" id="agreeTerms" name="agreeTerms" />
-          I agree to the <a href="terms-conditions.html" target="_blank" style="color: #8b5cf6;">Terms</a> and <a href="terms-conditions.html" target="_blank" style="color: #8b5cf6;">Privacy Policy</a>
-        </label>
-        <button class="btn btn-grad btn-block" type="submit">Sign In</button>
-      </form>
-      <div class="or">OR</div>
-      <div class="socials-auth">
-        <button class="social-btn" type="button" id="googleLoginBtn">
-          <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.5 12.2c0-.8-.07-1.4-.2-2H12v3.8h6c-.12 1-.77 2.5-2.2 3.5l3.4 2.6c2-1.8 3.3-4.6 3.3-7.9z"/><path fill="#34A853" d="M12 23c2.9 0 5.4-1 7.2-2.6l-3.4-2.6c-.9.6-2.1 1-3.8 1-2.9 0-5.4-2-6.3-4.7L2.2 16.8C4 20.5 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.7 14.1c-.2-.6-.4-1.3-.4-2.1s.15-1.5.4-2.1L2.2 7.2C1.4 8.7 1 10.3 1 12s.4 3.3 1.2 4.8l3.5-2.7z"/><path fill="#EA4335" d="M12 5.4c1.6 0 2.7.7 3.3 1.3l2.5-2.4C16.3 2.8 14.4 2 12 2 7.7 2 4 4.5 2.2 8.2l3.5 2.7C6.6 7.4 9.1 5.4 12 5.4z"/></svg>
-          Google
-        </button>
-        <button class="social-btn" type="button" id="githubLoginBtn">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.5c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.1-1.47-1.1-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.9.83.1-.65.36-1.08.64-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.9-1.29 2.74-1.02 2.74-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
-          GitHub
-        </button>
       </div>
-      <p class="signup-line">Don't have an account? <a href="register.html">Sign up</a></p>
     </div>
 
+    <!-- Right Side -->
+    <div class="premium-auth-right">
+      <div class="premium-card stagger-in">
+        <div class="premium-card-header">
+          <h2>Sign In</h2>
+          <p>Enter your credentials to access your account</p>
+        </div>
+
+        <form id="regForm" novalidate>
+          <!-- Google Button -->
+          <button type="button" id="googleLoginBtn" class="premium-google-btn">
+            <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.5 12.2c0-.8-.07-1.4-.2-2H12v3.8h6c-.12 1-.77 2.5-2.2 3.5l3.4 2.6c2-1.8 3.3-4.6 3.3-7.9z"/><path fill="#34A853" d="M12 23c2.9 0 5.4-1 7.2-2.6l-3.4-2.6c-.9.6-2.1 1-3.8 1-2.9 0-5.4-2-6.3-4.7L2.2 16.8C4 20.5 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.7 14.1c-.2-.6-.4-1.3-.4-2.1s.15-1.5.4-2.1L2.2 7.2C1.4 8.7 1 10.3 1 12s.4 3.3 1.2 4.8l3.5-2.7z"/><path fill="#EA4335" d="M12 5.4c1.6 0 2.7.7 3.3 1.3l2.5-2.4C16.3 2.8 14.4 2 12 2 7.7 2 4 4.5 2.2 8.2l3.5 2.7C6.6 7.4 9.1 5.4 12 5.4z"/></svg>
+            <span>Continue with Google</span>
+          </button>
+
+          <div class="premium-divider">
+            <span>OR</span>
+          </div>
+
+          <div class="form-grid">
+            <div class="premium-input-wrapper">
+              <input class="premium-input" type="email" id="email" name="email" placeholder="Email Address" autocomplete="email" />
+              <div class="icon"><i data-lucide="mail"></i></div>
+            </div>
+
+            <div class="premium-input-wrapper">
+              <input class="premium-input" type="password" id="password" name="password" placeholder="Password" autocomplete="current-password" />
+              <div class="icon"><i data-lucide="lock"></i></div>
+            </div>
+
+            <a class="forgot" href="forgot-password.html" style="display: block; text-align: right; margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.875rem; text-decoration: none;">Forgot password?</a>
+
+            <label class="premium-checkbox">
+              <input type="checkbox" id="agreeTerms" name="agreeTerms" />
+              <div class="checkmark">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span class="label">I agree to the <a href="terms-conditions.html" target="_blank">Terms</a> and <a href="terms-conditions.html" target="_blank">Privacy Policy</a></span>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button class="premium-btn" type="submit" id="submitBtn">Sign In</button>
+          </div>
+
+          <p style="text-align: center; color: var(--text-muted); font-size: 0.875rem; margin-top: 1.5rem;">
+            Don't have an account? <a href="register.html" style="color: #667eea; text-decoration: none;">Sign up</a>
+          </p>
+        </form>
+      </div>
+    </div>
   </div>
 </main>
 
@@ -111,5 +146,8 @@
 <script src="js/api.js"></script>
 <script src="js/auth-check.js"></script>
 <script src="js/login-handler.js"></script>
+<script>
+  lucide.createIcons();
+</script>
 </body>
 </html>
