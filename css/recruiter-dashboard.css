@@ -71,7 +71,7 @@
 .quick-action-btn span{font-size:.85rem; font-weight:500; color:var(--text);}
 
 /* ---------- dashboard content grid ---------- */
-.dashboard-content{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+.dashboard-content{display:grid; grid-template-columns:1fr; gap:24px;}
 .full-width{grid-column:1 / -1;}
 
 /* ---------- section cards ---------- */
@@ -114,7 +114,7 @@
 .applicant-match svg{width:12px; height:12px;}
 
 /* ---------- top candidates ---------- */
-.top-candidates-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:12px;}
+.top-candidates-grid{display:grid; grid-template-columns:1fr; gap:12px;}
 .candidate-card{
   display:flex; align-items:center; gap:12px; padding:14px; border-radius:14px;
   background:var(--glass); border:1px solid var(--glass-border); transition:all .25s;
