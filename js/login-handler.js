@@ -139,35 +139,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Handle forgot password
-  if (forgotPasswordLink) {
-    forgotPasswordLink.addEventListener('click', function(e) {
-      e.preventDefault();
-      const email = prompt('Enter your email address:');
-      if (email) {
-        handleForgotPassword(email);
-      }
-    });
-  }
-
-  function handleForgotPassword(email) {
-    setLoading(true);
-    api.forgotPassword(email)
-      .then(result => {
-        if (result.success) {
-          alert('Password reset email sent. Please check your inbox.');
-        } else {
-          showError(result.message || 'Failed to send reset email.');
-        }
-      })
-      .catch(error => {
-        showError('An error occurred. Please try again.');
-        console.error('Forgot password error:', error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }
+  // Handle forgot password links via default navigation to forgot-password.html
 
   function setLoading(loading) {
     if (loading) {
