@@ -22,15 +22,18 @@ router.get('/users/:id', protect, authorize('recruiter', 'admin'), authControlle
 // Google OAuth routes
 router.get('/google', (req, res, next) => {
   const frontendUrl = req.query.frontend_url || '';
-  const state = `login:candidate:${Buffer.from(frontendUrl).toString('base64')}`;
+  const stateId = req.query.state_id || '';
+  const state = `login:candidate:${Buffer.from(frontendUrl).toString('base64')}:${stateId}`;
   passport.authenticate('google', { scope: ['profile', 'email'], state })(req, res, next);
 });
 router.get('/google/signup', (req, res, next) => {
   const role = req.query.role || 'candidate';
   const frontendUrl = req.query.frontend_url || '';
-  const state = `new_user:${role}:${Buffer.from(frontendUrl).toString('base64')}`;
+  const stateId = req.query.state_id || '';
+  const state = `new_user:${role}:${Buffer.from(frontendUrl).toString('base64')}:${stateId}`;
   passport.authenticate('google', { scope: ['profile', 'email'], state })(req, res, next);
 });
+router.get('/google/status/:stateId', authController.getGoogleAuthStatus);
 router.get('/google/callback', (req, res, next) => {
   passport.authenticate('google', { session: false }, (err, user, info) => {
     if (err) {

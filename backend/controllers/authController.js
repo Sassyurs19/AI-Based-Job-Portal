@@ -415,30 +415,51 @@ const getUserById = async (req, res, next) => {
   }
 };
 
+global.oauthCache = global.oauthCache || new Map();
+
+const getGoogleAuthStatus = (req, res) => {
+  const { stateId } = req.params;
+  const cache = global.oauthCache;
+  if (cache && cache.has(stateId)) {
+    const data = cache.get(stateId);
+    cache.delete(stateId); // Clear after retrieval
+    return res.status(200).json({
+      success: true,
+      authenticated: true,
+      ...data
+    });
+  }
+  return res.status(200).json({
+    success: true,
+    authenticated: false
+  });
+};
+
 const googleAuthSuccess = async (req, res, next) => {
   try {
     const user = req.user;
+    const state = req.query.state || '';
+    const parts = state.split(':');
+    const stateId = parts[3] || '';
+    const frontendUrl = req.frontendUrl || process.env.FRONTEND_URL || 'http://localhost:5500';
 
     // Check if this was a signup attempt with existing email
     if (req.session && req.session.googleSignupError === 'EMAIL_EXISTS') {
       req.session.googleSignupError = null;
-      const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5500';
+      if (stateId) {
+        global.oauthCache = global.oauthCache || new Map();
+        global.oauthCache.set(stateId, { error: 'email_exists_use_google_login' });
+      }
       if (frontendUrl.startsWith('file:')) {
         res.send(`
           <!DOCTYPE html>
           <html>
           <head><title>Authentication Failed</title></head>
-          <body>
+          <body style="font-family: sans-serif; text-align: center; padding-top: 50px; background: #0f172a; color: white;">
+            <h2>Authentication Failed</h2>
+            <p>An account already exists with this email. This window will close automatically.</p>
             <script>
-              if (window.opener) {
-                window.opener.postMessage({
-                  type: 'google-auth-failure',
-                  error: 'email_exists_use_google_login'
-                }, '*');
-                window.close();
-              } else {
-                window.location.href = "${frontendUrl}/login.html?error=email_exists_use_google_login";
-              }
+              window.close();
             </script>
           </body>
           </html>
@@ -468,33 +489,31 @@ const googleAuthSuccess = async (req, res, next) => {
       });
     }
 
-    // Redirect to frontend with tokens
-    const frontendUrl = req.frontendUrl || process.env.FRONTEND_URL || 'http://localhost:5500';
-    
     // Check if user needs to complete profile (new Google user with minimal info)
     const needsProfileCompletion = user.provider === 'google' && 
       (!user.phone || !user.location || !user.skills || user.skills.length === 0);
     
+    // Store in cache for polling
+    if (stateId) {
+      global.oauthCache = global.oauthCache || new Map();
+      global.oauthCache.set(stateId, {
+        token,
+        refreshToken,
+        role: user.role,
+        completeProfile: needsProfileCompletion
+      });
+    }
+
     if (frontendUrl.startsWith('file:')) {
       res.send(`
         <!DOCTYPE html>
         <html>
         <head><title>Authentication Successful</title></head>
-        <body>
-          <p>Authentication successful. This window should close automatically.</p>
+        <body style="font-family: sans-serif; text-align: center; padding-top: 50px; background: #0f172a; color: white;">
+          <h2>Authentication Successful</h2>
+          <p>Sign in successful! This window will close automatically.</p>
           <script>
-            if (window.opener) {
-              window.opener.postMessage({
-                type: 'google-auth-success',
-                token: '${token}',
-                refreshToken: '${refreshToken}',
-                role: '${user.role}',
-                completeProfile: ${needsProfileCompletion}
-              }, '*');
-              window.close();
-            } else {
-              window.location.href = "${frontendUrl}/auth-callback.html?token=${token}&refreshToken=${refreshToken}&role=${user.role}${needsProfileCompletion ? '&completeProfile=true' : ''}";
-            }
+            window.close();
           </script>
         </body>
         </html>
@@ -516,6 +535,7 @@ const googleAuthFailure = (req, res) => {
   // Decode state if available to find proper frontend redirect URL
   const state = req.query.state || '';
   const parts = state.split(':');
+  const stateId = parts[3] || '';
   let frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5500';
   if (parts[2]) {
     try {
@@ -526,22 +546,21 @@ const googleAuthFailure = (req, res) => {
     frontendUrl = frontendUrl.slice(0, -1);
   }
   
+  if (stateId) {
+    global.oauthCache = global.oauthCache || new Map();
+    global.oauthCache.set(stateId, { error: 'google_auth_failed' });
+  }
+
   if (frontendUrl.startsWith('file:')) {
     res.send(`
       <!DOCTYPE html>
       <html>
       <head><title>Authentication Failed</title></head>
-      <body>
+      <body style="font-family: sans-serif; text-align: center; padding-top: 50px; background: #0f172a; color: white;">
+        <h2>Authentication Failed</h2>
+        <p>Google authentication failed. This window will close automatically.</p>
         <script>
-          if (window.opener) {
-            window.opener.postMessage({
-              type: 'google-auth-failure',
-              error: 'google_auth_failed'
-            }, '*');
-            window.close();
-          } else {
-            window.location.href = "${frontendUrl}/login.html?error=google_auth_failed";
-          }
+          window.close();
         </script>
       </body>
       </html>
@@ -692,5 +711,6 @@ module.exports = {
   googleAuthSuccess,
   googleAuthFailure,
   verifyEmailOTP,
-  resendOTP
+  resendOTP,
+  getGoogleAuthStatus
 };

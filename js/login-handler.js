@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
     googleLoginBtn.addEventListener('click', function() {
       const backendUrl = window.getBackendUrl ? window.getBackendUrl() : 'http://localhost:5000';
       const frontendUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
-      const authUrl = `${backendUrl}/api/auth/google?frontend_url=${encodeURIComponent(frontendUrl)}`;
+      const stateId = 'state_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      const authUrl = `${backendUrl}/api/auth/google?state_id=${stateId}&frontend_url=${encodeURIComponent(frontendUrl)}`;
       
       const width = 500;
       const height = 600;
@@ -37,33 +38,50 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
 
-      const messageListener = function(event) {
-        if (event.data && event.data.type === 'google-auth-success') {
-          const { token, refreshToken, role, completeProfile } = event.data;
-          api.setTokens(token, refreshToken);
-          api.getMe().then(result => {
-            if (result.success) {
-              api.setCurrentUser(result.user);
-              window.removeEventListener('message', messageListener);
-              if (completeProfile) {
-                window.location.href = role === 'candidate' ? 'complete-profile-candidate.html' : 'complete-profile-recruiter.html';
-              } else {
-                window.location.href = role === 'candidate' ? 'candidate-dashboard.html' : 'recruiter-dashboard.html';
-              }
-            }
-          }).catch(err => {
-            showError('Failed to fetch user profile details.');
-          });
-        } else if (event.data && event.data.type === 'google-auth-failure') {
-          const errorMsg = event.data.error === 'email_exists_use_google_login'
-            ? 'An account already exists with this email. Please sign in with Google.'
-            : 'Google authentication failed. Please try again.';
-          showError(errorMsg);
-          window.removeEventListener('message', messageListener);
+      // Polling interval
+      const pollInterval = setInterval(() => {
+        if (popup.closed) {
+          clearInterval(pollInterval);
         }
-      };
-
-      window.addEventListener('message', messageListener);
+        
+        fetch(`${backendUrl}/api/auth/google/status/${stateId}`)
+          .then(res => res.json())
+          .then(data => {
+            if (data.success && data.authenticated) {
+              clearInterval(pollInterval);
+              if (popup && !popup.closed) {
+                popup.close();
+              }
+              
+              const { token, refreshToken, role, completeProfile } = data;
+              api.setTokens(token, refreshToken);
+              api.getMe().then(result => {
+                if (result.success) {
+                  api.setCurrentUser(result.user);
+                  if (completeProfile) {
+                    window.location.href = role === 'candidate' ? 'complete-profile-candidate.html' : 'complete-profile-recruiter.html';
+                  } else {
+                    window.location.href = role === 'candidate' ? 'candidate-dashboard.html' : 'recruiter-dashboard.html';
+                  }
+                }
+              }).catch(err => {
+                showError('Failed to fetch user profile details.');
+              });
+            } else if (data.success && data.error) {
+              clearInterval(pollInterval);
+              if (popup && !popup.closed) {
+                popup.close();
+              }
+              const errorMsg = data.error === 'email_exists_use_google_login'
+                ? 'An account already exists with this email. Please sign in with Google.'
+                : 'Google authentication failed. Please try again.';
+              showError(errorMsg);
+            }
+          })
+          .catch(err => {
+            console.error('Error polling status:', err);
+          });
+      }, 1000);
     });
   }
 
