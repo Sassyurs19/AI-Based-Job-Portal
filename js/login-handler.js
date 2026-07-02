@@ -1,9 +1,9 @@
 // Login Handler
 document.addEventListener('DOMContentLoaded', function() {
-  const loginForm = document.querySelector('form[onsubmit="return false"]');
+  const loginForm = document.getElementById('regForm') || document.querySelector('form');
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
-  const submitButton = loginForm.querySelector('button[type="submit"]');
+  const submitButton = loginForm ? loginForm.querySelector('button[type="submit"]') : null;
   const forgotPasswordLink = document.querySelector('.forgot');
   const googleLoginBtn = document.getElementById('googleLoginBtn');
   const githubLoginBtn = document.getElementById('githubLoginBtn');
