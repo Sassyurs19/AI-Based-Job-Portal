@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', function() {
         userEmail = email;
         step1.style.display = 'none';
         step2.style.display = 'block';
-        showSuccess('Verification code sent to your email.');
+        const message = result.warning ? result.warning : 'Verification code sent to your email.';
+        showSuccess(message);
       } else {
         showError(result.message || 'Failed to send verification code.');
       }

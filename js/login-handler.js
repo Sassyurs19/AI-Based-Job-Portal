@@ -13,9 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Handle Google login
   if (googleLoginBtn) {
     googleLoginBtn.addEventListener('click', function() {
-      const backendUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-        ? 'http://localhost:5000'
-        : 'https://ai-based-job-portal-backend.onrender.com'; // Replace with your deployed backend URL
+      const backendUrl = window.getBackendUrl ? window.getBackendUrl() : 'http://localhost:5000';
       window.location.href = `${backendUrl}/api/auth/google`;
     });
   }

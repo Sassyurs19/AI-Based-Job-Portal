@@ -1,6 +1,11 @@
 const nodemailer = require('nodemailer');
 
 const sendEmail = async (options) => {
+  // Check if email credentials are configured
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
+    throw new Error('Email credentials not configured. Please set EMAIL_USER and EMAIL_PASSWORD in .env file.');
+  }
+
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST || 'smtp.gmail.com',
     port: process.env.EMAIL_PORT || 587,
@@ -23,7 +28,7 @@ const sendEmail = async (options) => {
     return true;
   } catch (error) {
     console.error('Email sending failed:', error);
-    return false;
+    throw new Error(`Failed to send email: ${error.message}`);
   }
 };
 

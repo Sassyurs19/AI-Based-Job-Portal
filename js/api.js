@@ -1,8 +1,6 @@
 // API Client with JWT Authentication
-// Configure API base URL based on environment
-const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-  ? 'http://localhost:5000/api'
-  : 'https://ai-based-job-portal-backend.onrender.com/api'; // Replace with your deployed backend URL
+// Load configuration
+const API_BASE_URL = window.getApiBaseUrl ? window.getApiBaseUrl() : 'http://localhost:5000/api';
 
 function getResolvedPath(target) {
   const inAdmin = window.location.pathname.includes('/admin/');

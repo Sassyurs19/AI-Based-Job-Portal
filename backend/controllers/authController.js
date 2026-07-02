@@ -199,11 +199,22 @@ const forgotPassword = async (req, res, next) => {
     // Send OTP email with template
     const html = getForgotPasswordOTP(user.name || 'User', otp);
 
-    await sendEmail({
-      email: user.email,
-      subject: 'Reset Your Password - AI Hire',
-      html
-    });
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: 'Reset Your Password - AI Hire',
+        html
+      });
+    } catch (emailError) {
+      console.error('Failed to send password reset email:', emailError);
+      // Return success anyway to prevent email enumeration
+      // But log the error for debugging
+      return res.status(200).json({
+        success: true,
+        message: 'If an account exists with this email, a password reset code has been sent.',
+        warning: 'Email service unavailable. Please contact support if you do not receive the code.'
+      });
+    }
 
     res.status(200).json({
       success: true,
