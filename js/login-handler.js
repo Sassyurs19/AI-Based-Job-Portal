@@ -10,11 +10,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (!loginForm) return;
 
+  // Check for Google login/signup errors from URL redirect
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlError = urlParams.get('error');
+  if (urlError === 'email_exists_use_google_login') {
+    showError('An account already exists with this email. Please sign in with Google.');
+  } else if (urlError === 'google_auth_failed') {
+    showError('Google authentication failed. Please try again.');
+  }
+
   // Handle Google login
   if (googleLoginBtn) {
     googleLoginBtn.addEventListener('click', function() {
       const backendUrl = window.getBackendUrl ? window.getBackendUrl() : 'http://localhost:5000';
-      window.location.href = `${backendUrl}/api/auth/google`;
+      const frontendUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
+      window.location.href = `${backendUrl}/api/auth/google?frontend_url=${encodeURIComponent(frontendUrl)}`;
     });
   }
 

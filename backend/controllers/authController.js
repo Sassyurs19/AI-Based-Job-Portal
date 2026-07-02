@@ -50,11 +50,18 @@ const register = async (req, res, next) => {
     // Send OTP email with template
     const html = getEmailVerificationOTP(name || 'User', otp);
 
-    await sendEmail({
-      email: user.email,
-      subject: 'Verify Your Email - AI Hire',
-      html
-    });
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: 'Verify Your Email - AI Hire',
+        html
+      });
+    } catch (emailError) {
+      console.error('Failed to send email verification OTP:', emailError);
+      console.log(`\n==================================================`);
+      console.log(`[DEVELOPMENT / TESTING] OTP for ${user.email} is: ${otp}`);
+      console.log(`==================================================\n`);
+    }
 
     res.status(201).json({
       success: true,
@@ -245,11 +252,15 @@ const resetPassword = async (req, res, next) => {
     // Send password reset confirmation email
     const html = getPasswordResetConfirmation(user.name || 'User');
 
-    await sendEmail({
-      email: user.email,
-      subject: 'Password Reset Successful - AI Hire',
-      html
-    });
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: 'Password Reset Successful - AI Hire',
+        html
+      });
+    } catch (emailError) {
+      console.error('Failed to send password reset confirmation email:', emailError);
+    }
 
     res.status(200).json({
       success: true,
@@ -424,15 +435,17 @@ const googleAuthSuccess = async (req, res, next) => {
     const isNewUser = user.createdAt && (Date.now() - new Date(user.createdAt).getTime()) < 5 * 60 * 1000;
     if (isNewUser && user.provider === 'google') {
       const html = getWelcomeEmail(user.name || 'User', user.role);
-      await sendEmail({
+      sendEmail({
         email: user.email,
         subject: 'Welcome to AI Hire!',
         html
+      }).catch(err => {
+        console.error('Failed to send Google OAuth welcome email:', err);
       });
     }
 
     // Redirect to frontend with tokens
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5500';
+    const frontendUrl = req.frontendUrl || process.env.FRONTEND_URL || 'http://localhost:5500';
     
     // Check if user needs to complete profile (new Google user with minimal info)
     const needsProfileCompletion = user.provider === 'google' && 
@@ -449,7 +462,18 @@ const googleAuthSuccess = async (req, res, next) => {
 };
 
 const googleAuthFailure = (req, res) => {
-  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5500';
+  // Decode state if available to find proper frontend redirect URL
+  const state = req.query.state || '';
+  const parts = state.split(':');
+  let frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5500';
+  if (parts[2]) {
+    try {
+      frontendUrl = Buffer.from(parts[2], 'base64').toString('utf8');
+    } catch (err) {}
+  }
+  if (frontendUrl.endsWith('/')) {
+    frontendUrl = frontendUrl.slice(0, -1);
+  }
   res.redirect(`${frontendUrl}/login.html?error=google_auth_failed`);
 };
 
@@ -486,6 +510,16 @@ const verifyEmailOTP = async (req, res, next) => {
     user.verificationOTP = undefined;
     user.verificationOTPExpiry = undefined;
     await user.save();
+
+    // Send welcome email asynchronously
+    const welcomeHtml = getWelcomeEmail(user.name || 'User', user.role);
+    sendEmail({
+      email: user.email,
+      subject: 'Welcome to AI Hire!',
+      html: welcomeHtml
+    }).catch(err => {
+      console.error('Failed to send welcome email to verified user:', err);
+    });
 
     // Generate tokens
     const token = generateToken(user._id);
@@ -546,11 +580,18 @@ const resendOTP = async (req, res, next) => {
       <p>This code will expire in 10 minutes.</p>
     `;
 
-    await sendEmail({
-      email: user.email,
-      subject: 'Verify Your Email - AI Job Portal',
-      html
-    });
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: 'Verify Your Email - AI Job Portal',
+        html
+      });
+    } catch (emailError) {
+      console.error('Failed to send verification OTP via email:', emailError);
+      console.log(`\n==================================================`);
+      console.log(`[DEVELOPMENT / TESTING] Resent OTP for ${user.email} is: ${otp}`);
+      console.log(`==================================================\n`);
+    }
 
     res.status(200).json({
       success: true,

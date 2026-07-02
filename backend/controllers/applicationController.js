@@ -313,9 +313,17 @@ const getApplicationById = async (req, res, next) => {
         message: 'Application not found'
       });
     }
+
+    // Fetch matching ResumeAnalysis if it exists
+    const analysis = await ResumeAnalysis.findOne({
+      user: application.applicant._id,
+      job: application.job._id
+    });
+
     res.status(200).json({
       success: true,
-      application
+      application,
+      analysis: analysis || null
     });
   } catch (error) {
     next(error);

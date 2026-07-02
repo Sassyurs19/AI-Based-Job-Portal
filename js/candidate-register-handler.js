@@ -6,6 +6,16 @@ document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('regForm');
   if (!form) return;
 
+  // Check for error parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlError = urlParams.get('error');
+  if (urlError === 'account_not_found') {
+    // We defer showing error slightly to ensure form is fully set up
+    setTimeout(() => {
+      showError('No account found for this Google email. Please register/create an account first.');
+    }, 100);
+  }
+
   let registeredUserId = null;
   let registeredEmail = null;
   let isOTPMode = false;
@@ -63,7 +73,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if (googleSignupBtn) {
     googleSignupBtn.addEventListener('click', function() {
       const backendUrl = window.getBackendUrl ? window.getBackendUrl() : 'http://localhost:5000';
-      window.location.href = `${backendUrl}/api/auth/google/signup`;
+      const frontendUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
+      window.location.href = `${backendUrl}/api/auth/google/signup?role=candidate&frontend_url=${encodeURIComponent(frontendUrl)}`;
     });
   }
 
@@ -114,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const formData = {
         name: `${firstName} ${lastName}`,
         email: email,
-        password: 'temp_password_' + Date.now(), // Temporary password
+        password: 'Temp_password_' + Date.now(), // Temporary password
         role: 'candidate'
       };
 

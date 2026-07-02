@@ -14,7 +14,9 @@ passport.use(
     },
     async (req, accessToken, refreshToken, profile, done) => {
       try {
-        const isNewUser = req.query.state === 'new_user';
+        const state = req.query.state || '';
+        const isNewUser = state.startsWith('new_user');
+        const role = state.split(':')[1] || 'candidate';
 
         // Check if user already exists with this Google ID
         let user = await User.findOne({ googleId: profile.id });
@@ -42,6 +44,11 @@ passport.use(
           return done(null, user);
         }
 
+        // If not isNewUser and user doesn't exist, they are trying to login
+        if (!isNewUser) {
+          return done(null, false, { message: 'ACCOUNT_NOT_FOUND' });
+        }
+
         // Create new user
         user = await User.create({
           name: profile.displayName,
@@ -50,7 +57,7 @@ passport.use(
           provider: 'google',
           avatar: profile.photos[0]?.value || '',
           password: Math.random().toString(36).slice(-8), // Random password for OAuth users
-          role: 'candidate', // Default role for OAuth users
+          role: role, // Use selected role from state parameter
           isVerified: true // Google accounts are pre-verified
         });
 

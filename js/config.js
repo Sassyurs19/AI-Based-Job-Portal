@@ -2,7 +2,10 @@
 // Update BACKEND_URL to your deployed backend URL
 const CONFIG = {
   // Backend API URL - change this to your deployed backend URL
-  BACKEND_URL: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  BACKEND_URL: window.location.hostname === 'localhost' || 
+               window.location.hostname === '127.0.0.1' || 
+               window.location.hostname === '' || 
+               window.location.protocol === 'file:'
     ? 'http://localhost:5000'
     : 'https://ai-based-job-portal-backend.onrender.com',
   

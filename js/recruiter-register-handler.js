@@ -63,7 +63,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if (googleSignupBtn) {
     googleSignupBtn.addEventListener('click', function() {
       const backendUrl = window.getBackendUrl ? window.getBackendUrl() : 'http://localhost:5000';
-      window.location.href = `${backendUrl}/api/auth/google/signup`;
+      const frontendUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
+      window.location.href = `${backendUrl}/api/auth/google/signup?role=recruiter&frontend_url=${encodeURIComponent(frontendUrl)}`;
     });
   }
 
@@ -114,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const formData = {
         name: `${firstName} ${lastName}`,
         email: email,
-        password: 'temp_password_' + Date.now(), // Temporary password
+        password: 'Temp_password_' + Date.now(), // Temporary password
         role: 'recruiter'
       };
 

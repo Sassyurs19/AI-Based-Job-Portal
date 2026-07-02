@@ -172,13 +172,13 @@ function handleFilter(e) {
 }
 
 async function acceptApplication(applicationId) {
-  if (!confirm('Are you sure you want to accept this application?')) return;
+  if (!confirm('Are you sure you want to shortlist this application?')) return;
 
   try {
-    const result = await api.updateApplicationStatus(applicationId, 'accepted');
+    const result = await api.updateApplicationStatus(applicationId, 'shortlisted');
     
     if (result.success) {
-      showSuccess('Application accepted');
+      showSuccess('Application shortlisted');
       // Reload applicants
       const jobSelect = document.getElementById('jobSelect');
       if (jobSelect && jobSelect.value) {
@@ -187,7 +187,7 @@ async function acceptApplication(applicationId) {
         loadAllApplicants();
       }
     } else {
-      showError(result.message || 'Failed to accept application');
+      showError(result.message || 'Failed to shortlist application');
     }
   } catch (error) {
     showError('An error occurred. Please try again.');
@@ -234,9 +234,11 @@ function formatStatus(status) {
   const statusMap = {
     'pending': 'Pending',
     'reviewed': 'Under Review',
+    'shortlisted': 'Shortlisted',
     'accepted': 'Accepted',
     'rejected': 'Rejected',
-    'interview': 'Interview'
+    'interview': 'Interview',
+    'hired': 'Hired'
   };
   return statusMap[status] || status;
 }

@@ -123,9 +123,11 @@ function formatStatus(status) {
   const statusMap = {
     'pending': 'Pending',
     'reviewed': 'Under Review',
+    'shortlisted': 'Shortlisted',
     'accepted': 'Accepted',
     'rejected': 'Rejected',
-    'interview': 'Interview'
+    'interview': 'Interview',
+    'hired': 'Hired'
   };
   return statusMap[status] || status;
 }
