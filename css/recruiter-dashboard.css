@@ -1,6 +1,6 @@
 /* ---------- recruiter dashboard layout ---------- */
 .dashboard-wrap{min-height:calc(100vh - 72px); padding:clamp(20px,4vw,40px) 0;}
-.dashboard-grid{display:grid; grid-template-columns:260px 1fr; gap:clamp(24px,4vw,40px); align-items:start;}
+.dashboard-grid{display:grid; grid-template-columns:1fr; gap:clamp(24px,4vw,40px); align-items:stretch;}
 
 /* ---------- sidebar ---------- */
 .sidebar{
