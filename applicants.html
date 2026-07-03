@@ -67,6 +67,87 @@
       <p>Review and manage candidates for your open positions</p>
     </div>
 
+    <!-- Applicant Stats -->
+    <div class="sidebar-card" style="margin-bottom: 32px;">
+      <div class="stats-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px;">
+        <div class="stat-item" style="flex-direction: column; text-align: center; gap: 4px; padding: 12px; margin: 0; background: var(--glass); border: 1px solid var(--glass-border);">
+          <span class="stat-item-label" style="font-size: 0.85rem; font-weight: 500; color: var(--muted);">Total Applicants</span>
+          <span class="stat-item-value" style="font-size: 1.8rem; font-family: 'Space Grotesk'; font-weight: 700; color: #fff;">48</span>
+        </div>
+        <div class="stat-item" style="flex-direction: column; text-align: center; gap: 4px; padding: 12px; margin: 0; background: var(--glass); border: 1px solid var(--glass-border);">
+          <span class="stat-item-label" style="font-size: 0.85rem; font-weight: 500; color: var(--muted);">New</span>
+          <span class="stat-item-value" style="font-size: 1.8rem; font-family: 'Space Grotesk'; font-weight: 700; color: var(--blue);">12</span>
+        </div>
+        <div class="stat-item" style="flex-direction: column; text-align: center; gap: 4px; padding: 12px; margin: 0; background: var(--glass); border: 1px solid var(--glass-border);">
+          <span class="stat-item-label" style="font-size: 0.85rem; font-weight: 500; color: var(--muted);">Shortlisted</span>
+          <span class="stat-item-value" style="font-size: 1.8rem; font-family: 'Space Grotesk'; font-weight: 700; color: #22c55e;">8</span>
+        </div>
+        <div class="stat-item" style="flex-direction: column; text-align: center; gap: 4px; padding: 12px; margin: 0; background: var(--glass); border: 1px solid var(--glass-border);">
+          <span class="stat-item-label" style="font-size: 0.85rem; font-weight: 500; color: var(--muted);">Rejected</span>
+          <span class="stat-item-value" style="font-size: 1.8rem; font-family: 'Space Grotesk'; font-weight: 700; color: #f87171;">5</span>
+        </div>
+        <div class="stat-item" style="flex-direction: column; text-align: center; gap: 4px; padding: 12px; margin: 0; background: var(--glass); border: 1px solid var(--glass-border);">
+          <span class="stat-item-label" style="font-size: 0.85rem; font-weight: 500; color: var(--muted);">Avg. AI Match</span>
+          <span class="stat-item-value" style="font-size: 1.8rem; font-family: 'Space Grotesk'; font-weight: 700; color: var(--purple);">88%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top 5 Candidates Section -->
+    <div class="top-candidates-card" style="margin-bottom: 32px; background: linear-gradient(160deg,rgba(30,41,59,.65),rgba(15,23,42,.65)); border: 1px solid var(--glass-border); border-radius: 22px; padding: 24px;">
+      <h3 style="margin-bottom: 20px; font-size: 1.2rem; display: flex; align-items: center; gap: 10px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width: 22px; height: 22px; color: var(--purple);"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+        Top AI Matched Candidates
+      </h3>
+      <div class="top-candidates-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+        <div class="top-candidate-item" style="padding: 16px; margin: 0; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; display: flex; align-items: center; gap: 12px;">
+          <div class="top-candidate-rank rank-1" style="width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; font-family: 'Space Grotesk'; font-weight: 700; background: linear-gradient(135deg,#ffd700,#ffec8b); color: #1a1a1a;">1</div>
+          <div class="top-candidate-avatar">JD</div>
+          <div class="top-candidate-info" style="flex: 1;">
+            <h4 style="margin: 0; font-size: 0.95rem;">John Doe</h4>
+            <p style="margin: 0; font-size: 0.78rem; color: var(--muted);">Senior ML Engineer</p>
+          </div>
+          <div class="top-candidate-match" style="font-size: 0.75rem; font-weight: 600; padding: 4px 8px; border-radius: 999px; background: rgba(34,197,94,.15); color: #22c55e;">97%</div>
+        </div>
+        <div class="top-candidate-item" style="padding: 16px; margin: 0; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; display: flex; align-items: center; gap: 12px;">
+          <div class="top-candidate-rank rank-2" style="width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; font-family: 'Space Grotesk'; font-weight: 700; background: linear-gradient(135deg,#c0c0c0,#e8e8e8); color: #1a1a1a;">2</div>
+          <div class="top-candidate-avatar">SM</div>
+          <div class="top-candidate-info" style="flex: 1;">
+            <h4 style="margin: 0; font-size: 0.95rem;">Sarah Miller</h4>
+            <p style="margin: 0; font-size: 0.78rem; color: var(--muted);">Data Scientist</p>
+          </div>
+          <div class="top-candidate-match" style="font-size: 0.75rem; font-weight: 600; padding: 4px 8px; border-radius: 999px; background: rgba(34,197,94,.15); color: #22c55e;">94%</div>
+        </div>
+        <div class="top-candidate-item" style="padding: 16px; margin: 0; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; display: flex; align-items: center; gap: 12px;">
+          <div class="top-candidate-rank rank-3" style="width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; font-family: 'Space Grotesk'; font-weight: 700; background: linear-gradient(135deg,#cd7f32,#e6a86c); color: #1a1a1a;">3</div>
+          <div class="top-candidate-avatar">LC</div>
+          <div class="top-candidate-info" style="flex: 1;">
+            <h4 style="margin: 0; font-size: 0.95rem;">Lisa Chen</h4>
+            <p style="margin: 0; font-size: 0.78rem; color: var(--muted);">Data Scientist</p>
+          </div>
+          <div class="top-candidate-match" style="font-size: 0.75rem; font-weight: 600; padding: 4px 8px; border-radius: 999px; background: rgba(34,197,94,.15); color: #22c55e;">92%</div>
+        </div>
+        <div class="top-candidate-item" style="padding: 16px; margin: 0; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; display: flex; align-items: center; gap: 12px;">
+          <div class="top-candidate-rank rank-other" style="width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; font-family: 'Space Grotesk'; font-weight: 700; background: rgba(99,102,241,.15); color: var(--purple);">4</div>
+          <div class="top-candidate-avatar">MJ</div>
+          <div class="top-candidate-info" style="flex: 1;">
+            <h4 style="margin: 0; font-size: 0.95rem;">Michael Johnson</h4>
+            <p style="margin: 0; font-size: 0.78rem; color: var(--muted);">AI Product Lead</p>
+          </div>
+          <div class="top-candidate-match" style="font-size: 0.75rem; font-weight: 600; padding: 4px 8px; border-radius: 999px; background: rgba(34,197,94,.15); color: #22c55e;">91%</div>
+        </div>
+        <div class="top-candidate-item" style="padding: 16px; margin: 0; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; display: flex; align-items: center; gap: 12px;">
+          <div class="top-candidate-rank rank-other" style="width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; font-family: 'Space Grotesk'; font-weight: 700; background: rgba(99,102,241,.15); color: var(--purple);">5</div>
+          <div class="top-candidate-avatar">EW</div>
+          <div class="top-candidate-info" style="flex: 1;">
+            <h4 style="margin: 0; font-size: 0.95rem;">Emily Wilson</h4>
+            <p style="margin: 0; font-size: 0.78rem; color: var(--muted);">ML Researcher</p>
+          </div>
+          <div class="top-candidate-match" style="font-size: 0.75rem; font-weight: 600; padding: 4px 8px; border-radius: 999px; background: rgba(34,197,94,.15); color: #22c55e;">89%</div>
+        </div>
+      </div>
+    </div>
+
     <div class="applicants-grid">
       
       <!-- Main Content -->
@@ -440,108 +521,6 @@
 
       </div>
 
-      <!-- Sidebar -->
-      <aside class="applicants-sidebar">
-        
-        <!-- AI Ranking -->
-        <div class="top-candidates-card">
-          <h3>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
-            Top 5 Candidates
-          </h3>
-          <div class="top-candidates-list">
-            <div class="top-candidate-item">
-              <div class="top-candidate-rank rank-1">1</div>
-              <div class="top-candidate-avatar">JD</div>
-              <div class="top-candidate-info">
-                <h4>John Doe</h4>
-                <p>Senior ML Engineer</p>
-              </div>
-              <div class="top-candidate-match">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
-                97%
-              </div>
-            </div>
-            <div class="top-candidate-item">
-              <div class="top-candidate-rank rank-2">2</div>
-              <div class="top-candidate-avatar">SM</div>
-              <div class="top-candidate-info">
-                <h4>Sarah Miller</h4>
-                <p>Data Scientist</p>
-              </div>
-              <div class="top-candidate-match">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
-                94%
-              </div>
-            </div>
-            <div class="top-candidate-item">
-              <div class="top-candidate-rank rank-3">3</div>
-              <div class="top-candidate-avatar">LC</div>
-              <div class="top-candidate-info">
-                <h4>Lisa Chen</h4>
-                <p>Data Scientist</p>
-              </div>
-              <div class="top-candidate-match">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
-                92%
-              </div>
-            </div>
-            <div class="top-candidate-item">
-              <div class="top-candidate-rank rank-other">4</div>
-              <div class="top-candidate-avatar">MJ</div>
-              <div class="top-candidate-info">
-                <h4>Michael Johnson</h4>
-                <p>AI Product Manager</p>
-              </div>
-              <div class="top-candidate-match">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
-                91%
-              </div>
-            </div>
-            <div class="top-candidate-item">
-              <div class="top-candidate-rank rank-other">5</div>
-              <div class="top-candidate-avatar">EW</div>
-              <div class="top-candidate-info">
-                <h4>Emily Wilson</h4>
-                <p>ML Research Scientist</p>
-              </div>
-              <div class="top-candidate-match">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
-                89%
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Stats -->
-        <div class="sidebar-card">
-          <h3>Applicant Stats</h3>
-          <div class="stats-list">
-            <div class="stat-item">
-              <span class="stat-item-label">Total Applicants</span>
-              <span class="stat-item-value">48</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-item-label">New</span>
-              <span class="stat-item-value">12</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-item-label">Shortlisted</span>
-              <span class="stat-item-value">8</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-item-label">Rejected</span>
-              <span class="stat-item-value">5</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-item-label">Avg. AI Match</span>
-              <span class="stat-item-value">88%</span>
-            </div>
-          </div>
-        </div>
-
-      </aside>
-
     </div>
   </div>
 </main>
@@ -551,6 +530,5 @@
 <script src="js/api.js"></script>
 <script src="js/auth-guard.js"></script>
 <script src="js/applicants.js"></script>
-<script src="js/applicants-handler.js"></script>
 </body>
 </html>

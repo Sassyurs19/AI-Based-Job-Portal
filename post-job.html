@@ -224,129 +224,46 @@
 
         </form>
 
+        <!-- Job Optimization Assistant -->
+        <div class="optimization-assistant" style="margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+          <!-- Job Quality Score -->
+          <div class="sidebar-card" style="margin: 0;">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              Job Quality Score
+            </h3>
+            <div class="quality-score" style="display: flex; align-items: center; gap: 20px;">
+              <div class="quality-score-ring" style="position: relative; width: 80px; height: 80px; flex-shrink: 0;">
+                <svg width="80" height="80" style="transform: rotate(-90deg);">
+                  <circle class="quality-score-ring-bg" cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4"/>
+                  <circle class="quality-score-ring-fill" cx="40" cy="40" r="34" fill="none" stroke="var(--grad)" stroke-width="4" stroke-linecap="round" stroke-dasharray="213.63" stroke-dashoffset="42.72"/>
+                </svg>
+                <div class="quality-score-text" style="position: absolute; inset: 0; display: grid; place-items: center; font-family: 'Space Grotesk'; font-size: 1.2rem; font-weight: 700;">80%</div>
+              </div>
+              <div class="quality-score-label" style="font-size: 0.8rem; color: var(--muted);">Complete all fields to improve matching score.</div>
+            </div>
+          </div>
+
+          <!-- Recommended Skills -->
+          <div class="sidebar-card" style="margin: 0;">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17-2 2"/></svg>
+              Recommended Skills
+            </h3>
+            <div class="recommended-skills" style="display: flex; flex-wrap: wrap; gap: 6px;">
+              <span class="recommended-skill">Python</span>
+              <span class="recommended-skill">TensorFlow</span>
+              <span class="recommended-skill">PyTorch</span>
+              <span class="recommended-skill">Machine Learning</span>
+              <span class="recommended-skill">Deep Learning</span>
+              <span class="recommended-skill">SQL</span>
+              <span class="recommended-skill">AWS</span>
+              <span class="recommended-skill">Docker</span>
+            </div>
+          </div>
+        </div>
+
       </div>
-
-      <!-- Sidebar -->
-      <aside class="post-job-sidebar">
-        
-        <!-- AI Suggestions -->
-        <div class="sidebar-card">
-          <h3>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            AI Suggestions
-          </h3>
-          <div class="suggestions-list">
-            <div class="suggestion-item">
-              <div class="suggestion-item-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-              </div>
-              <div class="suggestion-item-content">
-                <h4>Add quantifiable metrics</h4>
-                <p>Include specific KPIs and success metrics to attract top talent</p>
-              </div>
-            </div>
-            <div class="suggestion-item">
-              <div class="suggestion-item-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-              </div>
-              <div class="suggestion-item-content">
-                <h4>Highlight growth opportunities</h4>
-                <p>Mention career progression and learning opportunities</p>
-              </div>
-            </div>
-            <div class="suggestion-item">
-              <div class="suggestion-item-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-              </div>
-              <div class="suggestion-item-content">
-                <h4>Showcase company culture</h4>
-                <p>Describe team dynamics and work environment</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Job Quality Score -->
-        <div class="sidebar-card">
-          <h3>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            Job Quality Score
-          </h3>
-          <div class="quality-score">
-            <div class="quality-score-ring">
-              <svg width="100" height="100">
-                <circle class="quality-score-ring-bg" cx="50" cy="50" r="42"/>
-                <circle class="quality-score-ring-fill" cx="50" cy="50" r="42" stroke-dasharray="263.89" stroke-dashoffset="52.78"/>
-              </svg>
-              <div class="quality-score-text">80%</div>
-            </div>
-            <div class="quality-score-label">Complete all fields to improve score</div>
-          </div>
-        </div>
-
-        <!-- Recommended Skills -->
-        <div class="sidebar-card">
-          <h3>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17-2 2"/></svg>
-            Recommended Skills
-          </h3>
-          <div class="recommended-skills">
-            <span class="recommended-skill">Python</span>
-            <span class="recommended-skill">TensorFlow</span>
-            <span class="recommended-skill">PyTorch</span>
-            <span class="recommended-skill">Machine Learning</span>
-            <span class="recommended-skill">Deep Learning</span>
-            <span class="recommended-skill">SQL</span>
-            <span class="recommended-skill">AWS</span>
-            <span class="recommended-skill">Docker</span>
-          </div>
-        </div>
-
-        <!-- ATS Optimization Tips -->
-        <div class="sidebar-card">
-          <h3>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>
-            ATS Optimization Tips
-          </h3>
-          <div class="tips-list">
-            <div class="tip-item">
-              <div class="tip-item-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
-              </div>
-              <div class="tip-item-content">
-                <p>Use standard job titles for better ATS matching</p>
-              </div>
-            </div>
-            <div class="tip-item">
-              <div class="tip-item-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
-              </div>
-              <div class="tip-item-content">
-                <p>Include industry-specific keywords naturally</p>
-              </div>
-            </div>
-            <div class="tip-item">
-              <div class="tip-item-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
-              </div>
-              <div class="tip-item-content">
-                <p>Structure with clear sections and bullet points</p>
-              </div>
-            </div>
-            <div class="tip-item">
-              <div class="tip-item-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
-              </div>
-              <div class="tip-item-content">
-                <p>Avoid jargon and keep language accessible</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </aside>
-
-    </div>
   </div>
 </main>
 
@@ -355,6 +272,5 @@
 <script src="js/api.js"></script>
 <script src="js/auth-guard.js"></script>
 <script src="js/post-job.js"></script>
-<script src="js/post-job-handler.js"></script>
 </body>
 </html>

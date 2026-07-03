@@ -1,6 +1,6 @@
 /* ---------- applications layout ---------- */
 .applications-wrap{min-height:calc(100vh - 72px); padding:clamp(24px,4vw,48px) 0;}
-.applications-grid{display:grid; grid-template-columns:1fr 340px; gap:clamp(32px,5vw,48px); align-items:start;}
+.applications-grid{display:grid; grid-template-columns:1fr; gap:28px; align-items:start; max-width:920px; margin:0 auto;}
 
 /* ---------- page header ---------- */
 .page-header{margin-bottom:32px;}

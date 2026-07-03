@@ -1,7 +1,8 @@
-// Premium Recruiter Dashboard Handler
+// Consolidated Recruiter Dashboard script
+
 document.addEventListener('DOMContentLoaded', function() {
   // Protect route
-  if (!protectRecruiterRoute()) return;
+  if (window.protectRecruiterRoute && !protectRecruiterRoute()) return;
 
   // Initial welcome layout setup
   updateRecruiterHeader();
@@ -22,7 +23,7 @@ function updateRecruiterHeader() {
 
 async function loadDashboardWidgets() {
   try {
-    // 1. Fetch dashboard statistics, recent jobs, and recent applications
+    // Fetch dashboard statistics, recent jobs, and recent applications
     const result = await api.getRecruiterDashboard();
     
     if (result.success) {
@@ -31,7 +32,6 @@ async function loadDashboardWidgets() {
       populateRecentApplications(result.recentApplications);
       updateHiringIndex(result.stats);
     }
-
   } catch (error) {
     console.error('Error loading recruiter dashboard widgets:', error);
   }
@@ -54,7 +54,7 @@ function updatePipelineFunnel(stats) {
 function updateHiringIndex(stats) {
   if (!stats) return;
 
-  // Compute a mock/calculated hiring success index
+  // Compute hiring success index dynamically
   const total = stats.totalApplications || 0;
   const processed = (stats.shortlistedApplications || 0) + (stats.hiredApplications || 0);
   
@@ -62,12 +62,10 @@ function updateHiringIndex(stats) {
   if (total > 0) {
     score = Math.round((processed / total) * 100);
     // Smooth to premium range (e.g. 70-98%)
-    score = Math.max(70, Math.min(98, score + 65));
+    score = Math.max(70, Math.min(98, score + 15));
   }
 
   const matchScoreEl = document.querySelector('.match-score');
-  const radarCircle = document.querySelector('.radar-circle');
-
   if (matchScoreEl) {
     matchScoreEl.textContent = `${score}%`;
   }
@@ -116,7 +114,7 @@ function populateRecentApplications(applications) {
   if (!applications || applications.length === 0) {
     container.innerHTML = `
       <p style="color: var(--muted); padding: 12px; text-align: center;">
-        No candidate matches discovered yet.
+        No candidate applications received yet.
       </p>
     `;
     return;

@@ -1,299 +1,334 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Complete Your Profile — AI Hire</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="css/common.css" />
   <link rel="stylesheet" href="css/form.css" />
   <link rel="stylesheet" href="css/auth.css" />
 </head>
+
 <body>
-<canvas id="bg" aria-hidden="true"></canvas>
-<div class="vignette" aria-hidden="true"></div>
-<div class="orb a"></div><div class="orb b"></div><div class="orb c"></div>
+  <canvas id="bg" aria-hidden="true"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="orb a"></div>
+  <div class="orb b"></div>
+  <div class="orb c"></div>
 
-<!-- ===== NAVBAR ===== -->
-<header>
-  <div class="container">
-    <nav class="nav">
-      <a class="logo" href="index.html"><span class="dot">AI</span> AI Hire</a>
-      <ul class="nav-links">
-        <li><a href="index.html#home">Home</a></li>
-        <li><a href="index.html#jobs">Jobs</a></li>
-        <li><a href="index.html#companies">Companies</a></li>
-        <li><a href="index.html#how">About</a></li>
-        <li><a href="index.html#footer">Contact</a></li>
-      </ul>
-      <div class="nav-actions">
-        <a class="btn btn-ghost" href="login.html">Login</a>
-        <a class="btn btn-grad" href="register.html">Register</a>
-      </div>
-      <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="panel">
-        <span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span>
-      </button>
+  <!-- ===== NAVBAR ===== -->
+  <header>
+    <div class="container">
+      <nav class="nav">
+        <a class="logo" href="index.html"><span class="dot">AI</span> AI Hire</a>
+        <ul class="nav-links">
+          <li><a href="index.html#home">Home</a></li>
+          <li><a href="index.html#jobs">Jobs</a></li>
+          <li><a href="index.html#companies">Companies</a></li>
+          <li><a href="index.html#how">About</a></li>
+          <li><a href="index.html#footer">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a class="btn btn-ghost" href="login.html">Login</a>
+          <a class="btn btn-grad" href="register.html">Register</a>
+        </div>
+        <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false"
+          aria-controls="panel">
+          <span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== MOBILE OFF-CANVAS ===== -->
+  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
+  <aside class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <a class="logo panel-brand" href="index.html"><span class="dot">AI</span> AI Hire</a>
+    <nav class="panel-links">
+      <a href="index.html#home">Home</a>
+      <a href="index.html#jobs">Jobs</a>
+      <a href="index.html#companies">Companies</a>
+      <a href="index.html#how">About</a>
+      <a href="index.html#footer">Contact</a>
     </nav>
-  </div>
-</header>
+    <div class="panel-actions">
+      <a class="btn btn-ghost" href="login.html">Login</a>
+      <a class="btn btn-grad" href="register.html">Register</a>
+    </div>
+  </aside>
 
-<!-- ===== MOBILE OFF-CANVAS ===== -->
-<div class="backdrop" id="backdrop" aria-hidden="true"></div>
-<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Navigation menu">
-  <a class="logo panel-brand" href="index.html"><span class="dot">AI</span> AI Hire</a>
-  <nav class="panel-links">
-    <a href="index.html#home">Home</a>
-    <a href="index.html#jobs">Jobs</a>
-    <a href="index.html#companies">Companies</a>
-    <a href="index.html#how">About</a>
-    <a href="index.html#footer">Contact</a>
-  </nav>
-  <div class="panel-actions">
-    <a class="btn btn-ghost" href="login.html">Login</a>
-    <a class="btn btn-grad" href="register.html">Register</a>
-  </div>
-</aside>
+  <!-- ===== FORM SECTION ===== -->
+  <section class="form-wrap">
+    <div class="container">
+      <div class="auth-grid">
 
-<!-- ===== FORM SECTION ===== -->
-<section class="form-wrap">
-  <div class="container">
-    <div class="auth-grid">
-      
-      <!-- LEFT SIDE: Profile Benefits & Visual -->
-      <div class="auth-left enter d1">
-        <span class="eyebrow">Complete Your Profile</span>
-        <h2>Supercharge Your <span class="grad-text">Job Search</span></h2>
-        <p class="lead">Provide your details to unlock AI-powered job matching, instant ATS resume scoring, and direct recruiter outreach.</p>
-        
-        <div class="auth-visual" aria-hidden="true" style="margin-top: 1.5rem;">
-          <div class="fcard fc1"><span class="pip"></span><div><small>Hiring Chance</small><b>+85%</b></div></div>
-          <div class="fcard fc2"><div><small>Profile Status</small><b class="grad-text">Active</b></div></div>
-          <div class="fcard fc3"><div><small>Match Engine</small><b>Online</b></div></div>
-          <div class="dash gborder">
-            <div class="dash-top"><i></i><i></i><i></i><b>Profile Completion</b></div>
-            <div class="dash-row" style="grid-template-columns: 1fr;">
-              <div>
-                <small style="color: var(--muted); font-size: 0.76rem; display: block; margin-bottom: 6px;">Setup Progress: 60%</small>
-                <div style="width:100%; height:8px; background:rgba(255,255,255,.05); border-radius:4px; overflow:hidden; border:1px solid var(--glass-border); position:relative;">
-                  <div style="width:60%; height:100%; background:var(--grad); border-radius:4px;"></div>
+        <!-- LEFT SIDE: Profile Benefits & Visual -->
+        <div class="auth-left enter d1">
+          <span class="eyebrow">Complete Your Profile</span>
+          <h2>Supercharge Your <span class="grad-text">Job Search</span></h2>
+          <p class="lead">Provide your details to unlock AI-powered job matching, instant ATS resume scoring, and direct
+            recruiter outreach.</p>
+
+          <div class="auth-visual" aria-hidden="true" style="margin-top: 1.5rem;">
+            <div class="fcard fc1"><span class="pip"></span>
+              <div><small>Hiring Chance</small><b>+85%</b></div>
+            </div>
+            <div class="fcard fc2">
+              <div><small>Profile Status</small><b class="grad-text">Active</b></div>
+            </div>
+            <div class="fcard fc3">
+              <div><small>Match Engine</small><b>Online</b></div>
+            </div>
+            <div class="dash gborder">
+              <div class="dash-top"><i></i><i></i><i></i><b>Profile Completion</b></div>
+              <div class="dash-row" style="grid-template-columns: 1fr;">
+                <div>
+                  <small style="color: var(--muted); font-size: 0.76rem; display: block; margin-bottom: 6px;">Setup
+                    Progress: 60%</small>
+                  <div
+                    style="width:100%; height:8px; background:rgba(255,255,255,.05); border-radius:4px; overflow:hidden; border:1px solid var(--glass-border); position:relative;">
+                    <div style="width:60%; height:100%; background:var(--grad); border-radius:4px;"></div>
+                  </div>
                 </div>
-              </div>
-              <div class="mini-list" style="margin-top: 14px;">
-                <div class="mini-job" style="gap: 12px;"><span class="badge" style="background:#10b981; width:8px; height:8px; border-radius:50%; margin:0; flex:none;"></span><span>Verify Phone & Location</span><span style="color:#10b981; margin-left:auto;">✓</span></div>
-                <div class="mini-job" style="gap: 12px;"><span class="badge" style="background:#3b82f6; width:8px; height:8px; border-radius:50%; margin:0; flex:none;"></span><span>Add Qualifications</span><span style="color:#3b82f6; margin-left:auto;">Pending</span></div>
-                <div class="mini-job" style="gap: 12px;"><span class="badge" style="background:#a855f7; width:8px; height:8px; border-radius:50%; margin:0; flex:none;"></span><span>Upload Resume File</span><span style="color:#a855f7; margin-left:auto;">Optional</span></div>
+                <div class="mini-list" style="margin-top: 14px;">
+                  <div class="mini-job" style="gap: 12px;"><span class="badge"
+                      style="background:#10b981; width:8px; height:8px; border-radius:50%; margin:0; flex:none;"></span><span>Verify
+                      Phone & Location</span><span style="color:#10b981; margin-left:auto;">✓</span></div>
+                  <div class="mini-job" style="gap: 12px;"><span class="badge"
+                      style="background:#3b82f6; width:8px; height:8px; border-radius:50%; margin:0; flex:none;"></span><span>Add
+                      Qualifications</span><span style="color:#3b82f6; margin-left:auto;">Pending</span></div>
+                  <div class="mini-job" style="gap: 12px;"><span class="badge"
+                      style="background:#a855f7; width:8px; height:8px; border-radius:50%; margin:0; flex:none;"></span><span>Upload
+                      Resume File</span><span style="color:#a855f7; margin-left:auto;">Optional</span></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- RIGHT SIDE: The Form -->
+        <form class="form-card gborder enter d2" id="profileForm" novalidate style="margin: 0; max-width: 100%;">
+          <div class="form-grid" id="formGrid">
+
+            <div class="field" data-field="phone">
+              <label for="phone">Phone Number <span class="req">*</span></label>
+              <input class="input" type="tel" id="phone" name="phone" placeholder="+1 555 123 4567"
+                autocomplete="tel" />
+              <span class="err-msg" id="err-phone">Enter a valid phone number (10+ digits).</span>
+            </div>
+
+            <div class="field" data-field="location">
+              <label for="location">Location <span class="req">*</span></label>
+              <input class="input" type="text" id="location" name="location" placeholder="City, Country"
+                autocomplete="address-level2" />
+              <span class="err-msg" id="err-location">Please enter your location.</span>
+            </div>
+
+            <div class="field" data-field="qualification">
+              <label for="qualification">Highest Qualification <span class="req">*</span></label>
+              <input class="input" type="text" id="qualification" name="qualification"
+                placeholder="e.g. B.Tech in Computer Science" />
+              <span class="err-msg" id="err-qualification">Please enter your qualification.</span>
+            </div>
+
+            <div class="field" data-field="college">
+              <label for="college">College/University <span class="req">*</span></label>
+              <input class="input" type="text" id="college" name="college" placeholder="e.g. MIT" />
+              <span class="err-msg" id="err-college">Please enter your college name.</span>
+            </div>
+
+            <div class="field" data-field="role">
+              <label for="role">Preferred Role <span class="req">*</span></label>
+              <input class="input" type="text" id="role" name="role" placeholder="e.g. Software Engineer" />
+              <span class="err-msg" id="err-role">Please enter your preferred role.</span>
+            </div>
+
+            <div class="field" data-field="experience">
+              <label for="experience">Experience <span class="req">*</span></label>
+              <select class="input" id="experience" name="experience">
+                <option value="">Select experience level</option>
+                <option value="0-1">0-1 years (Fresher)</option>
+                <option value="1-3">1-3 years</option>
+                <option value="3-5">3-5 years</option>
+                <option value="5-10">5-10 years</option>
+                <option value="10+">10+ years</option>
+              </select>
+              <span class="err-msg" id="err-experience">Please select your experience level.</span>
+            </div>
+
+            <div class="field full" data-field="skills">
+              <label for="skills">Skills <span class="req">*</span></label>
+              <input class="input" type="text" id="skills" name="skills"
+                placeholder="JavaScript, Python, React (comma separated)" />
+              <span class="err-msg" id="err-skills">Please enter at least one skill.</span>
+            </div>
+
+            <div class="field full" data-field="resume">
+              <label>Resume <span class="opt">(Optional)</span></label>
+              <label class="file-input" for="resume">
+                <span class="file-btn">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="margin: 0;">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="17 8 12 3 7 8" />
+                    <line x1="12" y1="3" x2="12" y2="15" />
+                  </svg>
+                  Choose File
+                </span>
+                <span class="file-name" id="fileName">No file chosen</span>
+                <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" />
+              </label>
+              <span class="err-msg" id="err-resume">Please upload a valid resume file.</span>
+            </div>
+
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-grad" type="submit">Complete Profile</button>
+            <a class="btn btn-ghost" href="candidate-dashboard.html">Skip for Now</a>
+          </div>
+
+          <p class="form-foot">Already completed? <a href="candidate-dashboard.html">Go to Dashboard</a></p>
+
+          <div class="form-success" id="formSuccess" role="status" aria-live="polite">
+            <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M5 13l4 4L19 7" />
+              </svg></div>
+            <h3>Profile Completed!</h3>
+            <p>Your profile has been updated successfully.</p>
+            <a class="btn btn-grad" href="candidate-dashboard.html">Go to Dashboard</a>
+          </div>
+
+        </form>
       </div>
-
-      <!-- RIGHT SIDE: The Form -->
-      <form class="form-card gborder enter d2" id="profileForm" novalidate style="margin: 0; max-width: 100%;">
-        <div class="form-grid" id="formGrid">
-
-        <div class="field" data-field="phone">
-          <label for="phone">Phone Number <span class="req">*</span></label>
-          <input class="input" type="tel" id="phone" name="phone" placeholder="+1 555 123 4567" autocomplete="tel" />
-          <span class="err-msg" id="err-phone">Enter a valid phone number (10+ digits).</span>
-        </div>
-
-        <div class="field" data-field="location">
-          <label for="location">Location <span class="req">*</span></label>
-          <input class="input" type="text" id="location" name="location" placeholder="City, Country" autocomplete="address-level2" />
-          <span class="err-msg" id="err-location">Please enter your location.</span>
-        </div>
-
-        <div class="field" data-field="qualification">
-          <label for="qualification">Highest Qualification <span class="req">*</span></label>
-          <input class="input" type="text" id="qualification" name="qualification" placeholder="e.g. B.Tech in Computer Science" />
-          <span class="err-msg" id="err-qualification">Please enter your qualification.</span>
-        </div>
-
-        <div class="field" data-field="college">
-          <label for="college">College/University <span class="req">*</span></label>
-          <input class="input" type="text" id="college" name="college" placeholder="e.g. MIT" />
-          <span class="err-msg" id="err-college">Please enter your college name.</span>
-        </div>
-
-        <div class="field" data-field="role">
-          <label for="role">Preferred Role <span class="req">*</span></label>
-          <input class="input" type="text" id="role" name="role" placeholder="e.g. Software Engineer" />
-          <span class="err-msg" id="err-role">Please enter your preferred role.</span>
-        </div>
-
-        <div class="field" data-field="experience">
-          <label for="experience">Experience <span class="req">*</span></label>
-          <select class="input" id="experience" name="experience">
-            <option value="">Select experience level</option>
-            <option value="0-1">0-1 years (Fresher)</option>
-            <option value="1-3">1-3 years</option>
-            <option value="3-5">3-5 years</option>
-            <option value="5-10">5-10 years</option>
-            <option value="10+">10+ years</option>
-          </select>
-          <span class="err-msg" id="err-experience">Please select your experience level.</span>
-        </div>
-
-        <div class="field full" data-field="skills">
-          <label for="skills">Skills <span class="req">*</span></label>
-          <input class="input" type="text" id="skills" name="skills" placeholder="JavaScript, Python, React (comma separated)" />
-          <span class="err-msg" id="err-skills">Please enter at least one skill.</span>
-        </div>
-
-        <div class="field full" data-field="resume">
-          <label>Resume <span class="opt">(Optional)</span></label>
-          <label class="file-input" for="resume">
-            <span class="file-btn">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              Choose File
-            </span>
-            <span class="file-name" id="fileName">No file chosen</span>
-            <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" />
-          </label>
-          <span class="err-msg" id="err-resume">Please upload a valid resume file.</span>
-        </div>
-
-      </div>
-
-      <div class="form-actions">
-        <button class="btn btn-grad" type="submit">Complete Profile</button>
-        <a class="btn btn-ghost" href="candidate-dashboard.html">Skip for Now</a>
-      </div>
-
-      <p class="form-foot">Already completed? <a href="candidate-dashboard.html">Go to Dashboard</a></p>
-
-      <div class="form-success" id="formSuccess" role="status" aria-live="polite">
-        <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
-        <h3>Profile Completed!</h3>
-        <p>Your profile has been updated successfully.</p>
-        <a class="btn btn-grad" href="candidate-dashboard.html">Go to Dashboard</a>
-      </div>
-
-    </form>
     </div>
-  </div>
-</section>
+  </section>
 
-<script src="js/auth.js"></script>
-<script src="js/config.js"></script>
-<script src="js/api.js"></script>
-<script src="js/auth-guard.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  if (!protectCandidateRoute()) return;
+  <script src="js/auth.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth-guard.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (!protectCandidateRoute()) return;
 
-  // Update navbar based on auth status
-  updateNavbar();
+      // Update navbar based on auth status
+      updateNavbar();
 
-  // Handle file name display
-  const resumeInput = document.getElementById('resume');
-  const fileNameSpan = document.getElementById('fileName');
-  if (resumeInput && fileNameSpan) {
-    resumeInput.addEventListener('change', function() {
-      fileNameSpan.textContent = this.files.length > 0 ? this.files[0].name : 'No file chosen';
-    });
-  }
-
-  const form = document.getElementById('profileForm');
-  if (!form) return;
-
-  form.addEventListener('submit', async function(e) {
-    e.preventDefault();
-
-    // Validate form
-    const phone = document.getElementById('phone').value.trim();
-    const location = document.getElementById('location').value.trim();
-    const qualification = document.getElementById('qualification').value.trim();
-    const college = document.getElementById('college').value.trim();
-    const role = document.getElementById('role').value.trim();
-    const experience = document.getElementById('experience').value;
-    const skills = document.getElementById('skills').value.trim();
-
-    if (!phone || phone.length < 10) {
-      showError('Please enter a valid phone number.');
-      return;
-    }
-    if (!location) {
-      showError('Please enter your location.');
-      return;
-    }
-    if (!qualification) {
-      showError('Please enter your qualification.');
-      return;
-    }
-    if (!college) {
-      showError('Please enter your college name.');
-      return;
-    }
-    if (!role) {
-      showError('Please enter your preferred role.');
-      return;
-    }
-    if (!experience) {
-      showError('Please select your experience level.');
-      return;
-    }
-    if (!skills) {
-      showError('Please enter at least one skill.');
-      return;
-    }
-
-    const submitBtn = form.querySelector('button[type="submit"]');
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Updating Profile...';
-
-    try {
-      // Update profile
-      await api.updateProfile({
-        phone,
-        location,
-        skills: skills.split(',').map(s => s.trim()).filter(s => s),
-        bio: `Highest Qualification: ${qualification} from ${college}.\nPreferred Role: ${role}.\nExperience: ${experience} years.`
-      });
-
-      // Upload resume if selected
+      // Handle file name display
       const resumeInput = document.getElementById('resume');
-      const resumeFile = resumeInput && resumeInput.files && resumeInput.files[0];
-      if (resumeFile) {
-        try {
-          await api.uploadResume(resumeFile);
-        } catch (uploadErr) {
-          console.error('Error uploading resume:', uploadErr);
-        }
+      const fileNameSpan = document.getElementById('fileName');
+      if (resumeInput && fileNameSpan) {
+        resumeInput.addEventListener('change', function () {
+          fileNameSpan.textContent = this.files.length > 0 ? this.files[0].name : 'No file chosen';
+        });
       }
 
-      // Show success
-      document.getElementById('formGrid').style.display = 'none';
-      form.querySelector('.form-actions').style.display = 'none';
-      form.querySelector('.form-foot').style.display = 'none';
-      document.getElementById('formSuccess').classList.add('show');
-      document.getElementById('formSuccess').style.display = 'block';
+      const form = document.getElementById('profileForm');
+      if (!form) return;
 
-    } catch (error) {
-      showError('Failed to update profile. Please try again.');
-      console.error('Profile update error:', error);
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Complete Profile';
-    }
-  });
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
 
-  function showError(message) {
-    const existingError = form.querySelector('.error-message');
-    if (existingError) existingError.remove();
+        // Validate form
+        const phone = document.getElementById('phone').value.trim();
+        const location = document.getElementById('location').value.trim();
+        const qualification = document.getElementById('qualification').value.trim();
+        const college = document.getElementById('college').value.trim();
+        const role = document.getElementById('role').value.trim();
+        const experience = document.getElementById('experience').value;
+        const skills = document.getElementById('skills').value.trim();
 
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'error-message';
-    errorDiv.textContent = message;
-    errorDiv.style.cssText = 'color: #ef4444; font-size: 0.875rem; margin-top: 1rem; text-align: center;';
-    form.appendChild(errorDiv);
+        if (!phone || phone.length < 10) {
+          showError('Please enter a valid phone number.');
+          return;
+        }
+        if (!location) {
+          showError('Please enter your location.');
+          return;
+        }
+        if (!qualification) {
+          showError('Please enter your qualification.');
+          return;
+        }
+        if (!college) {
+          showError('Please enter your college name.');
+          return;
+        }
+        if (!role) {
+          showError('Please enter your preferred role.');
+          return;
+        }
+        if (!experience) {
+          showError('Please select your experience level.');
+          return;
+        }
+        if (!skills) {
+          showError('Please enter at least one skill.');
+          return;
+        }
 
-    setTimeout(() => errorDiv.remove(), 5000);
-  }
-});
-</script>
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Updating Profile...';
+
+        try {
+          // Update profile
+          await api.updateProfile({
+            phone,
+            location,
+            skills: skills.split(',').map(s => s.trim()).filter(s => s),
+            bio: `Highest Qualification: ${qualification} from ${college}.\nPreferred Role: ${role}.\nExperience: ${experience} years.`
+          });
+
+          // Upload resume if selected
+          const resumeInput = document.getElementById('resume');
+          const resumeFile = resumeInput && resumeInput.files && resumeInput.files[0];
+          if (resumeFile) {
+            try {
+              await api.uploadResume(resumeFile);
+            } catch (uploadErr) {
+              console.error('Error uploading resume:', uploadErr);
+            }
+          }
+
+          // Show success
+          document.getElementById('formGrid').style.display = 'none';
+          form.querySelector('.form-actions').style.display = 'none';
+          form.querySelector('.form-foot').style.display = 'none';
+          document.getElementById('formSuccess').classList.add('show');
+          document.getElementById('formSuccess').style.display = 'block';
+
+        } catch (error) {
+          showError('Failed to update profile. Please try again.');
+          console.error('Profile update error:', error);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Complete Profile';
+        }
+      });
+
+      function showError(message) {
+        const existingError = form.querySelector('.error-message');
+        if (existingError) existingError.remove();
+
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.textContent = message;
+        errorDiv.style.cssText = 'color: #ef4444; font-size: 0.875rem; margin-top: 1rem; text-align: center;';
+        form.appendChild(errorDiv);
+
+        setTimeout(() => errorDiv.remove(), 5000);
+      }
+    });
+  </script>
 </body>
+
 </html>

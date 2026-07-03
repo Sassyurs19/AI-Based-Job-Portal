@@ -458,9 +458,12 @@ const googleAuthSuccess = async (req, res, next) => {
           <body style="font-family: sans-serif; text-align: center; padding-top: 50px; background: #0f172a; color: white;">
             <h2>Authentication Failed</h2>
             <p>An account already exists with this email. This window will close automatically.</p>
-            <script>
-              window.close();
-            </script>
+             <script>
+               setTimeout(() => {
+                 window.open('', '_self', '');
+                 window.close();
+               }, 1000);
+             </script>
           </body>
           </html>
         `);
@@ -513,7 +516,10 @@ const googleAuthSuccess = async (req, res, next) => {
           <h2>Authentication Successful</h2>
           <p>Sign in successful! This window will close automatically.</p>
           <script>
-            window.close();
+            setTimeout(() => {
+              window.open('', '_self', '');
+              window.close();
+            }, 1000);
           </script>
         </body>
         </html>
@@ -560,7 +566,10 @@ const googleAuthFailure = (req, res) => {
         <h2>Authentication Failed</h2>
         <p>Google authentication failed. This window will close automatically.</p>
         <script>
-          window.close();
+          setTimeout(() => {
+            window.open('', '_self', '');
+            window.close();
+          }, 1000);
         </script>
       </body>
       </html>

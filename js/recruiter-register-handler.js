@@ -201,9 +201,10 @@ document.addEventListener('DOMContentLoaded', function() {
           startTimer();
         } else {
           // Old flow (without OTP) - redirect to set password
-          localStorage.setItem('pendingUserId', result.user.id);
+          const userIdVal = result.userId || (result.user && result.user.id);
+          localStorage.setItem('pendingUserId', userIdVal);
           localStorage.setItem('pendingEmail', email);
-          window.location.href = 'set-password.html?userId=' + result.user.id + '&email=' + email + '&role=recruiter';
+          window.location.href = 'set-password.html?userId=' + userIdVal + '&email=' + email + '&role=recruiter';
         }
       } else {
         if (result.requiresPassword) {

@@ -53,255 +53,296 @@
   </div>
 </aside>
 
-<!-- ===== DASHBOARD WRAP ===== -->
-<section class="dashboard-wrap">
-  <div class="container">
-    <div class="dashboard-grid">
+<!-- ===== MAIN CONTENT ===== -->
+<main class="dashboard-wrap">
+  <div class="container container-narrow">
 
-      <!-- ===== MAIN CONTENT ===== -->
-      <main class="dashboard-main">
-        
-        <!-- Premium Welcome Banner with Hologram Orb -->
-        <div class="welcome-banner gborder">
-          <div class="welcome-text">
-            <h2>Welcome back, <span class="grad-text" id="welcomeName">Candidate</span>!</h2>
-            <p>Your personal AI Match Engine is active and searching. We found new positions matching your qualifications today.</p>
-          </div>
-          <div class="ai-hub-badge">
-            <div class="radar-pulse"></div>
-            <span>AI MATCH ACTIVE</span>
-          </div>
+    <!-- 1. WELCOME HERO -->
+    <div class="welcome-hero gborder">
+      <div class="hero-left">
+        <span class="time-greeting" id="greetingText">Good Morning</span>
+        <h2>Welcome back, <span class="grad-text" id="candidateNameText">Candidate</span></h2>
+        <p class="hero-subtitle">Here's everything requiring your attention today.</p>
+        <div class="hero-ctas">
+          <a href="jobs.html" class="btn btn-grad">Browse Jobs</a>
+          <a href="candidate-profile.html" class="btn btn-ghost">Update Profile</a>
         </div>
-
-        <!-- Bento Grid Layout -->
-        <div class="bento-grid">
-          
-          <!-- Box 1: AI Match Center -->
-          <div class="bento-card match-center gborder">
-            <div class="card-header">
-              <h3>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m10 15 5-3-5-3v6Z"/></svg>
-                AI Profile Match
-              </h3>
-              <span class="badge badge-glow">95% Match</span>
-            </div>
-            
-            <div class="match-radial">
-              <div class="radar-circle">
-                <div class="radar-line"></div>
-                <div class="match-score">95%</div>
-              </div>
-              <div class="match-summary">
-                <h4>Engine Status: Optimal</h4>
-                <p>Profile matches 12 core requirements for Senior Machine Learning roles. Recommended next step: Complete Skills Profile.</p>
-                <a href="candidate-profile.html" class="btn btn-grad btn-sm">Complete Profile</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Box 2: Application Pipeline Funnel -->
-          <div class="bento-card pipeline gborder">
-            <div class="card-header">
-              <h3>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M12 2v20"/></svg>
-                Application Pipeline
-              </h3>
-            </div>
-            
-            <div class="funnel-container">
-              <div class="funnel-step completed">
-                <div class="funnel-node">12</div>
-                <div class="funnel-label">Applied</div>
-              </div>
-              <div class="funnel-line completed"></div>
-              <div class="funnel-step active">
-                <div class="funnel-node">3</div>
-                <div class="funnel-label">In Review</div>
-              </div>
-              <div class="funnel-line"></div>
-              <div class="funnel-step">
-                <div class="funnel-node">1</div>
-                <div class="funnel-label">Shortlisted</div>
-              </div>
-              <div class="funnel-line"></div>
-              <div class="funnel-step">
-                <div class="funnel-node">1</div>
-                <div class="funnel-label">Interviews</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Box 3: ATS Resume Checker -->
-          <div class="bento-card resume-check gborder">
-            <div class="card-header">
-              <h3>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
-                ATS Optimizer
-              </h3>
-              <div class="ats-badge">92% ATS</div>
-            </div>
-            
-            <div class="resume-overview">
-              <div class="ats-ring-wrap">
-                <svg width="70" height="70">
-                  <circle cx="35" cy="35" r="30" class="ring-bg"></circle>
-                  <circle cx="35" cy="35" r="30" class="ring-fill" stroke-dasharray="188.4" stroke-dashoffset="15"></circle>
-                </svg>
-                <span class="ats-val">92%</span>
-              </div>
-              <div class="ats-details">
-                <p><strong>12 skills parsed</strong> from your uploaded resume. 3 missing keywords identified for matched positions.</p>
-                <div class="mini-tags">
-                  <span class="tag tag-matched">Python</span>
-                  <span class="tag tag-matched">TensorFlow</span>
-                  <span class="tag tag-missing">Kubernetes</span>
-                </div>
-              </div>
-            </div>
-            
-            <div class="bento-card-action">
-              <a href="resume-analysis.html" class="btn btn-ghost btn-sm" style="width: 100%;">Optimize Resume</a>
-            </div>
-          </div>
-
-          <!-- Box 4: AI Recommendations Scroll -->
-          <div class="bento-card rec-jobs full-width gborder">
-            <div class="card-header">
-              <h3>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
-                AI Recommended Roles
-              </h3>
-              <a href="jobs.html" class="view-link">View All Jobs →</a>
-            </div>
-            
-            <div class="jobs-scroll" id="recommendedJobsContainer">
-              <!-- Dynamically populated job cards -->
-              <div class="job-card gborder">
-                <div class="job-card-header">
-                  <div class="job-logo">OA</div>
-                  <div>
-                    <h4>Senior ML Engineer</h4>
-                    <span>OpenAI · San Francisco, CA</span>
-                  </div>
-                </div>
-                <div class="job-meta">
-                  <span>Remote</span>
-                  <span>Full-time</span>
-                  <span>$210k–$280k</span>
-                </div>
-                <div class="job-match-badge">97% AI Match</div>
-                <div class="job-actions">
-                  <button class="btn btn-grad btn-sm">Quick Apply</button>
-                </div>
-              </div>
-
-              <div class="job-card gborder">
-                <div class="job-card-header">
-                  <div class="job-logo">NV</div>
-                  <div>
-                    <h4>Data Scientist</h4>
-                    <span>NVIDIA · Austin, TX</span>
-                  </div>
-                </div>
-                <div class="job-meta">
-                  <span>Hybrid</span>
-                  <span>Full-time</span>
-                  <span>$160k–$205k</span>
-                </div>
-                <div class="job-match-badge">93% AI Match</div>
-                <div class="job-actions">
-                  <button class="btn btn-grad btn-sm">Quick Apply</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Box 5: Recent Applications Activity -->
-          <div class="bento-card recent-apps full-width gborder">
-            <div class="card-header">
-              <h3>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>
-                Recent Application Activity
-              </h3>
-              <a href="my-applications.html" class="view-link">Manage Applications →</a>
-            </div>
-            
-            <div class="apps-table-wrap">
-              <table class="dashboard-table">
-                <thead>
-                  <tr>
-                    <th>Position / Company</th>
-                    <th>Date Applied</th>
-                    <th>Status</th>
-                    <th>AI Match</th>
-                  </tr>
-                </thead>
-                <tbody id="recentApplicationsBody">
-                  <!-- Dynamically populated or fallback static values -->
-                  <tr>
-                    <td>
-                      <strong>Senior ML Engineer</strong>
-                      <div class="comp">OpenAI</div>
-                    </td>
-                    <td>Jun 25, 2026</td>
-                    <td><span class="pill-badge status-interview">Interview</span></td>
-                    <td><strong style="color: #22c55e;">97%</strong></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong>Data Scientist</strong>
-                      <div class="comp">NVIDIA</div>
-                    </td>
-                    <td>Jun 22, 2026</td>
-                    <td><span class="pill-badge status-review">In Review</span></td>
-                    <td><strong style="color: #22c55e;">93%</strong></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Box 6: Job Market Insights -->
-          <div class="bento-card market-insights gborder">
-            <div class="card-header">
-              <h3>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83M22 12A10 10 0 0 0 12 2v10z"/></svg>
-                Market Intelligence
-              </h3>
-              <span class="badge" style="color:#06b6d4; background:rgba(6,182,212,0.1); border-color:rgba(6,182,212,0.2);">AI Trend</span>
-            </div>
-            
-            <div class="insights-content" style="display:flex; flex-direction:column; gap:12px; margin-top:4px;">
-              <div class="insight-row" style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.03); padding-bottom:8px;">
-                <span style="color:var(--muted); font-size:0.8rem;">Average AI / ML Salary</span>
-                <strong style="color:#22c55e; font-size:1.1rem;">$185,000 / yr</strong>
-              </div>
-              <div class="insight-row" style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.03); padding-bottom:8px;">
-                <span style="color:var(--muted); font-size:0.8rem;">Demand Growth</span>
-                <strong style="color:var(--purple); font-size:1.1rem;">+28.5% YoY</strong>
-              </div>
-              <div class="insight-row" style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="color:var(--muted); font-size:0.8rem;">Top Tech Keywords</span>
-                <div class="tag-list" style="display:flex; gap:6px;">
-                  <span class="tag tag-matched" style="font-size:0.65rem; background:rgba(99,102,241,0.15); color:var(--purple);">PyTorch</span>
-                  <span class="tag tag-matched" style="font-size:0.65rem; background:rgba(6,182,212,0.15); color:var(--cyan);">LLMs</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
+      </div>
+      <div class="hero-right">
+        <div class="profile-avatar-wrap">
+          <div class="avatar-circle" id="profileAvatar">JD</div>
+          <span class="availability-badge" title="Status"><span class="pulse-dot"></span> Open to Work</span>
         </div>
-
-      </main>
+        <div class="ai-match-metric">
+          <div class="metric-score" id="heroMatchScore">94%</div>
+          <span class="metric-label">AI Match Score</span>
+        </div>
+      </div>
     </div>
+
+    <!-- 2. TODAY'S OVERVIEW -->
+    <section class="dashboard-section" aria-labelledby="overview-heading">
+      <h3 id="overview-heading" class="section-title">Today's Overview</h3>
+      <div class="stats-row">
+        <div class="stat-box gborder">
+          <span class="stat-number" id="statApplications">0</span>
+          <span class="stat-label">Applications</span>
+        </div>
+        <div class="stat-box gborder">
+          <span class="stat-number" id="statReview">0</span>
+          <span class="stat-label">Under Review</span>
+        </div>
+        <div class="stat-box gborder">
+          <span class="stat-number" id="statInterviews">0</span>
+          <span class="stat-label">Interviews</span>
+        </div>
+        <div class="stat-box gborder">
+          <span class="stat-number" id="statOffers">0</span>
+          <span class="stat-label">Offers</span>
+        </div>
+        <div class="stat-box gborder">
+          <span class="stat-number" id="statStrength">0%</span>
+          <span class="stat-label">Profile Strength</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. AI RECOMMENDED JOBS -->
+    <section class="dashboard-section" aria-labelledby="recommended-heading">
+      <div class="section-header">
+        <h3 id="recommended-heading" class="section-title">AI Recommended Jobs</h3>
+        <a href="jobs.html" class="header-link">View All Jobs &rarr;</a>
+      </div>
+      <div class="jobs-list-vertical" id="recommendedJobsContainer">
+        <!-- Dynamically loaded job list -->
+        <div class="loading-state">
+          <div class="spinner-small"></div>
+          <span>Loading recommendations...</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. APPLICATION PIPELINE -->
+    <section class="dashboard-section" aria-labelledby="pipeline-heading">
+      <h3 id="pipeline-heading" class="section-title">Application Pipeline</h3>
+      <div class="pipeline-card gborder">
+        <div class="funnel-container" id="funnelContainer">
+          <div class="funnel-step cursor-pointer" data-status="applied">
+            <div class="funnel-node">0</div>
+            <div class="funnel-label">Applied</div>
+          </div>
+          <div class="funnel-line"></div>
+          <div class="funnel-step cursor-pointer" data-status="screening">
+            <div class="funnel-node">0</div>
+            <div class="funnel-label">Screening</div>
+          </div>
+          <div class="funnel-line"></div>
+          <div class="funnel-step cursor-pointer" data-status="interview">
+            <div class="funnel-node">0</div>
+            <div class="funnel-label">Interview</div>
+          </div>
+          <div class="funnel-line"></div>
+          <div class="funnel-step cursor-pointer" data-status="assessment">
+            <div class="funnel-node">0</div>
+            <div class="funnel-label">Assessment</div>
+          </div>
+          <div class="funnel-line"></div>
+          <div class="funnel-step cursor-pointer" data-status="offer">
+            <div class="funnel-node">0</div>
+            <div class="funnel-label">Offer</div>
+          </div>
+          <div class="funnel-line"></div>
+          <div class="funnel-step cursor-pointer" data-status="hired">
+            <div class="funnel-node">0</div>
+            <div class="funnel-label">Hired</div>
+          </div>
+        </div>
+        <div id="pipelineDetails" class="pipeline-details-panel" style="display: none;">
+          <h4 id="pipelineDetailsTitle">Applications in Screening</h4>
+          <div id="pipelineDetailsList" class="pipeline-details-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. UPCOMING INTERVIEWS -->
+    <section class="dashboard-section" aria-labelledby="interviews-heading">
+      <h3 id="interviews-heading" class="section-title">Upcoming Interviews</h3>
+      <div class="interviews-card gborder" id="interviewsContainer">
+        <!-- Render agenda or elegant empty state -->
+        <div class="empty-state">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <p>No interviews scheduled currently.</p>
+          <div class="prep-checklist">
+            <h5>Interview Preparation Checklist</h5>
+            <ul>
+              <li><span class="bullet-check">&#10003;</span> Complete your candidate profile details</li>
+              <li><span class="bullet-check">&#10003;</span> Upload your latest resume for ATS optimization</li>
+              <li><span class="bullet-check">&#10003;</span> Research top tech salaries & trends in career insights</li>
+              <li><span class="bullet-check">&#10003;</span> Review recommended courses to fill skills gaps</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. PROFILE HEALTH -->
+    <section class="dashboard-section" aria-labelledby="health-heading">
+      <h3 id="health-heading" class="section-title">Profile Health</h3>
+      <div class="health-card gborder">
+        <div class="health-ring-container">
+          <svg width="120" height="120">
+            <circle class="ring-track" cx="60" cy="60" r="50"/>
+            <circle class="ring-bar" cx="60" cy="60" r="50" id="profileHealthRing" stroke-dasharray="314.16" stroke-dashoffset="314.16"/>
+          </svg>
+          <div class="ring-value" id="profileHealthValue">0%</div>
+        </div>
+        <div class="health-details">
+          <h4>Profile Completion checklist</h4>
+          <ul class="health-checklist" id="profileHealthChecklist">
+            <!-- Populated dynamically -->
+          </ul>
+          <a href="candidate-profile.html" class="btn btn-grad btn-sm" style="margin-top: 12px; display: inline-flex;">Complete Profile</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. RESUME INSIGHTS -->
+    <section class="dashboard-section" aria-labelledby="resume-heading">
+      <h3 id="resume-heading" class="section-title">Resume Insights</h3>
+      <div class="resume-card gborder">
+        <div class="resume-ats-box">
+          <div class="ats-circular">
+            <span class="ats-lbl">ATS SCORE</span>
+            <span class="ats-value" id="resumeAtsScore">0%</span>
+          </div>
+          <div class="resume-actions-box">
+            <a href="resume-analysis.html" class="btn btn-grad btn-sm">Optimize Resume</a>
+            <label class="btn btn-ghost btn-sm" for="resumeUploadInput" style="margin: 0;">
+              Upload Resume
+              <input type="file" id="resumeUploadInput" style="display: none;" accept=".pdf,.doc,.docx" />
+            </label>
+          </div>
+        </div>
+        <div class="ats-insights-details">
+          <div class="insight-pill-group">
+            <div class="insight-pill">
+              <h5>Keywords Found</h5>
+              <div class="pill-tags" id="resumeKeywordsFound">
+                <span class="tag tag-matched">Loading...</span>
+              </div>
+            </div>
+            <div class="insight-pill">
+              <h5>Keywords Missing</h5>
+              <div class="pill-tags" id="resumeKeywordsMissing">
+                <span class="tag tag-missing">Loading...</span>
+              </div>
+            </div>
+          </div>
+          <div class="ats-recommendations">
+            <h5>AI Analysis & Suggestions</h5>
+            <ul id="resumeSuggestionsList">
+              <li>Upload a resume to scan for ATS scoring and keywords.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. SKILL GAP ANALYSIS -->
+    <section class="dashboard-section" aria-labelledby="skill-gap-heading">
+      <h3 id="skill-gap-heading" class="section-title">Skill Gap Analysis</h3>
+      <div class="skills-card gborder">
+        <p class="section-subtitle">Compare your current skills against the current market demand of top active roles.</p>
+        <div class="skill-bars-list" id="skillGapsContainer">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. LEARNING RECOMMENDATIONS -->
+    <section class="dashboard-section" aria-labelledby="learning-heading">
+      <h3 id="learning-heading" class="section-title">Learning Recommendations</h3>
+      <div class="learning-card gborder">
+        <p class="section-subtitle">Recommended courses and certifications to fill your identified skill gaps and boost search scores.</p>
+        <div class="courses-grid" id="coursesContainer">
+          <!-- Dynamically generated courses -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. RECENT ACTIVITY TIMELINE -->
+    <section class="dashboard-section" aria-labelledby="activity-heading">
+      <h3 id="activity-heading" class="section-title">Recent Activity</h3>
+      <div class="activity-card gborder">
+        <div class="timeline" id="activityTimeline">
+          <!-- Timeline items -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. CAREER INSIGHTS -->
+    <section class="dashboard-section" aria-labelledby="career-heading">
+      <h3 id="career-heading" class="section-title">Career Insights</h3>
+      <div class="career-card gborder">
+        <div class="career-grid">
+          <div class="career-metric-card">
+            <h5>Average tech salaries</h5>
+            <div class="salary-stat">$148,000<small>/yr avg</small></div>
+            <p>Salaries for active AI and software roles range from $110k to $250k+ based on experience.</p>
+          </div>
+          <div class="career-metric-card">
+            <h5>Hiring Trends</h5>
+            <div class="trend-direction positive">Rising Demand (+28.4%)</div>
+            <p>AI Infrastructure, MLOps, and Senior React Developers are experiencing strong market demand.</p>
+          </div>
+          <div class="career-metric-card">
+            <h5>Fastest Growing Skills</h5>
+            <div class="trend-skills-list">
+              <span class="skill-trend-badge">PyTorch</span>
+              <span class="skill-trend-badge">LLMs</span>
+              <span class="skill-trend-badge">TypeScript</span>
+              <span class="skill-trend-badge">Next.js</span>
+            </div>
+            <p>Adding these skills to your profile can raise your AI Matching score by up to 25%.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
-</section>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer-simple">
+  <div class="container">
+    <p>&copy; 2026 AI Hire. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- ===== QUICK APPLY MODAL ===== -->
+<div class="modal" id="quickApplyModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" style="display: none;">
+  <div class="modal-backdrop" onclick="closeQuickApplyModal()"></div>
+  <div class="modal-content gborder">
+    <h3 id="modalTitle">Quick Apply</h3>
+    <p id="modalSub">Apply for the position of <strong id="modalJobTitle">Job</strong> at <strong id="modalJobCompany">Company</strong></p>
+    <form id="quickApplyForm">
+      <input type="hidden" id="quickApplyJobId" />
+      <div class="field">
+        <label for="coverLetter">Cover Letter / Pitch <span class="req">*</span></label>
+        <textarea class="input" id="coverLetter" rows="5" placeholder="Explain why you're a great fit for this position..." required></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" onclick="closeQuickApplyModal()">Cancel</button>
+        <button type="submit" class="btn btn-grad" id="modalSubmitBtn">Submit Application</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script src="js/api.js"></script>
 <script src="js/auth-guard.js"></script>
 <script src="js/candidate-dashboard.js"></script>
-<script src="js/candidate-dashboard-handler.js"></script>
 </body>
 </html>

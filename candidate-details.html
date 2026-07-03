@@ -111,6 +111,46 @@
           </div>
         </div>
 
+        <!-- Recruiter Action Panel & AI Scores -->
+        <div class="profile-card" style="margin-bottom: 28px; padding: 24px;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px;">
+            <!-- AI Match & ATS Scores -->
+            <div class="ai-scores" style="display: flex; gap: 24px; margin: 0;">
+              <div class="ai-score" style="display: flex; align-items: center; gap: 12px; margin: 0;">
+                <div class="ai-score-ring" style="position: relative; width: 80px; height: 80px;">
+                  <svg width="80" height="80" style="transform: rotate(-90deg);">
+                    <circle class="ai-score-ring-bg" cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4"/>
+                    <circle class="ai-score-ring-fill" cx="40" cy="40" r="34" fill="none" stroke="var(--grad)" stroke-width="4" stroke-linecap="round" stroke-dasharray="213.63" stroke-dashoffset="213.63"/>
+                  </svg>
+                  <div class="ai-score-text" style="position: absolute; inset: 0; display: grid; place-items: center; font-family: 'Space Grotesk'; font-size: 1.1rem; font-weight: 700; color: white;">97%</div>
+                </div>
+                <div class="ai-score-label" style="font-size: 0.85rem; font-weight: 500;">AI Match</div>
+              </div>
+              <div class="ai-score" style="display: flex; align-items: center; gap: 12px; margin: 0;">
+                <div class="ai-score-ring" style="position: relative; width: 80px; height: 80px;">
+                  <svg width="80" height="80" style="transform: rotate(-90deg);">
+                    <circle class="ai-score-ring-bg" cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4"/>
+                    <circle class="ai-score-ring-fill" cx="40" cy="40" r="34" fill="none" stroke="var(--purple)" stroke-width="4" stroke-linecap="round" stroke-dasharray="213.63" stroke-dashoffset="213.63"/>
+                  </svg>
+                  <div class="ai-score-text" style="position: absolute; inset: 0; display: grid; place-items: center; font-family: 'Space Grotesk'; font-size: 1.1rem; font-weight: 700; color: white;">92%</div>
+                </div>
+                <div class="ai-score-label" style="font-size: 0.85rem; font-weight: 500;">ATS Score</div>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons" style="display: flex; flex-wrap: wrap; gap: 12px; margin: 0; align-items: center;">
+              <button class="btn btn-grad" id="shortlistBtn" style="padding: 10px 20px; font-size: 0.88rem; margin: 0;">Shortlist Candidate</button>
+              <button class="btn btn-grad" id="scheduleBtn" style="padding: 10px 20px; font-size: 0.88rem; margin: 0; background: linear-gradient(135deg, var(--blue), var(--cyan)); border-color: rgba(59,130,246,0.35);">Schedule Interview</button>
+              <button class="btn btn-reject" id="rejectBtn" style="padding: 10px 20px; font-size: 0.88rem; margin: 0;">Reject Candidate</button>
+              <button class="btn btn-ghost" id="downloadResume" style="padding: 10px 16px; font-size: 0.88rem; margin: 0; display: flex; align-items: center; gap: 6px; border: 1px solid var(--glass-border); width: auto;">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Resume
+              </button>
+            </div>
+          </div>
+        </div>
+
         <!-- Experience -->
         <div class="section-card">
           <h2>
@@ -220,124 +260,82 @@
 
       </div>
 
-      <!-- Sidebar -->
-      <aside class="details-sidebar">
-        
-        <!-- AI Analysis -->
-        <div class="ai-analysis-card">
-          <h2>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            AI Analysis
-          </h2>
-          
-          <div class="ai-scores">
-            <div class="ai-score">
-              <div class="ai-score-ring">
-                <svg width="80" height="80">
-                  <circle class="ai-score-ring-bg" cx="40" cy="40" r="34"/>
-                  <circle class="ai-score-ring-fill" cx="40" cy="40" r="34" stroke-dasharray="213.63" stroke-dashoffset="6.41"/>
-                </svg>
-                <div class="ai-score-text">97%</div>
-              </div>
-              <div class="ai-score-label">AI Match</div>
-            </div>
-            <div class="ai-score">
-              <div class="ai-score-ring">
-                <svg width="80" height="80">
-                  <circle class="ai-score-ring-bg" cx="40" cy="40" r="34"/>
-                  <circle class="ai-score-ring-fill" cx="40" cy="40" r="34" stroke-dasharray="213.63" stroke-dashoffset="17.09"/>
-                </svg>
-                <div class="ai-score-text">92%</div>
-              </div>
-              <div class="ai-score-label">ATS Score</div>
-            </div>
-          </div>
+      <!-- AI Talent Insights -->
+      <div class="section-card ai-analysis-card" style="margin-top: 28px;">
+        <h2>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          AI Talent Insights
+        </h2>
 
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 20px;">
           <!-- Skill Gap Analysis -->
-          <h3 style="font-size:1rem; margin-bottom:16px;">Skill Gap Analysis</h3>
-          <div style="margin-bottom:20px;">
-            <div class="skill-gap-item">
-              <span class="skill-gap-name">Python</span>
-              <div class="skill-gap-bar"><div class="skill-gap-fill high" style="width:95%;"></div></div>
-              <span class="skill-gap-value">95%</span>
-            </div>
-            <div class="skill-gap-item">
-              <span class="skill-gap-name">TensorFlow</span>
-              <div class="skill-gap-bar"><div class="skill-gap-fill high" style="width:90%;"></div></div>
-              <span class="skill-gap-value">90%</span>
-            </div>
-            <div class="skill-gap-item">
-              <span class="skill-gap-name">PyTorch</span>
-              <div class="skill-gap-bar"><div class="skill-gap-fill high" style="width:88%;"></div></div>
-              <span class="skill-gap-value">88%</span>
-            </div>
-            <div class="skill-gap-item">
-              <span class="skill-gap-name">MLOps</span>
-              <div class="skill-gap-bar"><div class="skill-gap-fill medium" style="width:75%;"></div></div>
-              <span class="skill-gap-value">75%</span>
-            </div>
-            <div class="skill-gap-item">
-              <span class="skill-gap-name">Kubernetes</span>
-              <div class="skill-gap-bar"><div class="skill-gap-fill low" style="width:45%;"></div></div>
-              <span class="skill-gap-value">45%</span>
+          <div>
+            <h3 style="font-size:1.05rem; margin-bottom:16px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width: 18px; height: 18px; color: var(--purple);"><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+              Skill Gap Analysis
+            </h3>
+            <div class="skill-gap-list">
+              <div class="skill-gap-item">
+                <span class="skill-gap-name">Python</span>
+                <div class="skill-gap-bar"><div class="skill-gap-fill high" style="width:95%;"></div></div>
+                <span class="skill-gap-value">95%</span>
+              </div>
+              <div class="skill-gap-item">
+                <span class="skill-gap-name">TensorFlow</span>
+                <div class="skill-gap-bar"><div class="skill-gap-fill high" style="width:90%;"></div></div>
+                <span class="skill-gap-value">90%</span>
+              </div>
+              <div class="skill-gap-item">
+                <span class="skill-gap-name">PyTorch</span>
+                <div class="skill-gap-bar"><div class="skill-gap-fill high" style="width:88%;"></div></div>
+                <span class="skill-gap-value">88%</span>
+              </div>
             </div>
           </div>
 
           <!-- Strengths -->
-          <h3 style="font-size:1rem; margin-bottom:12px;">Strengths</h3>
-          <div class="analysis-list" style="margin-bottom:20px;">
-            <div class="analysis-item">
-              <div class="analysis-item-icon green">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
+          <div>
+            <h3 style="font-size:1.05rem; margin-bottom:12px; font-weight: 600;">Strengths</h3>
+            <div class="analysis-list">
+              <div class="analysis-item">
+                <div class="analysis-item-icon green">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
+                </div>
+                <div class="analysis-item-content">
+                  <h4>Strong Technical Foundation</h4>
+                  <p>Excellent command of ML frameworks and programming</p>
+                </div>
               </div>
-              <div class="analysis-item-content">
-                <h4>Strong Technical Foundation</h4>
-                <p>Excellent command of ML frameworks and programming</p>
-              </div>
-            </div>
-            <div class="analysis-item">
-              <div class="analysis-item-icon green">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
-              </div>
-              <div class="analysis-item-content">
-                <h4>Leadership Experience</h4>
-                <p>Managed team of 4 engineers successfully</p>
-              </div>
-            </div>
-            <div class="analysis-item">
-              <div class="analysis-item-icon green">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
-              </div>
-              <div class="analysis-item-content">
-                <h4>Proven Results</h4>
-                <p>35% improvement in model accuracy</p>
+              <div class="analysis-item">
+                <div class="analysis-item-icon green">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
+                </div>
+                <div class="analysis-item-content">
+                  <h4>Leadership Experience</h4>
+                  <p>Managed team of 4 engineers successfully</p>
+                </div>
               </div>
             </div>
           </div>
 
           <!-- Weaknesses -->
-          <h3 style="font-size:1rem; margin-bottom:12px;">Areas for Improvement</h3>
-          <div class="analysis-list" style="margin-bottom:20px;">
-            <div class="analysis-item">
-              <div class="analysis-item-icon red">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-              </div>
-              <div class="analysis-item-content">
-                <h4>Limited Kubernetes</h4>
-                <p>Could improve container orchestration skills</p>
-              </div>
-            </div>
-            <div class="analysis-item">
-              <div class="analysis-item-icon red">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-              </div>
-              <div class="analysis-item-content">
-                <h4>No Publications</h4>
-                <p>Could contribute to research papers</p>
+          <div>
+            <h3 style="font-size:1.05rem; margin-bottom:12px; font-weight: 600;">Areas for Improvement</h3>
+            <div class="analysis-list">
+              <div class="analysis-item">
+                <div class="analysis-item-icon red">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                </div>
+                <div class="analysis-item-content">
+                  <h4>Limited Kubernetes</h4>
+                  <p>Could improve container orchestration skills</p>
+                </div>
               </div>
             </div>
           </div>
+        </div>
 
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 24px; border-top: 1px solid var(--glass-border); padding-top: 24px;">
           <!-- Recommendation -->
           <div class="recommendation-card">
             <h3>
@@ -355,23 +353,8 @@
             </h3>
             <p>Technical interview recommended. Focus on ML system design and MLOps experience. Prepare questions about team leadership and project management.</p>
           </div>
-
         </div>
-
-        <!-- Action Buttons -->
-        <div class="action-buttons">
-          <button class="btn btn-grad" id="shortlistBtn">Shortlist Candidate</button>
-          <button class="btn btn-grad" id="scheduleBtn">Schedule Interview</button>
-          <button class="btn btn-reject" id="rejectBtn">Reject Candidate</button>
-        </div>
-
-        <!-- Download Resume -->
-        <div class="download-resume" id="downloadResume">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Download Resume
-        </div>
-
-      </aside>
+      </div>
 
     </div>
   </div>

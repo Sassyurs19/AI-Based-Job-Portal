@@ -21,14 +21,32 @@ class APIClient {
     this.accessToken = localStorage.getItem('accessToken');
     this.refreshToken = localStorage.getItem('refreshToken');
     this.isRefreshing = false;
+
+    // Clean up any corrupt stringified "undefined" or "null" from previous sessions
+    if (this.accessToken === 'undefined' || this.accessToken === 'null') {
+      this.accessToken = null;
+      localStorage.removeItem('accessToken');
+    }
+    if (this.refreshToken === 'undefined' || this.refreshToken === 'null') {
+      this.refreshToken = null;
+      localStorage.removeItem('refreshToken');
+    }
   }
 
   // Store tokens securely
   setTokens(accessToken, refreshToken) {
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
-    localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('refreshToken', refreshToken);
+    if (accessToken) {
+      localStorage.setItem('accessToken', accessToken);
+    } else {
+      localStorage.removeItem('accessToken');
+    }
+    if (refreshToken) {
+      localStorage.setItem('refreshToken', refreshToken);
+    } else {
+      localStorage.removeItem('refreshToken');
+    }
   }
 
   // Clear tokens
@@ -41,13 +59,23 @@ class APIClient {
 
   // Get current user from localStorage
   getCurrentUser() {
-    const user = localStorage.getItem('currentUser');
-    return user ? JSON.parse(user) : null;
+    try {
+      const user = localStorage.getItem('currentUser');
+      if (!user || user === 'undefined' || user === 'null') return null;
+      return JSON.parse(user);
+    } catch (e) {
+      localStorage.removeItem('currentUser');
+      return null;
+    }
   }
 
   // Set current user
   setCurrentUser(user) {
-    localStorage.setItem('currentUser', JSON.stringify(user));
+    if (user) {
+      localStorage.setItem('currentUser', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('currentUser');
+    }
   }
 
   // Clear current user
@@ -127,8 +155,13 @@ class APIClient {
       headers
     });
 
-    // If 401, try to refresh token
-    if (response.status === 401 && this.refreshToken) {
+    // If 401, try to refresh token (avoid for auth routes)
+    const isAuthRoute = endpoint.includes('/auth/login') || 
+                        endpoint.includes('/auth/refresh-token') || 
+                        endpoint.includes('/auth/register') ||
+                        endpoint.includes('/auth/verify-otp');
+
+    if (response.status === 401 && this.refreshToken && !isAuthRoute) {
       try {
         const newToken = await this.refreshAccessToken();
         headers['Authorization'] = `Bearer ${newToken}`;
@@ -219,7 +252,7 @@ class APIClient {
   async register(data) {
     const response = await this.post('/auth/register', data);
     const result = await response.json();
-    if (result.success) {
+    if (result.success && result.token) {
       this.setTokens(result.token, result.refreshToken);
       this.setCurrentUser(result.user);
     }

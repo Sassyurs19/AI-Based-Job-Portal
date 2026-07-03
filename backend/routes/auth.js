@@ -59,6 +59,45 @@ router.get('/google/callback', (req, res, next) => {
 
     if (!user) {
       const message = info && info.message;
+      
+      if (frontendUrl.startsWith('file:')) {
+        let errType = 'google_auth_failed';
+        let errMsg = 'Google authentication failed. Please try again.';
+        if (message === 'EMAIL_EXISTS') {
+          errType = 'email_exists_use_google_login';
+          errMsg = 'An account already exists with this email. Please sign in with Google.';
+        } else if (message === 'ACCOUNT_NOT_FOUND') {
+          errType = 'account_not_found';
+          errMsg = 'No account found with this email. Please register first.';
+        }
+        
+        // Also set stateId cache if present
+        const stateId = parts[3] || '';
+        if (stateId) {
+          global.oauthCache = global.oauthCache || new Map();
+          global.oauthCache.set(stateId, { error: errType });
+        }
+        
+        res.send(`
+          <!DOCTYPE html>
+          <html>
+          <head><title>Authentication Failed</title></head>
+          <body style="font-family: sans-serif; text-align: center; padding-top: 50px; background: #0f172a; color: white;">
+            <h2>Authentication Failed</h2>
+            <p>${errMsg}</p>
+            <p>This window will close automatically.</p>
+            <script>
+              setTimeout(() => {
+                window.open('', '_self', '');
+                window.close();
+              }, 2500);
+            </script>
+          </body>
+          </html>
+        `);
+        return;
+      }
+
       if (message === 'EMAIL_EXISTS') {
         return res.redirect(`${frontendUrl}/login.html?error=email_exists_use_google_login`);
       } else if (message === 'ACCOUNT_NOT_FOUND') {

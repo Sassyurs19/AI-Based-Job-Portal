@@ -1,6 +1,6 @@
 /* ---------- candidate details layout ---------- */
 .details-wrap{min-height:calc(100vh - 72px); padding:clamp(24px,4vw,48px) 0;}
-.details-grid{display:grid; grid-template-columns:1fr 380px; gap:clamp(32px,5vw,48px); align-items:start;}
+.details-grid{display:grid; grid-template-columns:1fr; gap:28px; align-items:start; max-width:920px; margin:0 auto;}
 
 /* ---------- breadcrumb ---------- */
 .breadcrumb{display:flex; align-items:center; gap:8px; margin-bottom:24px; font-size:.9rem; color:var(--muted);}

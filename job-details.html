@@ -81,20 +81,21 @@
         <article class="job-main-card">
           
           <!-- Job Header -->
-          <div class="job-header">
-            <div class="job-header-logo">OA</div>
-            <div class="job-header-content">
-              <h1>Senior ML Engineer</h1>
-              <div class="company">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V7l8-4 8 4v14M8 21v-4h8v4"/></svg>
-                OpenAI · San Francisco, CA
+          <div class="job-header" style="flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center;">
+            <div style="display: flex; gap: 20px; align-items: start;">
+              <div class="job-header-logo">OA</div>
+              <div class="job-header-content">
+                <h1 class="job-title">Senior ML Engineer</h1>
+                <div class="company company-name">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V7l8-4 8 4v14M8 21v-4h8v4"/></svg>
+                  OpenAI · San Francisco, CA
+                </div>
               </div>
             </div>
-            <div class="job-header-actions">
-              <button class="btn-icon saved" id="saveBtn" title="Save Job">
-                <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-              </button>
-              <button class="btn-icon" id="shareBtn" title="Share Job">
+            <div class="job-header-actions" style="display: flex; gap: 12px; align-items: center; width: auto; flex-shrink: 0; margin-left: auto;">
+              <button class="btn btn-grad" id="applyBtn" style="padding: 10px 24px; margin: 0; font-size: 0.9rem;">Apply Now</button>
+              <button class="btn btn-ghost" id="saveBtn" style="padding: 10px 20px; margin: 0; font-size: 0.9rem; border: 1px solid var(--glass-border);">Save Job</button>
+              <button class="btn-icon" id="shareBtn" title="Share Job" style="margin: 0;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
               </button>
             </div>
@@ -378,43 +379,6 @@
 
       </div>
 
-      <!-- Sidebar -->
-      <aside class="job-sidebar">
-        
-        <!-- Apply Card -->
-        <div class="apply-card">
-          <h3>Senior ML Engineer</h3>
-          <div class="salary">$210k – $280k</div>
-          <div class="actions">
-            <a class="btn btn-grad" href="#">Apply Now</a>
-            <button class="btn btn-ghost" id="sidebarSaveBtn">Save Job</button>
-          </div>
-          <div class="meta-list">
-            <div class="meta-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-5.3-7-11a7 7 0 0 1 14 0c0 5.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-              Remote · US
-            </div>
-            <div class="meta-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              Full-time
-            </div>
-            <div class="meta-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
-              5+ years experience
-            </div>
-            <div class="meta-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              Posted 2 days ago
-            </div>
-            <div class="meta-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
-              97% AI Match
-            </div>
-          </div>
-        </div>
-
-      </aside>
-
     </div>
   </div>
 </main>
@@ -424,6 +388,5 @@
 <script src="js/api.js"></script>
 <script src="js/auth-guard.js"></script>
 <script src="js/job-details.js"></script>
-<script src="js/job-details-handler.js"></script>
 </body>
 </html>

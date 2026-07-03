@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/common.css" />
+<link rel="stylesheet" href="css/form.css" />
 <link rel="stylesheet" href="css/resume-analysis.css" />
 </head>
 <body>
@@ -79,6 +80,20 @@
           Choose File
         </button>
         <input type="file" id="fileInput" accept=".pdf,.doc,.docx" />
+      </div>
+
+      <!-- Job Selection and Analysis Button -->
+      <div class="analysis-controls" style="margin-top: 32px; max-width: 480px; margin-left: auto; margin-right: auto; display: flex; flex-direction: column; gap: 20px;">
+        <div class="field" style="text-align: left;">
+          <label for="jobSelect">Select Job to Analyze Against <span class="req">*</span></label>
+          <select id="jobSelect" class="input" disabled>
+            <option value="">Upload your resume first</option>
+          </select>
+        </div>
+        <button id="analyzeBtn" class="btn btn-grad" style="width: 100%; padding: 14px;" disabled>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          Analyze Resume
+        </button>
       </div>
     </div>
 
@@ -397,81 +412,12 @@
         </div>
 
         <!-- Action Buttons -->
-        <div class="actions-section">
+        <div class="actions-section" style="margin-top: 32px;">
           <button class="btn btn-grad" id="improveBtn">Improve Resume</button>
           <button class="btn btn-ghost" id="uploadNewBtn">Upload New Resume</button>
         </div>
 
       </div>
-
-      <!-- Sidebar -->
-      <aside class="resume-sidebar">
-        
-        <!-- Overall Score Card -->
-        <div class="sidebar-card">
-          <h3>Overall Score</h3>
-          <div class="progress-ring">
-            <svg width="120" height="120">
-              <circle class="progress-ring-bg" cx="60" cy="60" r="52"/>
-              <circle class="progress-ring-fill" cx="60" cy="60" r="52" stroke-dasharray="326.73" stroke-dashoffset="26.14"/>
-            </svg>
-            <div class="progress-ring-text">92%</div>
-          </div>
-          <div class="stats-list">
-            <div class="stat-item">
-              <span class="stat-item-label">Skills Found</span>
-              <span class="stat-item-value">12</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-item-label">Missing Skills</span>
-              <span class="stat-item-value">5</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-item-label">Strengths</span>
-              <span class="stat-item-value">3</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-item-label">Improvements</span>
-              <span class="stat-item-value">3</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Quick Tips -->
-        <div class="sidebar-card">
-          <h3>Quick Tips</h3>
-          <div class="analysis-list">
-            <div class="analysis-item" style="padding:10px;">
-              <div class="analysis-item-icon blue">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M13 2v7h7"/></svg>
-              </div>
-              <div class="analysis-item-content">
-                <h4 style="font-size:.85rem;">Keep it concise</h4>
-                <p style="font-size:.78rem;">Aim for 1-2 pages maximum</p>
-              </div>
-            </div>
-            <div class="analysis-item" style="padding:10px;">
-              <div class="analysis-item-icon blue">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-              </div>
-              <div class="analysis-item-content">
-                <h4 style="font-size:.85rem;">Use action verbs</h4>
-                <p style="font-size:.78rem;">Start bullets with strong verbs</p>
-              </div>
-            </div>
-            <div class="analysis-item" style="padding:10px;">
-              <div class="analysis-item-icon blue">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/></svg>
-              </div>
-              <div class="analysis-item-content">
-                <h4 style="font-size:.85rem;">Quantify results</h4>
-                <p style="font-size:.78rem;">Use numbers to show impact</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </aside>
 
     </div>
   </div>
@@ -481,6 +427,6 @@
 <script src="js/config.js"></script>
 <script src="js/api.js"></script>
 <script src="js/auth-guard.js"></script>
-<script src="js/resume-analysis-handler.js"></script>
+<script src="js/resume-analysis.js"></script>
 </body>
 </html>

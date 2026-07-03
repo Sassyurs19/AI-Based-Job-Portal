@@ -96,30 +96,34 @@
           if (result.success) {
             api.setCurrentUser(result.user);
             
-            // Check if profile completion is needed
+            const userRole = result.user.role || role;
+            let targetUrl = 'index.html';
+            
             if (completeProfile === 'true') {
-              const userRole = result.user.role || role;
+              targetUrl = userRole === 'candidate' ? 'complete-profile-candidate.html' : 'complete-profile-recruiter.html';
+            } else {
               if (userRole === 'candidate') {
-                window.location.href = 'complete-profile-candidate.html';
+                targetUrl = 'candidate-dashboard.html';
               } else if (userRole === 'recruiter') {
-                window.location.href = 'complete-profile-recruiter.html';
-              } else {
-                window.location.href = 'index.html';
+                targetUrl = 'recruiter-dashboard.html';
+              } else if (userRole === 'admin') {
+                targetUrl = 'admin/admin-dashboard.html';
               }
-              return;
+            }
+
+            if (window.opener && !window.opener.closed) {
+              try {
+                window.opener.api.setTokens(token, refreshToken);
+                window.opener.api.setCurrentUser(result.user);
+                window.opener.location.href = targetUrl;
+                window.close();
+                return;
+              } catch (openerErr) {
+                console.error('Error updating parent window:', openerErr);
+              }
             }
             
-            // Redirect based on role
-            const userRole = result.user.role || role;
-            if (userRole === 'candidate') {
-              window.location.href = 'candidate-dashboard.html';
-            } else if (userRole === 'recruiter') {
-              window.location.href = 'recruiter-dashboard.html';
-            } else if (userRole === 'admin') {
-              window.location.href = 'admin/admin-dashboard.html';
-            } else {
-              window.location.href = 'index.html';
-            }
+            window.location.href = targetUrl;
           } else {
             throw new Error('Failed to fetch user data');
           }
