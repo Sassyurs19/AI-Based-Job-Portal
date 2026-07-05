@@ -68,70 +68,14 @@ document.addEventListener('DOMContentLoaded', function() {
     otpBoxes[0].focus();
   }
 
-  // Handle Google signup
+  // Handle Google signup — same-tab redirect flow
   const googleSignupBtn = document.getElementById('googleSignupBtn');
   if (googleSignupBtn) {
     googleSignupBtn.addEventListener('click', function() {
       const backendUrl = window.getBackendUrl ? window.getBackendUrl() : 'http://localhost:5000';
       const frontendUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
-      const stateId = 'state_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-      const authUrl = `${backendUrl}/api/auth/google/signup?role=candidate&state_id=${stateId}&frontend_url=${encodeURIComponent(frontendUrl)}`;
-      
-      const width = 500;
-      const height = 600;
-      const left = (window.innerWidth - width) / 2;
-      const top = (window.innerHeight - height) / 2;
-      const popup = window.open(authUrl, 'Google Signup', `width=${width},height=${height},left=${left},top=${top},status=no,resizable=yes,scrollbars=yes`);
-
-      if (!popup) {
-        showError('Popup blocked! Please allow popups for Google Sign In.');
-        return;
-      }
-
-      // Polling interval
-      const pollInterval = setInterval(() => {
-        if (popup.closed) {
-          clearInterval(pollInterval);
-        }
-        
-        fetch(`${backendUrl}/api/auth/google/status/${stateId}`)
-          .then(res => res.json())
-          .then(data => {
-            if (data.success && data.authenticated && data.token) {
-              clearInterval(pollInterval);
-              if (popup && !popup.closed) {
-                popup.close();
-              }
-              
-              const { token, refreshToken, role, completeProfile } = data;
-              api.setTokens(token, refreshToken);
-              api.getMe().then(result => {
-                if (result.success) {
-                  api.setCurrentUser(result.user);
-                  if (completeProfile) {
-                    window.location.href = role === 'candidate' ? 'complete-profile-candidate.html' : 'complete-profile-recruiter.html';
-                  } else {
-                    window.location.href = role === 'candidate' ? 'candidate-dashboard.html' : 'recruiter-dashboard.html';
-                  }
-                }
-              }).catch(err => {
-                showError('Failed to fetch user profile details.');
-              });
-            } else if (data.success && data.error) {
-              clearInterval(pollInterval);
-              if (popup && !popup.closed) {
-                popup.close();
-              }
-              const errorMsg = data.error === 'email_exists_use_google_login'
-                ? 'An account already exists with this email. Please sign in with Google.'
-                : 'Google authentication failed. Please try again.';
-              showError(errorMsg);
-            }
-          })
-          .catch(err => {
-            console.error('Error polling status:', err);
-          });
-      }, 1000);
+      const authUrl = `${backendUrl}/api/auth/google/signup?role=candidate&frontend_url=${encodeURIComponent(frontendUrl)}`;
+      window.location.href = authUrl;
     });
   }
 

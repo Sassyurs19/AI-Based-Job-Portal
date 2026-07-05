@@ -21,78 +21,13 @@ document.addEventListener('DOMContentLoaded', function() {
     showError('No account found with this email. Please register first.');
   }
 
-  // Handle Google login
+  // Handle Google login — same-tab redirect flow
   if (googleLoginBtn) {
     googleLoginBtn.addEventListener('click', function() {
       const backendUrl = window.getBackendUrl ? window.getBackendUrl() : 'http://localhost:5000';
       const frontendUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
-      const stateId = 'state_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-      const authUrl = `${backendUrl}/api/auth/google?state_id=${stateId}&frontend_url=${encodeURIComponent(frontendUrl)}`;
-      
-      const width = 500;
-      const height = 600;
-      const left = (window.innerWidth - width) / 2;
-      const top = (window.innerHeight - height) / 2;
-      const popup = window.open(authUrl, 'Google Login', `width=${width},height=${height},left=${left},top=${top},status=no,resizable=yes,scrollbars=yes`);
-
-      if (!popup) {
-        showError('Popup blocked! Please allow popups for Google Sign In.');
-        return;
-      }
-
-      // Polling interval — stop when popup closes or auth succeeds/fails
-      const pollInterval = setInterval(() => {
-        // If popup was closed by user without completing auth, stop polling
-        try {
-          if (popup.closed) {
-            clearInterval(pollInterval);
-            return;
-          }
-        } catch (e) {
-          // Cross-origin access error is fine, popup is still open
-        }
-        
-        fetch(`${backendUrl}/api/auth/google/status/${stateId}`)
-          .then(res => res.json())
-          .then(data => {
-            if (data.success && data.authenticated && data.token) {
-              clearInterval(pollInterval);
-              if (popup && !popup.closed) {
-                popup.close();
-              }
-              
-              const { token, refreshToken, role, completeProfile } = data;
-              api.setTokens(token, refreshToken);
-              api.getMe().then(result => {
-                if (result.success) {
-                  api.setCurrentUser(result.user);
-                  if (completeProfile) {
-                    window.location.href = role === 'candidate' ? 'complete-profile-candidate.html' : 'complete-profile-recruiter.html';
-                  } else {
-                    window.location.href = role === 'candidate' ? 'candidate-dashboard.html' : 'recruiter-dashboard.html';
-                  }
-                }
-              }).catch(err => {
-                showError('Failed to fetch user profile details.');
-              });
-            } else if (data.success && data.error) {
-              clearInterval(pollInterval);
-              if (popup && !popup.closed) {
-                popup.close();
-              }
-              let errorMsg = 'Google authentication failed. Please try again.';
-              if (data.error === 'email_exists_use_google_login') {
-                errorMsg = 'An account already exists with this email. Please sign in with Google.';
-              } else if (data.error === 'account_not_found') {
-                errorMsg = 'No account found with this email. Please <a href="register.html" style="color: #8b5cf6;">register first</a>.';
-              }
-              showError(errorMsg);
-            }
-          })
-          .catch(err => {
-            // Network error — don't spam console, backend may be starting up
-          });
-      }, 1500);
+      const authUrl = `${backendUrl}/api/auth/google?frontend_url=${encodeURIComponent(frontendUrl)}`;
+      window.location.href = authUrl;
     });
   }
 
