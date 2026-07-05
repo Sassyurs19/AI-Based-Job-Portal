@@ -26,6 +26,8 @@ const allowedOrigins = [
   'http://localhost:8080',
   'http://127.0.0.1:5500',
   'http://127.0.0.1:3000',
+  'https://ai-hire-portal.web.app',
+  'https://ai-hire-portal.firebaseapp.com',
   process.env.FRONTEND_URL
 ].filter(Boolean);
 
