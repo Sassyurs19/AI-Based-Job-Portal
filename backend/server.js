@@ -18,6 +18,46 @@ connectDB();
 
 const app = express();
 
+// CORS must come first — before session, passport, and routes
+// This ensures preflight OPTIONS requests are handled correctly
+const allowedOrigins = [
+  'http://localhost:5500',
+  'http://localhost:3000',
+  'http://localhost:8080',
+  'http://127.0.0.1:5500',
+  'http://127.0.0.1:3000',
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
+app.use(cors({
+  origin: function(origin, callback) {
+    // Allow requests with no origin (mobile apps, Postman, file:// protocol)
+    if (!origin) return callback(null, true);
+    
+    // Check if origin is in allowed list
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      return callback(null, true);
+    }
+    
+    // Also allow any Firebase or Vercel deployment URLs
+    if (origin.endsWith('.web.app') || 
+        origin.endsWith('.firebaseapp.com') || 
+        origin.endsWith('.vercel.app')) {
+      return callback(null, true);
+    }
+    
+    // In development, allow all origins
+    if (process.env.NODE_ENV !== 'production') {
+      return callback(null, true);
+    }
+    
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 // Session middleware for passport
 app.use(session({
   secret: process.env.JWT_SECRET || 'your-secret-key',
@@ -34,7 +74,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Middlewares
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());

@@ -17,13 +17,15 @@ document.addEventListener('DOMContentLoaded', function() {
     showError('An account already exists with this email. Please sign in with Google.');
   } else if (urlError === 'google_auth_failed') {
     showError('Google authentication failed. Please try again.');
+  } else if (urlError === 'account_not_found') {
+    showError('No account found with this email. Please register first.');
   }
 
   // Handle Google login
   if (googleLoginBtn) {
     googleLoginBtn.addEventListener('click', function() {
       const backendUrl = window.getBackendUrl ? window.getBackendUrl() : 'http://localhost:5000';
-      const frontendUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
+      const frontendUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
       const stateId = 'state_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
       const authUrl = `${backendUrl}/api/auth/google?state_id=${stateId}&frontend_url=${encodeURIComponent(frontendUrl)}`;
       
@@ -38,16 +40,22 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
 
-      // Polling interval
+      // Polling interval — stop when popup closes or auth succeeds/fails
       const pollInterval = setInterval(() => {
-        if (popup.closed) {
-          clearInterval(pollInterval);
+        // If popup was closed by user without completing auth, stop polling
+        try {
+          if (popup.closed) {
+            clearInterval(pollInterval);
+            return;
+          }
+        } catch (e) {
+          // Cross-origin access error is fine, popup is still open
         }
         
         fetch(`${backendUrl}/api/auth/google/status/${stateId}`)
           .then(res => res.json())
           .then(data => {
-            if (data.success && data.authenticated) {
+            if (data.success && data.authenticated && data.token) {
               clearInterval(pollInterval);
               if (popup && !popup.closed) {
                 popup.close();
@@ -72,16 +80,19 @@ document.addEventListener('DOMContentLoaded', function() {
               if (popup && !popup.closed) {
                 popup.close();
               }
-              const errorMsg = data.error === 'email_exists_use_google_login'
-                ? 'An account already exists with this email. Please sign in with Google.'
-                : 'Google authentication failed. Please try again.';
+              let errorMsg = 'Google authentication failed. Please try again.';
+              if (data.error === 'email_exists_use_google_login') {
+                errorMsg = 'An account already exists with this email. Please sign in with Google.';
+              } else if (data.error === 'account_not_found') {
+                errorMsg = 'No account found with this email. Please <a href="register.html" style="color: #8b5cf6;">register first</a>.';
+              }
               showError(errorMsg);
             }
           })
           .catch(err => {
-            console.error('Error polling status:', err);
+            // Network error — don't spam console, backend may be starting up
           });
-      }, 1000);
+      }, 1500);
     });
   }
 
@@ -98,17 +109,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const email = emailInput.value.trim();
     const password = passwordInput.value;
-    const agreeTerms = document.getElementById('agreeTerms');
 
     if (!email || !password) {
       showError('Please fill in all fields');
       return;
     }
 
-    if (!agreeTerms || !agreeTerms.checked) {
-      showError('You must agree to the terms and conditions');
-      const errAgreeTerms = document.getElementById('err-agreeTerms');
-      if (errAgreeTerms) errAgreeTerms.style.display = 'block';
+    // Basic email format validation
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showError('Please enter a valid email address');
       return;
     }
 
@@ -129,10 +138,15 @@ document.addEventListener('DOMContentLoaded', function() {
           window.location.href = 'admin/admin-dashboard.html';
         }
       } else {
-        showError(result.message || 'Login failed. Please try again.');
+        // Show descriptive error messages
+        if (result.requiresPassword) {
+          showError('No password set for this account. <a href="forgot-password.html" style="color: #8b5cf6;">Set a password</a> or use Google login.');
+        } else {
+          showError(result.message || 'Login failed. Please check your credentials and try again.');
+        }
       }
     } catch (error) {
-      showError('An error occurred. Please try again.');
+      showError('Unable to connect to the server. Please check your internet connection and try again.');
       console.error('Login error:', error);
     } finally {
       setLoading(false);
@@ -142,6 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Handle forgot password links via default navigation to forgot-password.html
 
   function setLoading(loading) {
+    if (!submitButton) return;
     if (loading) {
       submitButton.disabled = true;
       submitButton.textContent = 'Signing in...';
@@ -163,13 +178,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add error message
     const errorDiv = document.createElement('div');
     errorDiv.className = 'error-message';
-    errorDiv.textContent = message;
-    errorDiv.style.cssText = 'color: #ef4444; font-size: 0.875rem; margin-top: 1rem; text-align: center;';
+    errorDiv.innerHTML = message;
+    errorDiv.style.cssText = 'color: #ef4444; font-size: 0.875rem; margin-top: 1rem; text-align: center; padding: 0.75rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.2);';
     loginForm.appendChild(errorDiv);
 
-    // Auto remove after 5 seconds
+    // Auto remove after 8 seconds
     setTimeout(() => {
-      errorDiv.remove();
-    }, 5000);
+      if (errorDiv.parentNode) {
+        errorDiv.remove();
+      }
+    }, 8000);
   }
 });

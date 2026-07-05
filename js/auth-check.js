@@ -5,18 +5,45 @@ function checkAuthAndRedirect() {
   const api = window.api;
   if (!api) return;
 
-  const pathname = window.location.pathname;
-  const isAuthPage = pathname.includes('login.html') || 
-                     pathname.includes('register.html') ||
-                     pathname.includes('candidate-register.html') ||
-                     pathname.includes('recruiter-register.html') ||
-                     pathname.includes('index.html') ||
-                     (pathname.endsWith('/') && !pathname.includes('/admin/') && !pathname.includes('/candidate/') && !pathname.includes('/recruiter/'));
+  const pathname = window.location.pathname.toLowerCase();
+  
+  // Extract just the filename from the path
+  const filename = pathname.substring(pathname.lastIndexOf('/') + 1) || 'index.html';
 
-  const isProtectedPage = window.location.pathname.includes('candidate-dashboard.html') ||
-                          window.location.pathname.includes('recruiter-dashboard.html') ||
-                          window.location.pathname.includes('admin-dashboard.html') ||
-                          window.location.pathname.includes('complete-profile-');
+  // Pages that should redirect authenticated users to their dashboard
+  const authPages = [
+    'login.html',
+    'register.html',
+    'candidate-register.html',
+    'recruiter-register.html'
+  ];
+
+  // Pages that should be accessible regardless of auth status
+  const neutralPages = [
+    'forgot-password.html',
+    'set-password.html',
+    'auth-callback.html',
+    'terms-conditions.html',
+    'index.html'
+  ];
+
+  // Pages that require authentication
+  const protectedPages = [
+    'candidate-dashboard.html',
+    'recruiter-dashboard.html',
+    'admin-dashboard.html',
+    'complete-profile-candidate.html',
+    'complete-profile-recruiter.html',
+    'candidate-profile.html',
+    'my-applications.html',
+    'resume-analysis.html',
+    'post-job.html',
+    'applicants.html'
+  ];
+
+  const isAuthPage = authPages.includes(filename);
+  const isNeutralPage = neutralPages.includes(filename);
+  const isProtectedPage = protectedPages.includes(filename);
 
   if (isAuthPage && api.isAuthenticated()) {
     // User is logged in but trying to access login/register page
@@ -27,8 +54,6 @@ function checkAuthAndRedirect() {
       window.location.href = 'recruiter-dashboard.html';
     } else if (role === 'admin') {
       window.location.href = 'admin/admin-dashboard.html';
-    } else {
-      window.location.href = 'index.html';
     }
     return true; // Redirected
   }

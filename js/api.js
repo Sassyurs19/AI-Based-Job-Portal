@@ -1,6 +1,9 @@
 // API Client with JWT Authentication
-// Load configuration
-const API_BASE_URL = window.getApiBaseUrl ? window.getApiBaseUrl() : 'http://localhost:5000/api';
+// Load configuration - use getter to ensure config is always resolved at call time
+function getApiBaseUrlResolved() {
+  return window.getApiBaseUrl ? window.getApiBaseUrl() : 'http://localhost:5000/api';
+}
+const API_BASE_URL = getApiBaseUrlResolved();
 
 function getResolvedPath(target) {
   const inAdmin = window.location.pathname.includes('/admin/');

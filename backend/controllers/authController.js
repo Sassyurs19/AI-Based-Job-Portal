@@ -423,6 +423,16 @@ const getGoogleAuthStatus = (req, res) => {
   if (cache && cache.has(stateId)) {
     const data = cache.get(stateId);
     cache.delete(stateId); // Clear after retrieval
+    
+    // Check if this is an error response (no token means it's an error)
+    if (data.error) {
+      return res.status(200).json({
+        success: true,
+        authenticated: false,
+        error: data.error
+      });
+    }
+    
     return res.status(200).json({
       success: true,
       authenticated: true,

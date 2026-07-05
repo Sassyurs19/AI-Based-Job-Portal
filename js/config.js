@@ -1,13 +1,26 @@
 // Application Configuration
 // Update BACKEND_URL to your deployed backend URL
+
 const CONFIG = {
-  // Backend API URL - change this to your deployed backend URL
-  BACKEND_URL: window.location.hostname === 'localhost' || 
-               window.location.hostname === '127.0.0.1' || 
-               window.location.hostname === '' || 
-               window.location.protocol === 'file:'
-    ? 'http://localhost:5000'
-    : 'https://ai-based-job-portal-backend.onrender.com',
+  // Backend API URL - auto-detects local vs production
+  // For Firebase/Vercel deployment, the hostname won't be localhost
+  BACKEND_URL: (function() {
+    const hostname = window.location.hostname;
+    const protocol = window.location.protocol;
+    
+    // Local development detection
+    const isLocal = hostname === 'localhost' || 
+                    hostname === '127.0.0.1' || 
+                    hostname === '' || 
+                    protocol === 'file:';
+    
+    if (isLocal) {
+      return 'http://localhost:5000';
+    }
+    
+    // Production - use your deployed backend URL
+    return 'https://ai-based-job-portal-backend.onrender.com';
+  })(),
   
   // API base path
   API_BASE: '/api'

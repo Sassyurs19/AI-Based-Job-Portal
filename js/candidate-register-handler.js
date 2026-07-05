@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (googleSignupBtn) {
     googleSignupBtn.addEventListener('click', function() {
       const backendUrl = window.getBackendUrl ? window.getBackendUrl() : 'http://localhost:5000';
-      const frontendUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
+      const frontendUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
       const stateId = 'state_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
       const authUrl = `${backendUrl}/api/auth/google/signup?role=candidate&state_id=${stateId}&frontend_url=${encodeURIComponent(frontendUrl)}`;
       
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(`${backendUrl}/api/auth/google/status/${stateId}`)
           .then(res => res.json())
           .then(data => {
-            if (data.success && data.authenticated) {
+            if (data.success && data.authenticated && data.token) {
               clearInterval(pollInterval);
               if (popup && !popup.closed) {
                 popup.close();
